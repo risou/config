@@ -1,0 +1,83 @@
+" 1.2 (created: 2008/08/16 18:51:52)
+" Mappings
+
+" Options
+set guioptions=mTBrb
+
+" Abbreviations
+
+source! ~/_vimperatorrc.local
+
+" vim: set ft=vimperator:
+
+" 検索後ハイライト
+set hlsearch
+
+" Beep音OFF
+set visualbell
+hi Bell display:none;
+
+" 常時タブ
+set showtabline=2
+
+" コマンド補完
+set wildoptions=auto
+
+" アドレス補完
+set complete=lbsS
+
+" <S-r>で、_vimperatorrcをリロード
+map <S-r> :source ~/_vimperatorrc<CR>
+
+" アクセスキーを無効に
+set! ui.key.generalAccessKey=0
+
+" リンクをバックグラウンドで開く
+set! browser.tabs.loadDivertedInBackground=true
+
+" 補完リストの選択
+cmap <C-n> <TAB>
+cmap <C-p> <S-TAB>
+
+" j, kを5倍
+map j 5<C-e>
+map k 5<C-y>
+
+" 再起動
+map ,r :restart<CR>
+
+" Stop loading
+map ,c :stop<CR>
+
+" <C-h>を再定義
+map <C-h> <BS>
+
+" ブラウザタイトルを変更
+set titlestring=Firefox
+
+" フォーカスを奪われるのを防ぐ
+set focuscontent
+
+" <BS>で「戻る」
+map <BS> H
+
+" 範囲選択、コピー、カット、ペースト
+noremap <C-a> <C-v><C-a>
+inoremap <C-a> <C-v><C-a>
+cnoremap <C-a> <C-v><C-a>
+noremap <C-c> <C-v><C-c>
+inoremap <C-c> <C-v><C-c>
+cnoremap <C-c> <C-v><C-c>
+inoremap <C-x> <S-Del>
+cnoremap <C-x> <S-Del>
+inoremap <C-z> <C-v><C-z>
+cnoremap <C-z> <C-v><C-z>
+inoremap <C-v> <S-Insert>
+cnoremap <C-v> <S-Insert>
+
+" tabopen
+inoremap <C-t> <ESC>:tabopen<CR>
+
+" open/tabopen
+bmark -title="Google EN" -tags=keyword -keyword=g http://www.google.com/search?q=%s
+set defsearch=g
