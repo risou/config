@@ -1,0 +1,66 @@
+;; 行番号
+(require 'wb-line-number)
+(wb-line-number-toggle)
+(setq truncate-partial-width-windows nil)
+(setq wb-line-number-scroll-bar nil)
+
+;; タブ幅
+(setq-default tab-width 4)
+(setq-default c-basic-offset 4)
+(setq-default indent-tabs-mode t)
+
+;; darwin：Option -> Meta
+(when (eq system-type 'darwin)
+  (setq mac-option-modifier 'meta))
+
+;; C-h：backspace
+(global-set-key "\C-h" 'delete-backward-char)
+
+;; *.~ を作らない
+(setq make-backup-files nil)
+;; .#* を作らない
+(setq auto-save-default nil)
+
+;; C++mode：cc-mode
+(add-hook 'c++-mode-hook
+		  '(lambda()
+			 (c-set-style "cc-mode")))
+
+;; C-mode：cc-mode
+(setq c-default-style "cc-mode")
+(add-hook 'c-mode-common-hook
+		  '(lambda()
+			 (progn
+			   (c-toggle-hungry-state 1))))
+
+;; C言語インデント
+(setq c-auto-newline t)
+
+;; CSS-mode
+(autoload 'css-mode "css-mode")
+(setq auto-mode-alist
+	  (cons '("\\.css\\'" . css-mode) auto-mode-alist))
+;; CSSタブ幅
+(setq cssm-indent-level 4)
+;; CSS-mode：インデント
+(setq cssm-indent-function #'cssm-c-style-indenter)
+
+;; AquaSKK を使わず ddskk を使う
+(setq mac-pass-control-to-system nil)
+
+;; ddskk の設定
+(require 'skk-autoloads)
+(global-set-key "\C-x\C-j" 'skk-mode)
+(global-set-key "\C-xj" 'skk-auto-fill-mode)
+(global-set-key "\C-xt" 'skk-tutorial)
+(setq skk-large-jisyo "./SKK-JISYO.L")
+(setq skk-egg-like-newline t)
+(setq skk-japanese-message-and-error t)
+(setq skk-show-japanese-menu t)
+
+;; outputz
+(require 'outputz)
+(setq outputz-key "OyG9uk527SxQ")
+(setq outputz-uri "http://www.rs-f.net/%s")
+(global-outputz-mode t)
+
