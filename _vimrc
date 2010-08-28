@@ -16,8 +16,8 @@ set history=300
 "tab幅の設定
 set shiftwidth=4
 set tabstop=4
-"Tab 2 Space
-set expandtab
+"Tab -> Space
+"set expandtab
 
 "オートインデント設定
 set cindent
@@ -39,6 +39,35 @@ set shortmess+=I
 
 "バックアップファイルはいらない
 set nobackup
+
+"タブ文字を表示
+set lcs=tab:>.,eol:$,trail:_,extends:\
+set list
+
+"文字コードの自動判別
+set encoding=utf-8
+set fileencodings=iso-2022-jp,euc-jp,sjis,cp932,utf-8
+"改行コードの自動認識
+set fileformats=unix,dos,mac
+
+"○や□などの文字でカーソル位置がずれないようにする
+if exists('&ambiwidth')
+	set ambiwidth=double
+endif
+
+"全角スペースを表示
+augroup JpSpaceHook
+autocmd!
+autocmd Colorscheme * highlight JpSpace cterm=underline ctermbg=lightblue guibg=lightblue
+autocmd VimEnter,WinEnter * match JpSpace /　/
+augroup END
+
+"入力モード時、ステータスラインのカラーを変更
+augroup InsertHook
+autocmd!
+autocmd InsertEnter * highlight StatusLine guifg=#FFFFFF guibg=#FE1235
+autocmd InsertLeave * highlight StatusLine guifg=#0000FF guibg=#FFFFFF
+augroup END
 
 "GREPの設定
 au QuickfixCmdPost vimgrep cw
@@ -65,10 +94,11 @@ augroup AuForRuby
     autocmd FileType ruby,eruby setlocal makeprg=ruby\ -cdw\ %
     autocmd FileType ruby,eruby setlocal errorformat=%f:%l:%m
     "au BufWritePost <buffer> silent make
-augroup
+augroup END
 
 """"""""""""""""""""""""""""""
 " => for make
 """"""""""""""""""""""""""""""
 nnoremap ,m  :make<Return>
 nnoremap ,M  :make<Space>
+
