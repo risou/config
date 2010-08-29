@@ -1,7 +1,7 @@
 let mapleader = ","
-map <silent> <leader>ss :source .vimrc<cr>
-map <silent> <leader>ee :e .vimrc<cr>
-autocmd! bufwritepost .vimrc source .vimrc
+map <silent> <leader>ss :source ~/.vimrc<cr>
+map <silent> <leader>ee :e ~/.vimrc<cr>
+autocmd! bufwritepost ~/.vimrc source ~/.vimrc
 
 " viとの互換性OFF
 set nocompatible
@@ -36,6 +36,15 @@ set showmatch
 " シンタックスハイライトをON
 syntax on
 
+" コメント色を水色にする
+highlight Comment ctermfg=lightcyan
+" スペシャルキー色を水色にする
+highlight SpecialKey ctermfg=lightcyan
+" ノンテキスト色を水色にする
+highlight NonText ctermfg=darkcyan
+" ディレクトリ色を水色にする
+highlight Directory ctermfg=lightcyan
+
 " 検索結果のハイライト
 set hlsearch
 
@@ -65,6 +74,11 @@ set clipboard=unnamed
 
 " テキスト挿入中の自動折り返しを日本語に対応
 set formatoptions+=mM
+
+" Omni補完の設定
+:filetype plugin indent on
+"imap <C-Space> <C-x><C-o>
+imap <Nul> <C-x><C-o>
 
 " コンパイラの設定
 autocmd FileType perl,cgi : compiler perl
