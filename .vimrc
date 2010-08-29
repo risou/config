@@ -66,6 +66,9 @@ set clipboard=unnamed
 " テキスト挿入中の自動折り返しを日本語に対応
 set formatoptions+=mM
 
+" コンパイラの設定
+autocmd FileType perl,cgi : compiler perl
+
 " 文字コードの自動判別
 set encoding=utf-8
 set fileencodings=iso-2022-jp,sjis,euc-jp,cp932,utf-8
