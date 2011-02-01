@@ -1,78 +1,116 @@
+"viã¨ã®äº’æ›ãƒ¢ãƒ¼ãƒ‰ã‚’OFF
+set nocompatible
+
 let mapleader = ","
 if has('macunix') "Mac OS X
 elseif has('unix') "Unix
 elseif has('win32') "Windows
-    "vimrc•ÒW
+    "vimrcç·¨é›†
     map <silent> <leader>ss :source $VIM/_vimrc<cr>
     map <silent> <leader>ee :e $VIM/_vimrc<cr>
     autocmd! bufwritepost _vimrc source $VIM/_vimrc
 endif
 
-let g:NeoComplCache_EnableAtStartUp = 1
+"pathogen.vim
+call pathogen#runtime_append_all_bundles()
 
-"ŒŸõ—š—ğ
+"æ¤œç´¢å±¥æ­´
 set history=300 
 
-"tab•‚Ìİ’è
+"tabå¹…ã®è¨­å®š
 set shiftwidth=4
 set tabstop=4
 "Tab -> Space
 "set expandtab
 
-"ƒI[ƒgƒCƒ“ƒfƒ“ƒgİ’è
+"ã‚ªãƒ¼ãƒˆã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆè¨­å®š
 set cindent
 
-"ƒNƒŠƒbƒvƒ{[ƒhg—p
+"ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ä½¿ç”¨
 set clipboard=unnamed
 
-"s”Ô†•\¦
+"è¡Œç•ªå·è¡¨ç¤º
 set number
 
-"s”Ô†ˆóü
+"è¡Œç•ªå·å°åˆ·
 set printoptions=number:y
 
-"ƒ‹[ƒ‰‚ğ•\¦
+"ãƒ«ãƒ¼ãƒ©ã‚’è¡¨ç¤º
 set ruler
 
-"‹N“®‚ÌƒƒbƒZ[ƒW‚ğ•\¦‚µ‚È‚¢
+"èµ·å‹•æ™‚ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã—ãªã„
 set shortmess+=I
 
-"ƒoƒbƒNƒAƒbƒvƒtƒ@ƒCƒ‹‚Í‚¢‚ç‚È‚¢
+"ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ãƒ•ã‚¡ã‚¤ãƒ«ã¯ã„ã‚‰ãªã„
 set nobackup
 
-"ƒ^ƒu•¶š‚ğ•\¦
+"ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³è£œå®Œã®æ‹¡å¼µ
+set wildmenu
+"ãƒãƒƒãƒ•ã‚¡ãŒéš ã‚Œã‚‹éš›ã«ã‚¢ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ãªã„
+set hid
+"ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹è¡Œã«è¡¨ç¤º
+set showcmd
+"ãƒãƒƒã‚¯ã‚¹ãƒšãƒ¼ã‚¹ã§å‰Šé™¤ã§ãã‚‹ã‚‚ã®ã£ã‚’æŒ‡å®š
+set backspace=indent,eol,start
+"å¯¾å¿œã™ã‚‹æ‹¬å¼§ã‚’è¡¨ç¤º
+set showmatch
+"ã‚¨ãƒ©ãƒ¼æ™‚ã®ãƒ™ãƒ«ã‚’ç„¡åŠ¹
+set noerrorbells
+set novisualbell
+set t_vb=
+
+"gvimã®è¨­å®š
+set guioptions-=T "ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã®é™¤å»
+
+"escã§ãƒã‚¤ãƒ©ã‚¤ãƒˆã‚’ã‚ªãƒ•
+nnoremap <silent> <ESC> <ESC>:noh<CR>
+
+"ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ©ã‚¤ãƒ³ã«æƒ…å ±ã‚’è¡¨ç¤º
+set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
+
+"windowåˆ†å‰²ã®éš›ã®æŒ™å‹•å¤‰æ›´
+set splitbelow
+set splitright
+
+"ãƒ•ã‚¡ã‚¤ãƒ«ã‚¿ã‚¤ãƒ—è­˜åˆ¥
+filetype plugin indent on
+
+"ã‚ªãƒ ãƒ‹è£œå®Œã®ã‚­ãƒ¼å¤‰æ›´
+imap <C-Space> <C-x><C-o>
+
+"ã‚¿ãƒ–æ–‡å­—ã‚’è¡¨ç¤º
 set lcs=tab:>.,eol:$,trail:_,extends:\
 set list
 
-"•¶šƒR[ƒh‚Ì©“®”»•Ê
+"æ–‡å­—ã‚³ãƒ¼ãƒ‰ã®è‡ªå‹•åˆ¤åˆ¥
 set encoding=utf-8
 set fileencodings=iso-2022-jp,euc-jp,sjis,cp932,utf-8
-"‰üsƒR[ƒh‚Ì©“®”F¯
+"æ”¹è¡Œã‚³ãƒ¼ãƒ‰ã®è‡ªå‹•èªè­˜
 set fileformats=unix,dos,mac
 
-"›‚â ‚È‚Ç‚Ì•¶š‚ÅƒJ[ƒ\ƒ‹ˆÊ’u‚ª‚¸‚ê‚È‚¢‚æ‚¤‚É‚·‚é
+"â—‹ã‚„â–¡ãªã©ã®æ–‡å­—ã§ã‚«ãƒ¼ã‚½ãƒ«ä½ç½®ãŒãšã‚Œãªã„ã‚ˆã†ã«ã™ã‚‹
 if exists('&ambiwidth')
-	set ambiwidth=double
+    set ambiwidth=double
 endif
 
-"‘SŠpƒXƒy[ƒX‚ğ•\¦
+"å…¨è§’ã‚¹ãƒšãƒ¼ã‚¹ã‚’è¡¨ç¤º
 augroup JpSpaceHook
 autocmd!
 autocmd Colorscheme * highlight JpSpace cterm=underline ctermbg=lightblue guibg=lightblue
-autocmd VimEnter,WinEnter * match JpSpace /@/
+autocmd VimEnter,WinEnter * match JpSpace /ã€€/
 augroup END
 
-"“ü—Íƒ‚[ƒhAƒXƒe[ƒ^ƒXƒ‰ƒCƒ“‚ÌƒJƒ‰[‚ğ•ÏX
+"å…¥åŠ›ãƒ¢ãƒ¼ãƒ‰æ™‚ã€ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ©ã‚¤ãƒ³ã®ã‚«ãƒ©ãƒ¼ã‚’å¤‰æ›´
 augroup InsertHook
 autocmd!
 autocmd InsertEnter * highlight StatusLine guifg=#FFFFFF guibg=#FE1235
 autocmd InsertLeave * highlight StatusLine guifg=#0000FF guibg=#FFFFFF
 augroup END
 
-"GREP‚Ìİ’è
+"GREPã®è¨­å®š
 au QuickfixCmdPost vimgrep cw
 
-"ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚ğAŒ»İŠJ‚¢‚Ä‚¢‚éƒtƒ@ƒCƒ‹‚ÌƒfƒBƒŒƒNƒgƒŠ‚É‚·‚é
+"ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ã€ç¾åœ¨é–‹ã„ã¦ã„ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ã™ã‚‹
 au BufEnter * execute ":lcd " . expand("%:p:h")
 
 "Outputz for vim
@@ -93,7 +131,23 @@ augroup AuForRuby
     " for error marker
     autocmd FileType ruby,eruby setlocal makeprg=ruby\ -cdw\ %
     autocmd FileType ruby,eruby setlocal errorformat=%f:%l:%m
+    "ç’°å¢ƒå›ºæœ‰ã®è¨­å®š #works_notebook
+	autocmd FileType ruby,eruby set tags+=C:\fcube-app\VEE\ruby\tags
+	autocmd FileType ruby,eruby set tags+=C:\Ruby\tags
     "au BufWritePost <buffer> silent make
+augroup END
+
+""""""""""""""""""""""""""""""
+" => for python
+""""""""""""""""""""""""""""""
+augroup AuForPython
+	autocmd!
+	autocmd FileType python setlocal tabstop=8
+	autocmd FileType python setlocal shiftwidth=4
+	autocmd FileType python setlocal noexpandtab
+	autocmd FileType python setlocal softtabstop=4
+	autocmd FileType python setlocal smartindent
+	autocmd FileType python setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class
 augroup END
 
 """"""""""""""""""""""""""""""
@@ -102,3 +156,78 @@ augroup END
 nnoremap ,m  :make<Return>
 nnoremap ,M  :make<Space>
 
+""""""""""""""""""""""""""""""
+"ã‚¸ãƒ£ãƒ³ãƒ—ã®è¨­å®š #taglist.vim
+""""""""""""""""""""""""""""""
+"tã‚’è§£é™¤
+nnoremap t <Nop>
+"ã‚¸ãƒ£ãƒ³ãƒ—
+nnoremap tt <C-]>
+"ã‚¸ãƒ£ãƒ³ãƒ—å±¥æ­´/é€²ã‚€
+"ã‚¸ãƒ£ãƒ³ãƒ—å±¥æ­´/æˆ»ã‚‹
+nnoremap tj :<C-u>tag<CR>
+nnoremap tk :<C-u>pop<CR>
+:set tags=tags
+let Tlist_Exit_OnlyWindow = 1
+let Tlist_Use_Right_Window = 1
+
+""""""""""""""""""""""""""""""
+"newcomplcacheã®è¨­å®š
+""""""""""""""""""""""""""""""
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_smart_case = 1
+let g:neocomplcache_enable_camel_case_completion = 1
+let g:neocomplcache_enable_underbar_completion = 1
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+
+" Define dictionary.
+let g:neocomplcache_dictionary_filetype_lists = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+
+" Define keyword.
+if !exists('g:neocomplcache_keyword_patterns')
+    let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neocomplcache_snippets_expand)
+smap <C-k>     <Plug>(neocomplcache_snippets_expand)
+inoremap <expr><C-g>     neocomplcache#undo_completion()
+inoremap <expr><C-l>     neocomplcache#complete_common_string()
+
+" SuperTab like snippets behavior.
+"imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+"inoremap <expr><CR>  neocomplcache#smart_close_popup() . (&indentexpr != '' ? "\<C-f>\<CR>X\<BS>":"\<CR>")
+inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "<CR>"
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplcache#close_popup()
+inoremap <expr><C-e>  neocomplcache#cancel_popup()
+
+" AutoComplPop like behavior.
+"let g:neocomplcache_enable_auto_select = 1
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplcache_omni_patterns')
+    let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+"autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
