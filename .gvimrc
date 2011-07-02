@@ -7,6 +7,8 @@ set columns=160
 	"set guifont=Consolas:h8:cSHIFTJIS
 	"set printfont=MeiryoKe_Gothic:h8:cSHIFTJIS
 "endif
+set guifont=Ricty:h14
+set printfont=-Ricty:h14
 
 "色テーマ設定
 colorscheme koehler
