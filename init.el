@@ -116,7 +116,7 @@
 (when (require 'auto-install nil t)
   (setq auto-install-directory "~/.emacs.d/elisp/")
   (auto-install-update-emacswiki-package-name t)
-  (setq url-proxy-services '(("http" . "10.42.5.10:8000")))
+  ;; (setq url-proxy-services '(("http" . "10.42.5.10:8000")))
   (auto-install-compatibility-setup))
 
 ;; redo+.elのインストール
@@ -134,7 +134,7 @@
 			   '("marmalade" . "http://marmalade-repo.org/packages/"))
   (add-to-list 'package-archives
 			   '("ELPA" . "http://tromey.com/elpa/"))
-  (setq url-proxy-services '(("http" . "10.42.5.10:8000")))
+  ;; (setq url-proxy-services '(("http" . "10.42.5.10:8000")))
   (package-initialize))
 
 ;; color-moccur
@@ -225,3 +225,196 @@
   (define-key global-map (kbd "M-[") 'point-undo)
   (define-key global-map (kbd "M-]") 'point-redo)
   )
+
+;; nxml-mode
+(add-to-list 'auto-mode-alist '("\\.[sx]?html?\\(\\.[a-zA-Z_]+\\)?\\'" . nxml-mode))
+;; HTML5
+(eval-after-load "rng-loc"
+  '(add-to-list 'rng-schema-locating-files
+				"~/.emacs.d/public_repos/html5-el/schemas.xml"))
+(require 'whattf-dt)
+;; </ を入力すると自動的にタグを閉じる
+(setq nxml-slash-auto-complete-flag t)
+;; M-TAB でタグを補完する
+(setq nxml-bind-meta-tab-to-complete-flag t)
+;; nxml-mode で auto-complete-mode を利用する
+(add-to-list 'ac-modes 'nxml-mode)
+
+;; altanative css-mode
+;; M-x install-elisp RET http://www.garshol.priv.no/download/software/css-mode/css-mode.el RET
+(defun css-mode-hooks ()
+  "css-mode hooks"
+  (setq cssm-indent-function #'cssm-c-style-indenter) ;; C style indent
+  (setq cssm-indent-level 4) ;; indent-width
+  (setq-default indent-tabs-mode t) ;; tab indent
+  (setq cssm-newline-before-closing-bracket t))
+(add-hook 'css-mode-hook 'css-mode-hooks)
+
+;; js2-mode
+;; M-x package-install RET js2-mode RET
+(add-hook 'js2-mode 'js-indent-hook)
+
+;; perl-mode を cperl-mode のエイリアスにする
+(defalias 'perl-mode 'cperl-mode)
+;; cperl-mode
+(setq cperl-indent-level 4
+	  cperl-continued-statement-offset 4
+	  cperl-brace-offset -4
+	  cperl-label-offset -4
+	  cperl-indent-parens-as-block t
+	  cperl-close-paren-offset -4
+	  cperl-tab-always-indent t
+	  cperl-highlight-variables-indiscriminately t)
+;; perl flymake
+(defun cperl-mode-hooks ()
+  (flymake-mode t))
+(add-hook 'cperl-mode-hook 'cperl-mode-hooks)
+;; perl-completion
+;; M-x install-elisp RET https://raw.github.com/imakado/perl-completion/master/perl-completion.el
+(defun perl-completion-hook ()
+  (when (require 'perl-completion nil t)
+	(perl-completion-mode t)
+	(when (require 'auto-complete nil t)
+	  (auto-complete-mode t)
+	  (make-variable-buffer-local 'ac-sources)
+	  (setq ac-sources
+			'(ac-source-perl-completion)))))
+(add-hook 'cperl-mode-hook 'perl-completion-hook)
+
+;; yaml-mode
+;; M-x package-install RET yaml-mode RET
+(when (require 'yaml-mode nil t)
+  (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode)))
+
+;; ruby-mode indent
+(setq ruby-indent-level 4
+	  ruby-deep-indent-paren-style nil
+	  ruby-indent-tabs-mode t)
+;; ruby-electric
+;; (install-elisp "https://raw.github.com/ruby/ruby/trunk/misc/ruby-electric.el")
+(require 'ruby-electric nil t)
+;; inf-ruby
+;; (install-elisp "https://raw.github.com/ruby/ruby/trunk/misc/inf-ruby.el")
+(autoload 'run-ruby "inf-ruby"
+  "Run an inferior Ruby process")
+(autoload 'inf-ruby-keys "inf-ruby"
+  "Set local key defs for inf-ruby in ruby-mode")
+;; ruby-block
+;; (auto-install-from-emacswiki "ruby-block.el")
+(when (require 'ruby-block nil t)
+  (setq ruby-block-highlight-toggle t))
+;; ruby-mode-hook
+(defun ruby-mode-hooks ()
+  (inf-ruby-keys)
+  (ruby-electric-mode t)
+  (ruby-block-mode t))
+(add-hook 'ruby-mode-hook 'ruby-mode-hooks)
+
+;; python-mode
+;; M-x package-install RET python-mode RET
+
+(require 'flymake)
+
+;; javascript flymake
+;; curl -O http://www.javascriptlint.com/download/jsl-0.3.0-mac.tar.gz
+;; tar xvf jsl-0.3.0-mac.tar.gz
+;; sudo cp ./jsl-0.3.0-mac/jsl /usr/local/bin/jsl
+(defun flymake-jsl-init ()
+  (list "jsl" (list "-process" (flymake-init-create-temp-buffer-copy
+								'flymake-create-temp-inplace))))
+(add-to-list 'flymake-allowed-file-name-masks
+			 '("\\.js\\'" flymake-jsl-init))
+(add-to-list 'flymake-err-line-patterns
+			 '("^\\(.+\\)(\\([0-9]+\\)): \\(.*warning\\|SyntaxError\\): \\(.*\\)"
+			   1 2 nil 4))
+
+;; ruby flymake
+(defun flymake-ruby-init ()
+  (list "ruby" (list "-c" (flymake-init-create-temp-buffer-copy
+						   'flymake-create-temp-inplace))))
+(add-to-list 'flymake-allowed-file-name-masks
+			 '("\\.rb\\'" flymake-ruby-init))
+(add-to-list 'flymake-err-line-patterns
+			 '("\\(.*\\):(\\([0-9]+\\)): \\(.*\\)" 1 2 nil 3))
+
+;; python flymake
+;; (install-elisp "https://raw.github.com/seanfisk/emacs/sean/src/lib/flymake-python.el")
+(when (require 'flymake-python nil t)
+  (setq flymake-python-syntax-checker "flake8")
+  ;; (setq flymake-python-syntax-checker "pep8")
+  )
+
+;; gtags
+;; curl -O http://tamacom.com/global/global-6.1.tar.gz
+;; tar xvf global-6.1.tar.gz
+;; cd global-6.1.tar.gz
+;; ./configure
+;; make
+;; sudo make install
+(setq gtags-suggested-key-mapping t)
+(require 'gtags nil t)
+
+;; ctags
+;; M-x package-install RET ctags RET
+(require 'ctags nil t)
+(setq tags-revert-without-query t)
+;; (setq ctags-command "ctags -e -R")
+(setq ctags-command "ctags -R --fields=\"+afikKlmnsSzt\" ")
+(global-set-key (kbd "<f5>") 'ctags-create-or-update-tags-table)
+
+;; anything-for-tags
+;;(auto-install-from-emacswiki "anything-gtags.el")
+;;(auto-install-from-emacswiki "anything-exuberant-ctags.el")
+(when (and (require 'anything-exuberant-ctags nil t)
+		   (require 'anything-gtags nil t))
+  (setq anything-for-tags
+		(list anything-c-source-imenu
+			  anything-c-source-gtags-select
+			  ;; anything-c-source-etags-select
+			  anything-c-source-exuberant-ctags-select
+			  ))
+  (defun anything-for-tags ()
+	"Preconfigured `anything' for anything-for-tags."
+	(interactive)
+	(anything anything-for-tags
+			  (thing-at-point 'symbol)
+			  nil nil nil "*anything for tags*"))
+  (define-key global-map (kbd "M-t") 'anything-for-tags))
+
+;; git
+;; (install-elisp "https://raw.github.com/byplayer/egg/master/egg.el")
+;; (install-elisp "https://raw.github.com/byplayer/egg/master/egg-grep.el")
+(when (executable-find "git")
+  (require 'egg nil t))
+
+;; multi-term
+;; M-x package-install RET multi-term RET
+(when (require 'multi-term nil t)
+  (setq multi-term-program "/usr/local/bin/zsh"))
+
+;; TRAMP でバックアップファイルを作成しない
+(add-to-list 'backup-directory-alist
+			 (cons tramp-file-name-regexp nil))
+
+;; woman
+(setq woman-cache-filename "~./emacs.d/.wmncach.el")
+(setq woman-manpath '("/usr/share/man"
+					  "/usr/local/share/man"
+					  "/usr/local/share/man/ja"))
+;; anything man
+(setq anything-for-document-sources
+	  (list anything-c-source-man-pages
+			anything-c-source-info-cl
+			anything-c-source-info-pages
+			anything-c-source-info-elisp
+			anything-c-source-apropos-emacs-commands
+			anything-c-source-apropos-emacs-functions
+			anything-c-source-apropos-emacs-variables))
+(defun anything-for-document ()
+  "Preconfigured `anything' for anything-for-document."
+  (interactive)
+  (anything anything-for-document-sources
+			(thing-at-point 'symbol) nil nil nil
+			"*anything for document*"))
+(define-key global-map (kbd "s-d") 'anything-for-document)
+
