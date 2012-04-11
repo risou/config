@@ -229,6 +229,10 @@
 ;; nxml-mode
 (add-to-list 'auto-mode-alist '("\\.[sx]?html?\\(\\.[a-zA-Z_]+\\)?\\'" . nxml-mode))
 ;; HTML5
+;; cd ~/.emacs.d/public_repos
+;; git clone git://github.com/hober/html5-el.git
+;; cd ./html5-el
+;; make relaxng
 (eval-after-load "rng-loc"
   '(add-to-list 'rng-schema-locating-files
 				"~/.emacs.d/public_repos/html5-el/schemas.xml"))
@@ -363,8 +367,8 @@
 (global-set-key (kbd "<f5>") 'ctags-create-or-update-tags-table)
 
 ;; anything-for-tags
-;;(auto-install-from-emacswiki "anything-gtags.el")
-;;(auto-install-from-emacswiki "anything-exuberant-ctags.el")
+;; (auto-install-from-emacswiki "anything-gtags.el")
+;; (auto-install-from-emacswiki "anything-exuberant-ctags.el")
 (when (and (require 'anything-exuberant-ctags nil t)
 		   (require 'anything-gtags nil t))
   (setq anything-for-tags
