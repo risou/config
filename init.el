@@ -397,7 +397,7 @@
 			 (cons tramp-file-name-regexp nil))
 
 ;; woman
-(setq woman-cache-filename "~./emacs.d/.wmncach.el")
+(setq woman-cache-filename "~/emacs.d/.wmncach.el")
 (setq woman-manpath '("/usr/share/man"
 					  "/usr/local/share/man"
 					  "/usr/local/share/man/ja"))
