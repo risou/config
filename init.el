@@ -67,18 +67,28 @@
 ;; asciiフォント
 (when (eq system-type 'darwin)
   (set-face-attribute 'default nil
-					  :family "Ricty"
-					  :height 140))
+;;					  :family "Ricty"
+;;					  :height 140))
+					  :family "あずきフォントL"
+					  :height 150))
 (when (eq system-type 'windows-nt)
   (set-face-attribute 'default nil
-					  :family "Ricty"
+;;					  :family "Ricty"
+					  :family "うずらフォント"
 					  :height 110))
 
 ;; 日本語フォント
-(set-fontset-font
- nil 'japanese-jisx0208
- (font-spec :family "Ricty"))
-
+(when (eq system-type 'darwin)
+  (set-fontset-font
+   nil 'japanese-jisx0208
+;;   (font-spec :family "Ricty"))
+;;   (font-spec :family "うずらフォント"))
+   (font-spec :family "あずきフォントL")))
+(when (eq system-type 'windows-nt)
+  (set-font-set-font
+   nil 'japanese-jisx0208
+   (font-spec :family "うずらフォント")))
+ 
 ;; 行ハイライト
 (defface my-hl-line-face
   '((((class color) (background dark))
@@ -226,7 +236,46 @@
   (define-key global-map (kbd "M-]") 'point-redo)
   )
 
-;; nxml-mode
+;; elscreen
+;; curl -O http://kanji.zinbun.kyoto-u.ac.jp/~tomo/lemi/dist/apel/apel-10.8.tar.gz
+;; tar xvf apel-10.8.tar.gz
+;; cd ./apel-10.8.tar.gz
+;; make LISPDIR=~/.emacs.d/elisp VERSION_SPECIFIC_LISPDIR=~/.emacs.d/elisp INFODIR=~/.emacs.d/info EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
+;; make install LISPDIR=~/.emacs.d/elisp VERSION_SPECIFIC_LISPDIR=~/.emacs.d/elisp INFODIR=~/.emacs.d/info
+;; curl -O ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-1.4.6.tar.gz
+;; tar xvf elscreen-1.4.6.tar.gz
+;; cp ./elscreen-1.4.6/elscreen.el ~/.emacs.d/elisp
+(setq elscreen-prefix-key (kbd "C-t"))
+(when (require 'elscreen nil t)
+  (if window-system
+	  (define-key elscreen-map (kbd "C-z") 'iconify-or-deiconify-frame)
+	(define-key elscreen-map (kbd "C-z") 'suspend-emacs)))
+
+;; cua-mode
+(cua-mode t)
+(setq cua-enable-cua-keys nil)
+
+;; whitespace-mode
+(when (require 'whitespace nil t)
+  (setq whitespace-style '(face tabs tab-mark  spaces space-mark trailing))
+  (setq whitespace-display-mappings
+		'((space-mark ?\u3000 [?\u25a1])
+		  (tab-mark ?\t [?\xBB ?\t] [?\\ ?\t])))
+  (setq whitespace-space-regexp "\\(\u3000+\\)")
+  (setq whitespace-trailing-regexp "\\(\u0020+$\\)")
+  (set-face-foreground 'whitespace-tab "#adff2f")
+  (set-face-background 'whitespace-tab 'nil)
+  (set-face-underline 'whitespace-tab t)
+  (set-face-foreground 'whitespace-space "#7cfc00")
+  (set-face-background 'whitespace-space 'nil)
+  (set-face-bold-p 'whitespace-space t)
+  (set-face-foreground 'whitespace-trailing "#ff0000")
+  (set-face-background 'whitespace-trailing 'nil)
+  (set-face-underline 'whitespace-trailing t)
+  (global-whitespace-mode 1)
+  )
+
+;; Nxml-mode
 (add-to-list 'auto-mode-alist '("\\.[sx]?html?\\(\\.[a-zA-Z_]+\\)?\\'" . nxml-mode))
 ;; HTML5
 ;; cd ~/.emacs.d/public_repos
