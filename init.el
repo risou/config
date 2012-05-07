@@ -67,27 +67,28 @@
 ;; asciiフォント
 (when (eq system-type 'darwin)
   (set-face-attribute 'default nil
-;;					  :family "Ricty"
-;;					  :height 140))
-					  :family "あずきフォントL"
-					  :height 150))
+					  :family "Ricty"
+					  :height 140))
+;;					  :family "あずきフォントL"
+;;					  :height 150))
 (when (eq system-type 'windows-nt)
   (set-face-attribute 'default nil
-;;					  :family "Ricty"
-					  :family "うずらフォント"
+					  :family "Ricty"
+;;					  :family "うずらフォント"
 					  :height 110))
 
 ;; 日本語フォント
 (when (eq system-type 'darwin)
   (set-fontset-font
    nil 'japanese-jisx0208
-;;   (font-spec :family "Ricty"))
+   (font-spec :family "Ricty"))
 ;;   (font-spec :family "うずらフォント"))
-   (font-spec :family "あずきフォントL")))
+;;   (font-spec :family "あずきフォントL")))
 (when (eq system-type 'windows-nt)
   (set-font-set-font
    nil 'japanese-jisx0208
-   (font-spec :family "うずらフォント")))
+;;   (font-spec :family "うずらフォント")))
+   (font-spec :family "Ricty"))
  
 ;; 行ハイライト
 (defface my-hl-line-face
@@ -275,7 +276,7 @@
   (global-whitespace-mode 1)
   )
 
-;; Nxml-mode
+;; nxml-mode
 (add-to-list 'auto-mode-alist '("\\.[sx]?html?\\(\\.[a-zA-Z_]+\\)?\\'" . nxml-mode))
 ;; HTML5
 ;; cd ~/.emacs.d/public_repos
