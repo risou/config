@@ -81,14 +81,14 @@
 (when (eq system-type 'darwin)
   (set-fontset-font
    nil 'japanese-jisx0208
-   (font-spec :family "Ricty"))
+   (font-spec :family "Ricty")))
 ;;   (font-spec :family "うずらフォント"))
 ;;   (font-spec :family "あずきフォントL")))
 (when (eq system-type 'windows-nt)
   (set-font-set-font
    nil 'japanese-jisx0208
 ;;   (font-spec :family "うずらフォント")))
-   (font-spec :family "Ricty"))
+   (font-spec :family "Ricty")))
  
 ;; 行ハイライト
 (defface my-hl-line-face
