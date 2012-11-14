@@ -52,6 +52,11 @@
 	  (append
 	   (list
 		'(alpha . (75 50))
+ 		;; '(alpha . (85 70))
+ 		;; '(width . 200)
+ 		;; '(height . 65)
+ 		;; '(top . 50)
+ 		;; '(left . 50)
 		'(foreground-color . "white")
 		'(background-color . "black")
 		) default-frame-alist))
@@ -69,6 +74,8 @@
   (set-face-attribute 'default nil
 					  :family "Ricty"
 					  :height 140))
+					  ;; :family "Migu 1M"
+					  ;; :height 100))
 ;;					  :family "あずきフォントL"
 ;;					  :height 150))
 (when (eq system-type 'windows-nt)
@@ -76,20 +83,24 @@
 					  :family "Ricty"
 ;;					  :family "うずらフォント"
 					  :height 110))
+					  ;; :family "Migu 1M"
+					  ;; :family 100))
 
 ;; 日本語フォント
 (when (eq system-type 'darwin)
   (set-fontset-font
    nil 'japanese-jisx0208
    (font-spec :family "Ricty")))
-;;   (font-spec :family "うずらフォント"))
+;;   (font-spec :family "Migu 1M")))
+;;   (font-spec :family "うずらフォント")))
 ;;   (font-spec :family "あずきフォントL")))
 (when (eq system-type 'windows-nt)
   (set-font-set-font
    nil 'japanese-jisx0208
 ;;   (font-spec :family "うずらフォント")))
    (font-spec :family "Ricty")))
- 
+;;   (font-spec :family "Migu 1M")))
+
 ;; 行ハイライト
 (defface my-hl-line-face
   '((((class color) (background dark))
@@ -113,6 +124,14 @@
 			 (cons "." "~/emacs.d/backups/"))
 (setq auto-save-file-name-transforms
 	  `((".*" ,(expand-file-name "~/.emacs.d/backups/") t)))
+
+;; 検索時にカーソルを単語の先頭に移動する
+(defun isearch-forward-with-heading ()
+  "Search the word your cursor looking at."
+  (interactive)
+  (command-execute 'backward-word)
+  (command-execute 'isearch-forward))
+(global-set-key "\C-s" 'isearch-forward-with-heading)
 
 ;; eldocによるエコーエリアへの表示
 (defun eldoc-print ()
@@ -472,3 +491,8 @@
 			"*anything for document*"))
 (define-key global-map (kbd "s-d") 'anything-for-document)
 
+;; Emacs server を起動
+(require 'server)
+(unless (server-running-p)
+  (server-start)
+  (remove-hook 'kill-buffer-query-functions 'server-kill-buffer-query-function))
