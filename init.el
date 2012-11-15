@@ -133,6 +133,9 @@
   (command-execute 'isearch-forward))
 (global-set-key "\C-s" 'isearch-forward-with-heading)
 
+;; スクロール
+(setq scroll-conservatively 1)
+
 ;; eldocによるエコーエリアへの表示
 (defun eldoc-print ()
   "lisp-mode-hooks"
