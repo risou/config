@@ -165,6 +165,8 @@
   (add-to-list 'package-archives
 			   '("ELPA" . "http://tromey.com/elpa/"))
   ;; (setq url-proxy-services '(("http" . "10.42.5.10:8000")))
+  (add-to-list 'package-archives
+			   '("melpa" . "http://melpa.milkbox.net/packagets/"))
   (package-initialize))
 
 ;; color-moccur
@@ -327,8 +329,13 @@
 ;; M-x package-install RET js2-mode RET
 (add-hook 'js2-mode 'js-indent-hook)
 
+;; cperl-mode ( from package-install )
+;; (package-install 'cperl-mode) / need melpa
 ;; perl-mode を cperl-mode のエイリアスにする
 (defalias 'perl-mode 'cperl-mode)
+;; .psgi, .t ファイルを cperl-mode で開く
+(add-to-list 'auto-mode-alist '("\\.psgi$" . cperl-mode))
+(add-to-list 'auto-mode-alist '("\\.t\\'" . cperl-mode))
 ;; cperl-mode
 (setq cperl-indent-level 4
 	  cperl-continued-statement-offset 4
@@ -337,6 +344,7 @@
 	  cperl-indent-parens-as-block t
 	  cperl-close-paren-offset -4
 	  cperl-tab-always-indent t
+;;	  cperl-indent-subs-specially nil ;; need melpa package-install
 	  cperl-highlight-variables-indiscriminately t)
 ;; perl flymake
 (defun cperl-mode-hooks ()
