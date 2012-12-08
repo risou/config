@@ -90,8 +90,8 @@
 (when (eq system-type 'darwin)
   (set-fontset-font
    nil 'japanese-jisx0208
-;;   (font-spec :family "Ricty")))
-   (font-spec :family "Migu 1M")))
+   (font-spec :family "Ricty")))
+;;   (font-spec :family "Migu 1M")))
 ;;   (font-spec :family "うずらフォント")))
 ;;   (font-spec :family "あずきフォントL")))
 (when (eq system-type 'windows-nt)
