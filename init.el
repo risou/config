@@ -1,4 +1,3 @@
-(setq url-proxy-services '(("http" . "10.42.5.10:8000")))
 
 ;; load-path を追加する関数を定義
 (defun add-to-load-path (&rest paths)
@@ -137,15 +136,15 @@
 
 ;; Window分割
 ;; prefixをC-zに
-(define-key global-map "\C-z" (make-sparse-keymap))
-;; C-z2回でWindow移動（Windowが1つの場合は2分割）
+;; (define-key global-map "\C-z" (make-sparse-keymap))
+;; C-c2回でWindow移動（Windowが1つの場合は2分割）
 (defun other-window-or-split ()
   (interactive)
   (when (one-window-p)
 	(split-window-horizontally))
   (other-window 1))
-(global-set-key "\C-z\C-z" 'other-window-or-split)
-;; C-zC-rでリサイズ（hjkl）
+(global-set-key "\C-c\C-c" 'other-window-or-split)
+;; C-cC-rでリサイズ（hjkl）
 (defun window-resizer ()
   "Control window size and position."
   (interactive)
@@ -168,13 +167,15 @@
 				   (when command (call-interactively command)))
 				 (message "Quit")
 				 (throw 'end-flag t)))))))
-(global-set-key "\C-z\C-r" 'window-resizer)
-;; C-z(hjkl)でWindow移動
-(global-set-key "\C-zl" 'windmove-right)
-(global-set-key "\C-zh" 'windmove-left)
-(global-set-key "\C-zj" 'windmove-down)
-(global-set-key "\C-zk" 'windmove-up)
-;; C-z vで3分割
+(global-set-key "\C-c\C-r" 'window-resizer)
+;; C-c(hjkl)でWindow移動
+(global-set-key "\C-cl" 'windmove-right)
+(global-set-key "\C-ch" 'windmove-left)
+(global-set-key "\C-cj" 'windmove-down)
+(global-set-key "\C-ck" 'windmove-up)
+;; Window移動時にループ可能にする
+(setq windmove-wrap-around t)
+;; C-c vで3分割
 (defun split-n (n)
   "split window to N parts"
   (interactive "p")
@@ -187,7 +188,7 @@
 (defun split-3 ()
   (interactive)
   (split-n 3))
-(global-set-key "\C-zv" 'split-3)
+(global-set-key "\C-cv" 'split-3)
 
 ;; ;; カーソル移動1行ずつ再描画
 ;; (defun next-line-recenter()
