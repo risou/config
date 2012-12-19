@@ -276,6 +276,7 @@
 	(require 'anything-auto-install nil t))
   (when (require 'descbinds-anything nil t)
 	(descbinds-anything-install)))
+(define-key global-map (kbd "C-;") 'anything)
 ;; M-yにanything-show-kill-ringを割り当てる
 (define-key global-map (kbd "M-y") 'anything-show-kill-ring)
 ;; anything-c-moccurの設定
