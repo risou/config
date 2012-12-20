@@ -277,6 +277,7 @@
   (when (require 'descbinds-anything nil t)
 	(descbinds-anything-install)))
 (define-key global-map (kbd "C-;") 'anything)
+(define-key anything-map (kbd "C-;") 'abort-recursive-edit)
 ;; M-yにanything-show-kill-ringを割り当てる
 (define-key global-map (kbd "M-y") 'anything-show-kill-ring)
 ;; anything-c-moccurの設定
