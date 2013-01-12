@@ -51,7 +51,12 @@
 (setq default-frame-alist
 	  (append
 	   (list
-		'(alpha . (75 50))
+		;; '(alpha . (75 50))
+ 		'(alpha . (85 70))
+ 		'(width . 200)
+ 		'(height . 65)
+ 		'(top . 50)
+ 		'(left . 50)
 		'(foreground-color . "white")
 		'(background-color . "black")
 		) default-frame-alist))
@@ -69,27 +74,33 @@
   (set-face-attribute 'default nil
 					  :family "Ricty"
 					  :height 140))
+					  ;; :family "Migu 1M"
+					  ;; :height 100))
 ;;					  :family "あずきフォントL"
 ;;					  :height 150))
 (when (eq system-type 'windows-nt)
   (set-face-attribute 'default nil
-					  :family "Ricty"
+					  ;; :family "Ricty"
 ;;					  :family "うずらフォント"
-					  :height 110))
+					  ;; :height 110))
+					  :family "Migu 1M"
+					  :height 100))
 
 ;; 日本語フォント
 (when (eq system-type 'darwin)
   (set-fontset-font
    nil 'japanese-jisx0208
    (font-spec :family "Ricty")))
-;;   (font-spec :family "うずらフォント"))
+;;   (font-spec :family "Migu 1M")))
+;;   (font-spec :family "うずらフォント")))
 ;;   (font-spec :family "あずきフォントL")))
 (when (eq system-type 'windows-nt)
-  (set-font-set-font
+  (set-fontset-font
    nil 'japanese-jisx0208
 ;;   (font-spec :family "うずらフォント")))
-   (font-spec :family "Ricty")))
- 
+;;   (font-spec :family "Ricty")))
+   (font-spec :family "Migu 1M")))
+  
 ;; 行ハイライト
 (defface my-hl-line-face
   '((((class color) (background dark))
@@ -103,6 +114,7 @@
 
 ;; 対応する括弧を強調
 (setq show-paren-delay 0)
+
 (show-paren-mode t)
 (setq show-paren-style 'expression)
 (set-face-background 'show-paren-match-face nil)
@@ -113,6 +125,84 @@
 			 (cons "." "~/emacs.d/backups/"))
 (setq auto-save-file-name-transforms
 	  `((".*" ,(expand-file-name "~/.emacs.d/backups/") t)))
+
+;; 検索時にカーソルを単語の先頭に移動する
+(defun isearch-forward-with-heading ()
+  "Search the word your cursor looking at."
+  (interactive)
+  (command-execute 'backward-word)
+  (command-execute 'isearch-forward))
+(global-set-key "\C-s" 'isearch-forward-with-heading)
+
+;; Window分割
+;; prefixをC-zに
+;; (define-key global-map "\C-z" (make-sparse-keymap))
+;; C-c2回でWindow移動（Windowが1つの場合は2分割）
+(defun other-window-or-split ()
+  (interactive)
+  (when (one-window-p)
+	(split-window-horizontally))
+  (other-window 1))
+(global-set-key "\C-c\C-c" 'other-window-or-split)
+;; C-cC-rでリサイズ（hjkl）
+(defun window-resizer ()
+  "Control window size and position."
+  (interactive)
+  (let ((window-obj (selected-window))
+		(current-width (window-width))
+		(current-height (window-height))
+		(dx (if (= (nth 0 (window-edges)) 0) 1 -1))
+		(dy (if (= (nth 1 (window-edges)) 3) 1 -1)) ;; '3'は会社開発機での環境
+		action c)
+	(catch 'end-flag
+	  (while t
+		(setq action (read-key-sequence-vector (format "size[%dx%d]" (window-width) (window-height))))
+		(setq c (aref action 0))
+		(cond ((= c ?l) (enlarge-window-horizontally dx))
+			  ((= c ?h) (shrink-window-horizontally dx))
+			  ((= c ?j) (enlarge-window dy))
+			  ((= c ?k) (shrink-window dy))
+			  (t (let ((last-command-char (aref action 0))
+					   (command (key-binding action)))
+				   (when command (call-interactively command)))
+				 (message "Quit")
+				 (throw 'end-flag t)))))))
+(global-set-key "\C-c\C-r" 'window-resizer)
+;; C-c(hjkl)でWindow移動
+(global-set-key "\C-cl" 'windmove-right)
+(global-set-key "\C-ch" 'windmove-left)
+(global-set-key "\C-cj" 'windmove-down)
+(global-set-key "\C-ck" 'windmove-up)
+;; Window移動時にループ可能にする
+(setq windmove-wrap-around t)
+;; C-c vで3分割
+(defun split-n (n)
+  "split window to N parts"
+  (interactive "p")
+  (if (= n 2)
+	  (progn (split-window-horizontally) (other-window 2))
+	(progn
+	  (split-window-horizontally (/ (window-width) n))
+	  (other-window 1)
+	  (split-n (- n 1)))))
+(defun split-3 ()
+  (interactive)
+  (split-n 3))
+(global-set-key "\C-cv" 'split-3)
+
+;; ;; カーソル移動1行ずつ再描画
+;; (defun next-line-recenter()
+;;   (interactive)
+;;   (next-line)
+;;   (recenter))
+;; (define-key global-map "\C-n" 'next-line-recenter)
+
+;; (defun previous-line-recenter()
+;;   (interactive)
+;;   (previous-line)
+;;   (recenter))
+;; (define-key global-map "\C-p" 'previous-line-recenter)
+(setq scroll-conservatively 1)
 
 ;; eldocによるエコーエリアへの表示
 (defun eldoc-print ()
@@ -146,6 +236,10 @@
   (add-to-list 'package-archives
 			   '("ELPA" . "http://tromey.com/elpa/"))
   ;; (setq url-proxy-services '(("http" . "10.42.5.10:8000")))
+  ;; melpa.el のインストール
+  ;; https://raw.github.com/milkypostman/melpa/master/melpa.el
+  ;; (add-to-list 'package-archives
+  ;; 			   '("melpa" . "http://melpa.milkbox.net/packages"))
   (package-initialize))
 
 ;; color-moccur
@@ -182,6 +276,8 @@
 	(require 'anything-auto-install nil t))
   (when (require 'descbinds-anything nil t)
 	(descbinds-anything-install)))
+(define-key global-map (kbd "C-;") 'anything)
+(define-key anything-map (kbd "C-;") 'abort-recursive-edit)
 ;; M-yにanything-show-kill-ringを割り当てる
 (define-key global-map (kbd "M-y") 'anything-show-kill-ring)
 ;; anything-c-moccurの設定
@@ -308,8 +404,13 @@
 ;; M-x package-install RET js2-mode RET
 (add-hook 'js2-mode 'js-indent-hook)
 
+;; cperl-mode ( from package-install )
+;; (package-install 'cperl-mode)
 ;; perl-mode を cperl-mode のエイリアスにする
 (defalias 'perl-mode 'cperl-mode)
+;; .psgi, .t ファイルを cperl-mode で開く
+(add-to-list 'auto-mode-alist '("\\.psgi$" . cperl-mode))
+(add-to-list 'auto-mode-alist '("\\.t\\'" . cperl-mode))
 ;; cperl-mode
 (setq cperl-indent-level 4
 	  cperl-continued-statement-offset 4
@@ -318,6 +419,7 @@
 	  cperl-indent-parens-as-block t
 	  cperl-close-paren-offset -4
 	  cperl-tab-always-indent t
+;;	  cperl-indent-subs-specially nil) ;; need package-install
 	  cperl-highlight-variables-indiscriminately t)
 ;; perl flymake
 (defun cperl-mode-hooks ()
@@ -472,3 +574,8 @@
 			"*anything for document*"))
 (define-key global-map (kbd "s-d") 'anything-for-document)
 
+;; Emacs server を起動
+(require 'server)
+(unless (server-running-p)
+  (server-start)
+  (remove-hook 'kill-buffer-query-functions 'server-kill-buffer-query-function))
