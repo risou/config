@@ -19,8 +19,10 @@ colors
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:*' actionformats ' %F{1}(%b:%a)%f'
-zstyle ':vcs_info:*' formats ' %F{2}(%b)%f'
+zstyle ':vcs_info:git:*' stagedstr "+"
+zstyle ':vcs_info:git:*' unstagedstr "-"
+zstyle ':vcs_info:*' actionformats ' %F{1}(%b%u%c:%a)%f'
+zstyle ':vcs_info:*' formats ' %F{2}(%b%u%c)%f'
 precmd () { vcs_info }
 
 # プロンプトの右端にパスを表示
