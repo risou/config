@@ -26,8 +26,5 @@ setopt share_history
 alias ls='ls -G'
 alias ll='ls -l'
 
-# MacPorts 用
-export PATH=/opt/local/bin:/opt/local/sbin/:$PATH
-
 # 色情報
 export LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx
