@@ -41,3 +41,6 @@ alias ll='ls -l'
 
 # 色情報
 export LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx
+
+# emacsclient
+export EDITOR="emacsclient"
