@@ -342,8 +342,12 @@
 ;; curl -O ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-1.4.6.tar.gz
 ;; tar xvf elscreen-1.4.6.tar.gz
 ;; cp ./elscreen-1.4.6/elscreen.el ~/.emacs.d/elisp
-(setq elscreen-prefix-key (kbd "C-t"))
+;; after emacs24
+;; M-x list-packages Elscreen
+(setq elscreen-prefikey (kbd "C-t"))
 (when (require 'elscreen nil t)
+  (when (>= emacs-major-version 24)
+	(elscreen-start))
   (if window-system
 	  (define-key elscreen-map (kbd "C-z") 'iconify-or-deiconify-frame)
 	(define-key elscreen-map (kbd "C-z") 'suspend-emacs)))
