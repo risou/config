@@ -42,7 +42,7 @@
 (setq display-time-24hr-format t)
 (display-time-mode t)
 ;; バッテリー残量を表示
-(display-battery-mode t)
+;; (display-battery-mode t)
 ;; タイトルバーにフルパスを表示
 (setq frame-title-format "%f")
 ;; 行番号を常に表示
@@ -71,34 +71,32 @@
 
 ;; asciiフォント
 (when (eq system-type 'darwin)
-  (set-face-attribute 'default nil
-					  :family "Ricty"
-					  :height 140))
-					  ;; :family "Migu 1M"
-					  ;; :height 100))
-;;					  :family "あずきフォントL"
-;;					  :height 150))
+  (let ((system-name (system-name)))
+	(cond
+	 ((string-match "rmb" system-name)
+	  (set-face-attribute 'default nil
+						  :family "Ricty"
+						  :height 140)
+	  )))
+  )
 (when (eq system-type 'windows-nt)
   (set-face-attribute 'default nil
-					  ;; :family "Ricty"
-;;					  :family "うずらフォント"
-					  ;; :height 110))
 					  :family "Migu 1M"
 					  :height 100))
 
 ;; 日本語フォント
 (when (eq system-type 'darwin)
-  (set-fontset-font
-   nil 'japanese-jisx0208
-   (font-spec :family "Ricty")))
-;;   (font-spec :family "Migu 1M")))
-;;   (font-spec :family "うずらフォント")))
-;;   (font-spec :family "あずきフォントL")))
+  (let ((system-name (system-name)))
+	(cond
+	 ((string-match "rmb" system-name)
+	  (set-fontset-font
+	   nil 'japanese-jisx0208
+	   (font-spec :family "Ricty")))
+	 ))
+  )
 (when (eq system-type 'windows-nt)
   (set-fontset-font
    nil 'japanese-jisx0208
-;;   (font-spec :family "うずらフォント")))
-;;   (font-spec :family "Ricty")))
    (font-spec :family "Migu 1M")))
   
 ;; 行ハイライト
@@ -220,8 +218,20 @@
   ;; (setq url-proxy-services '(("http" . "10.42.5.10:8000")))
   (auto-install-compatibility-setup))
 
+;; el-get
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+    (let (el-get-master-branch)
+      (goto-char (point-max))
+      (eval-print-last-sexp))))
+(el-get 'sync)
+
 ;; redo+.elのインストール
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/redo+.el")
+;; -> el-get
 ;; redo+の設定
 (when (require 'redo+ nil t)
   ;; C-'にredoを割り当てる
@@ -244,6 +254,7 @@
 
 ;; color-moccur
 ;; (auto-install-from-emacswiki "color-moccur.el")
+;; -> el-get
 (when (require 'color-moccur nil t)
   (define-key global-map (kbd "M-o") 'occur-by-moccur)
   (setq moccur-split-word t)
@@ -255,6 +266,7 @@
 
 ;; anything
 ;; M-x auto-install-batch RET anything RET
+;; -> el-get
 (when (require 'anything nil t)
   (setq
    anything-idle-delay 0.3 ;; 候補を表示するまでの時間
@@ -282,6 +294,7 @@
 (define-key global-map (kbd "M-y") 'anything-show-kill-ring)
 ;; anything-c-moccurの設定
 ;; (install-elisp "http://svn.coderepos.org/share/lang/elisp/anything-c-moccur/trunk/anything-c-moccur.el")
+;; -> el-get
 (when (require 'anything-c-moccur nil t)
   (setq
    anything-c-moccur-anything-idle-delay 0.1
@@ -306,6 +319,7 @@
 
 ;; auto-complete
 ;; M-x package-install RET auto-complete RET
+;; -> el-get
 (when (require 'auto-complete-config nil t)
   (add-to-list 'ac-dictionary-directories
 			   "~/.emacs.d/elisp/ac-dict")
@@ -314,20 +328,24 @@
 
 ;; wgrep
 ;; M-x package-install RET wgrep RET
+;; -> el-get
 (require 'wgrep nil t)
 
 ;; undohist
 ;; (install-elisp "http://cx4a.org/pub/undohist.el")
+;; -> el-get
 (when (require 'undohist nil t)
   (undohist-initialize))
 
 ;; undo-tree
 ;; M-x package-install RET undo-tree RET
+;; -> el-get
 (when (require 'undo-tree nil t)
   (global-undo-tree-mode))
 
 ;; point-undo
 ;; (auto-install-from-emacswiki "point-undo.el")
+;; -> el-get
 (when (require 'point-undo nil t)
   (define-key global-map (kbd "M-[") 'point-undo)
   (define-key global-map (kbd "M-]") 'point-redo)
@@ -342,6 +360,7 @@
 ;; curl -O ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-1.4.6.tar.gz
 ;; tar xvf elscreen-1.4.6.tar.gz
 ;; cp ./elscreen-1.4.6/elscreen.el ~/.emacs.d/elisp
+;; -> el-get
 (setq elscreen-prefix-key (kbd "C-t"))
 (when (require 'elscreen nil t)
   (if window-system
@@ -379,6 +398,7 @@
 ;; git clone git://github.com/hober/html5-el.git
 ;; cd ./html5-el
 ;; make relaxng
+;; -> el-get
 (eval-after-load "rng-loc"
   '(add-to-list 'rng-schema-locating-files
 				"~/.emacs.d/public_repos/html5-el/schemas.xml"))
@@ -392,6 +412,7 @@
 
 ;; altanative css-mode
 ;; M-x install-elisp RET http://www.garshol.priv.no/download/software/css-mode/css-mode.el RET
+;; -> el-get
 (defun css-mode-hooks ()
   "css-mode hooks"
   (setq cssm-indent-function #'cssm-c-style-indenter) ;; C style indent
@@ -402,10 +423,12 @@
 
 ;; js2-mode
 ;; M-x package-install RET js2-mode RET
+;; -> el-get
 (add-hook 'js2-mode 'js-indent-hook)
 
 ;; cperl-mode ( from package-install )
 ;; (package-install 'cperl-mode)
+;; -> el-get
 ;; perl-mode を cperl-mode のエイリアスにする
 (defalias 'perl-mode 'cperl-mode)
 ;; .psgi, .t ファイルを cperl-mode で開く
@@ -427,6 +450,7 @@
 (add-hook 'cperl-mode-hook 'cperl-mode-hooks)
 ;; perl-completion
 ;; M-x install-elisp RET https://raw.github.com/imakado/perl-completion/master/perl-completion.el
+;; -> el-get
 (defun perl-completion-hook ()
   (when (require 'perl-completion nil t)
 	(perl-completion-mode t)
@@ -439,6 +463,7 @@
 
 ;; yaml-mode
 ;; M-x package-install RET yaml-mode RET
+;; el-get
 (when (require 'yaml-mode nil t)
   (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode)))
 
@@ -448,15 +473,18 @@
 	  ruby-indent-tabs-mode t)
 ;; ruby-electric
 ;; (install-elisp "https://raw.github.com/ruby/ruby/trunk/misc/ruby-electric.el")
+;; -> el-get
 (require 'ruby-electric nil t)
 ;; inf-ruby
 ;; (install-elisp "https://raw.github.com/ruby/ruby/trunk/misc/inf-ruby.el")
+;; -> el-get
 (autoload 'run-ruby "inf-ruby"
   "Run an inferior Ruby process")
 (autoload 'inf-ruby-keys "inf-ruby"
   "Set local key defs for inf-ruby in ruby-mode")
 ;; ruby-block
 ;; (auto-install-from-emacswiki "ruby-block.el")
+;; -> el-get
 (when (require 'ruby-block nil t)
   (setq ruby-block-highlight-toggle t))
 ;; ruby-mode-hook
@@ -468,6 +496,7 @@
 
 ;; python-mode
 ;; M-x package-install RET python-mode RET
+;; -> el-get
 
 (require 'flymake)
 
@@ -507,11 +536,13 @@
 ;; ./configure
 ;; make
 ;; sudo make install
+;; -> el-get
 (setq gtags-suggested-key-mapping t)
 (require 'gtags nil t)
 
 ;; ctags
 ;; M-x package-install RET ctags RET
+;; -> el-get
 (require 'ctags nil t)
 (setq tags-revert-without-query t)
 ;; (setq ctags-command "ctags -e -R")
@@ -520,7 +551,9 @@
 
 ;; anything-for-tags
 ;; (auto-install-from-emacswiki "anything-gtags.el")
+;; -> el-get
 ;; (auto-install-from-emacswiki "anything-exuberant-ctags.el")
+;; -> el-get
 (when (and (require 'anything-exuberant-ctags nil t)
 		   (require 'anything-gtags nil t))
   (setq anything-for-tags
@@ -539,6 +572,7 @@
 
 ;; git
 ;; (install-elisp "https://raw.github.com/byplayer/egg/master/egg.el")
+;; -> el-get
 ;; (install-elisp "https://raw.github.com/byplayer/egg/master/egg-grep.el")
 (when (executable-find "git")
   (require 'egg nil t))
