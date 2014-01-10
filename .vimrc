@@ -24,7 +24,7 @@ set title
 " 行番号を表示
 set number
 
-" 業番号を印刷
+" 行番号を印刷
 set printoptions=number:y
 
 " tab = 4
@@ -38,6 +38,26 @@ set showmatch
 
 " シンタックスハイライトをON
 syntax on
+
+" 色設定
+colorscheme koehler
+if &term =~ "xterm-256color" || "screen-256color"
+  " 256色
+  set t_Co=256
+  set t_Sf=[3%dm
+  set t_Sb=[4%dm
+elseif &term =~ "xterm-debian" || &term =~ "xterm-xfree86"
+  set t_Co=16
+  set t_Sf=[3%dm
+  set t_Sb=[4%dm
+elseif &term =~ "xterm-color"
+  set t_Co=8
+  set t_Sf=[3%dm
+  set t_Sb=[4%dm
+endif
+
+" カーソル行をハイライト
+set cursorline
 
 " コメント色を水色にする
 highlight Comment ctermfg=lightcyan
@@ -99,6 +119,12 @@ set t_vb=
 " escでハイライトをオフ
 nnoremap <silent> <ESC> <ESC>:noh<CR>
 
+" netrwの設定
+let g:netrw_liststyle = 3
+let g:netrw_list_hide = 'CVS,\(^\|\s\s\)\zs\.\S\+'
+let g:netrw_altv = 1
+let g:netrw_alto = 1
+
 " gvimの設定
 set guioptions-=T
 
@@ -127,7 +153,8 @@ set fileencodings=iso-2022-jp,sjis,euc-jp,cp932,utf-8
 set fileformats=unix,mac,dos
 
 " タブ文字を表示
-set lcs=tab:>.,eol:$,trail:_,extends:\
+set lcs=tab:>\ ,trail:_,extends:\
+"set lcs=tab:>.,eol:$,trail:_,extends:\
 set list
 " ○や□などの文字でカーソル位置がずれないようにする
 if exists('&ambiwidth')
@@ -139,6 +166,13 @@ au QuickfixCmdPost vimgrep cw
 
 " カレントディレクトリを現在開いているファイルのディレクトリにする
 au BufEnter * execute ":lcd " . expand("%:p:h")
+
+" NERDTree
+let NERDTreeShowHidden = 1
+let file_name = expand("%:p")
+if has('vim_starting') && file_name == ""
+	autocmd VimEnter * execute 'NERDTree ./'
+endif
 
 """"""""""""""""""""""""""""""
 " => for ruby
