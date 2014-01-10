@@ -44,3 +44,4 @@ export LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx
 
 # emacsclient
 export EDITOR="emacsclient"
+export PATH=/usr/local/bin:$PATH
