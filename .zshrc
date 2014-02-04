@@ -43,7 +43,10 @@ alias ll='ls -l'
 export LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx
 
 # emacsclient
-export EDITOR="emacsclient"
+#export EDITOR="emacsclient"
 export PATH=/usr/local/bin:$PATH
 
-eval "$(plenv init -)"
+eval "$(plenv init - zsh)"
+
+# coosy dev
+export PGDATA=/usr/local/var/postgres
