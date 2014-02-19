@@ -48,5 +48,9 @@ export PATH=/usr/local/bin:$PATH
 
 eval "$(plenv init - zsh)"
 
+export TERM=xterm-256color
+
+PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
+
 # coosy dev
 export PGDATA=/usr/local/var/postgres
