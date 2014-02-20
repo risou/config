@@ -408,23 +408,28 @@
 ;; M-x package-install RET js2-mode RET
 (add-hook 'js2-mode 'js-indent-hook)
 
-;; cperl-mode ( from package-install )
-;; (package-install 'cperl-mode)
-;; perl-mode を cperl-mode のエイリアスにする
-(defalias 'perl-mode 'cperl-mode)
-;; .psgi, .t ファイルを cperl-mode で開く
-(add-to-list 'auto-mode-alist '("\\.psgi$" . cperl-mode))
-(add-to-list 'auto-mode-alist '("\\.t\\'" . cperl-mode))
-;; cperl-mode
-(setq cperl-indent-level 4
-	  cperl-continued-statement-offset 4
-	  cperl-brace-offset -4
-	  cperl-label-offset -4
-	  cperl-indent-parens-as-block t
-	  cperl-close-paren-offset -4
-	  cperl-tab-always-indent t
-;;	  cperl-indent-subs-specially nil) ;; need package-install
-	  cperl-highlight-variables-indiscriminately t)
+;; Perl mode
+(autoload 'cperl-mode "cperl-mode" "alternate mode for editing perl script." t)
+(autoload 'perl-mode "perl-mode" "Edit perl script." t)
+(setq auto-mode-alist
+	  (append '(("cpanfile$\\|\\.\\([pP][Llm]\\|al\\|t\\|psgi\\)$" . cperl-mode)
+				("\\.cgi$" . cperl-mode)) auto-mode-alist ))
+
+;;; cperl-mode
+(custom-set-variables
+ '(indent-tabs-mode nil))
+
+(setq cperl-auto-newline t)
+(setq cperl-indent-parens-as-block t)
+(setq cperl-close-paren-offset -4)
+(setq cperl-indent-level 4)
+(setq cperl-label-offset -4)
+;(setq cperl-electric-parens t)
+(setq cperl-continued-statement-offset 2)
+; (setq cperl-invalid-face nil)
+(setq cperl-highlight-variables-indiscriminately t)
+(setq cperl-indent-subs-specially nil)
+
 ;; perl flymake
 (defun cperl-mode-hooks ()
   (flymake-mode t))
