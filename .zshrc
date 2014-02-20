@@ -36,7 +36,14 @@ SAVEHIST=10000
 setopt hist_ignore_dups
 setopt share_history
 
-alias ls='ls -G'
+case "${OSTYPE}" in
+	freebsd* | darwin* )
+		alias ls='ls -G'
+	;;
+	linux* )
+		alias ls="ls --color"
+	;;
+esac
 alias ll='ls -l'
 
 # 色情報
