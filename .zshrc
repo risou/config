@@ -36,11 +36,28 @@ SAVEHIST=10000
 setopt hist_ignore_dups
 setopt share_history
 
-alias ls='ls -G'
+case "${OSTYPE}" in
+	freebsd* | darwin* )
+		alias ls='ls -G'
+	;;
+	linux* )
+		alias ls="ls --color"
+	;;
+esac
 alias ll='ls -l'
 
 # 色情報
 export LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx
 
 # emacsclient
-export EDITOR="emacsclient"
+#export EDITOR="emacsclient"
+export PATH=/usr/local/bin:$PATH
+
+eval "$(plenv init - zsh)"
+
+export TERM=xterm-256color
+
+PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
+
+# coosy dev
+export PGDATA=/usr/local/var/postgres

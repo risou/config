@@ -24,7 +24,7 @@ set title
 " 行番号を表示
 set number
 
-" 業番号を印刷
+" 行番号を印刷
 set printoptions=number:y
 
 " tab = 4
@@ -38,6 +38,26 @@ set showmatch
 
 " シンタックスハイライトをON
 syntax on
+
+" 色設定
+colorscheme koehler
+if &term =~ "xterm-256color" || "screen-256color"
+  " 256色
+  set t_Co=256
+  set t_Sf=[3%dm
+  set t_Sb=[4%dm
+elseif &term =~ "xterm-debian" || &term =~ "xterm-xfree86"
+  set t_Co=16
+  set t_Sf=[3%dm
+  set t_Sb=[4%dm
+elseif &term =~ "xterm-color"
+  set t_Co=8
+  set t_Sf=[3%dm
+  set t_Sb=[4%dm
+endif
+
+" カーソル行をハイライト
+set cursorline
 
 " コメント色を水色にする
 highlight Comment ctermfg=lightcyan
@@ -99,11 +119,91 @@ set t_vb=
 " escでハイライトをオフ
 nnoremap <silent> <ESC> <ESC>:noh<CR>
 
+" netrwの設定
+let g:netrw_liststyle = 3
+let g:netrw_list_hide = 'CVS,\(^\|\s\s\)\zs\.\S\+'
+let g:netrw_altv = 1
+let g:netrw_alto = 1
+
 " gvimの設定
 set guioptions-=T
 
 " ステータスラインに情報を表示
-set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
+"set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
+"set laststatus=2
+"set statusline=[%n]\ %t\ %y%{GetStatusEx()}\ %m%h%r=%l/%L,%c%V\ %P
+"function! GetStatusEx()
+	"let str = &fileformat
+	"if has("multi_byte") && &fileencoding != ""
+		"let str = &fileencoding . ":" . str
+	"endif
+	"let str = "[" . str . "]"
+	"return str
+"endfunction
+set laststatus=2
+" lightline - start
+" use font : https://gist.github.com/epegzz/1634235
+let g:lightline = {
+	\ 'colorscheme': 'wombat',
+	\ 'mode_map': { 'c': 'NORMAL' },
+	\ 'active': {
+	\   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+	\ },
+	\ 'component_function': {
+	\   'modified': 'MyModified',
+	\   'readonly': 'MyReadonly',
+	\   'fugitive': 'MyFugitive',
+	\   'filename': 'MyFilename',
+	\   'fileformat': 'MyFileformat',
+	\   'filetype': 'MyFiletype',
+	\   'fileencoding': 'MyFileencoding',
+	\   'mode': 'MyMode',
+	\ },
+	\ 'separator': { 'left': '⮀', 'right': '⮂' },
+	\ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+	\ }
+
+function! MyModified()
+	return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! MyReadonly()
+	return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
+endfunction
+
+function! MyFilename()
+	return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+		\ (&ft == 'vimfiler' ? vimfiler#get_status_string() : 
+		\  &ft == 'unite' ? unite#get_status_string() : 
+		\  &ft == 'vimshell' ? vimshell#get_status_string() :
+		\ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+		\ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyFugitive()
+	if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
+		let _ = fugitive#head()
+		return strlen(_) ? '⭠ '._ : ''
+	endif
+	return ''
+endfunction
+
+function! MyFileformat()
+	return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+	return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+	return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+	return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+" lightline - end
 
 " window分割の際の挙動変更
 set splitbelow
@@ -127,7 +227,8 @@ set fileencodings=iso-2022-jp,sjis,euc-jp,cp932,utf-8
 set fileformats=unix,mac,dos
 
 " タブ文字を表示
-set lcs=tab:>.,eol:$,trail:_,extends:\
+set lcs=tab:>\ ,trail:_,extends:\
+"set lcs=tab:>.,eol:$,trail:_,extends:\
 set list
 " ○や□などの文字でカーソル位置がずれないようにする
 if exists('&ambiwidth')
@@ -139,6 +240,15 @@ au QuickfixCmdPost vimgrep cw
 
 " カレントディレクトリを現在開いているファイルのディレクトリにする
 au BufEnter * execute ":lcd " . expand("%:p:h")
+
+" NERDTree
+let NERDTreeShowHidden = 1
+let file_name = expand("%:p")
+if has('vim_starting') && file_name == ""
+	autocmd VimEnter * execute 'NERDTree ./'
+endif
+
+set mouse=a
 
 """"""""""""""""""""""""""""""
 " => for ruby
