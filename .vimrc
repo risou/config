@@ -39,6 +39,10 @@ set showmatch
 " シンタックスハイライトをON
 syntax on
 
+" エンコーディング
+set enc=utf-8
+set fenc=utf-8
+
 " 色設定
 colorscheme koehler
 if &term =~ "xterm-256color" || "screen-256color"
