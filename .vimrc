@@ -39,10 +39,6 @@ set showmatch
 " シンタックスハイライトをON
 syntax on
 
-" エンコーディング
-set enc=utf-8
-set fenc=utf-8
-
 " 色設定
 colorscheme koehler
 if &term =~ "xterm-256color" || "screen-256color"
@@ -226,7 +222,8 @@ autocmd FileType perl,cgi : compiler perl
 
 " 文字コードの自動判別
 set encoding=utf-8
-set fileencodings=iso-2022-jp,sjis,euc-jp,cp932,utf-8
+"set fileencodings=iso-2022-jp,sjis,euc-jp,cp932,utf-8
+set fileencodings=utf-8,sjis,cp932,euc-jp,iso-2022-jp
 " 改行コードの自動判別
 set fileformats=unix,mac,dos
 
