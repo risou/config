@@ -34,6 +34,7 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt hist_ignore_dups
+setopt hist_ignore_all_dups
 setopt share_history
 
 case "${OSTYPE}" in
@@ -46,14 +47,22 @@ case "${OSTYPE}" in
 esac
 alias ll='ls -l'
 
+# percol
+source ~/.zsh/percol.zsh
+
 # 色情報
 export LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx
 
 # emacsclient
 #export EDITOR="emacsclient"
 export PATH=/usr/local/bin:$PATH
+alias e="emacsclient -nw"
+alias emacsd="emacs --daemon"
+alias emacsk="emacsclient -e '(kill-emacs)'"
 
 eval "$(plenv init - zsh)"
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init - zsh)"
 
 export TERM=xterm-256color
 
