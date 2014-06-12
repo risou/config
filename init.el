@@ -16,7 +16,8 @@
 (global-set-key (kbd "C-m") 'newline-and-indent)
 
 ;; C-h でバックスペース
-(keyboard-translate ?\C-h ?\C-?)
+;; (keyboard-translate ?\C-h ?\C-?)
+(define-key key-translation-map [?\C-h] [?\C-?])
 
 ;; C-x ? でヘルプ
 (global-set-key (kbd "C-x ?") 'help-command)
@@ -65,9 +66,28 @@
 (setq-default tab-width 4)
 
 ;; color-theme
+(add-to-list 'load-path "~/.emacs.d/el-get/color-theme")
 (when (require 'color-theme nil t)
   (color-theme-initialize)
   (color-theme-hober))
+
+;; customized color
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(anything-bookmarks-su-face ((t (:foreground "magenta"))))
+ '(anything-buffer-saved-out ((t (:foreground "magenta"))))
+ '(message-header-xheader-face ((t (:foreground "cyan"))))
+ '(minibuffer-prompt ((t (:foreground "cyan"))))
+ '(my-hl-line-face ((t (:background "color-17" :weight bold)))))
 
 ;; asciiフォント
 (when (eq system-type 'darwin)
@@ -611,7 +631,7 @@
 (define-key global-map (kbd "s-d") 'anything-for-document)
 
 ;; Emacs server を起動
-(require 'server)
-(unless (server-running-p)
-  (server-start)
-  (remove-hook 'kill-buffer-query-functions 'server-kill-buffer-query-function))
+; (require 'server)
+; (unless (server-running-p)
+;   (server-start)
+;   (remove-hook 'kill-buffer-query-functions 'server-kill-buffer-query-function))
