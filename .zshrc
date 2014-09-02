@@ -9,7 +9,7 @@ setopt prompt_subst
 
 # デフォルトの補完機能を有効
 autoload -U compinit
-compinit
+compinit -u
 
 # プロンプトのカラー表示を有効
 autoload -U colors
@@ -24,6 +24,13 @@ zstyle ':vcs_info:git:*' unstagedstr "-"
 zstyle ':vcs_info:*' actionformats ' %F{1}(%b%u%c:%a)%f'
 zstyle ':vcs_info:*' formats ' %F{2}(%b%u%c)%f'
 precmd () { vcs_info }
+
+# cdr
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ':chpwd:*' recent-dirs-max 5000
+zstyle ':chpwd:*' recent-dirs-default yes
+zstyle ':completion:*' recent-dirs-insert both
 
 # プロンプトの右端にパスを表示
 RPROMPT=$'%{\e[32m%}%/%{\e[m%}${vcs_info_msg_0_}'
@@ -48,7 +55,9 @@ esac
 alias ll='ls -l'
 
 # percol
-source ~/.zsh/percol.zsh
+#source ~/.zsh/percol.zsh
+# peco
+source ~/.zsh/peco.zsh
 
 # 色情報
 export LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx
@@ -70,3 +79,6 @@ PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -
 
 # coosy dev
 export PGDATA=/usr/local/var/postgres
+
+# grunt
+export NODE_PATH='/usr/local/lib/node_modules'
