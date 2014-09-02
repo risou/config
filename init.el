@@ -604,6 +604,9 @@
 (when (require 'multi-term nil t)
   (setq multi-term-program "/usr/local/bin/zsh"))
 
+;; editorconfig
+;; M-x package-install RET editorconfig RET
+
 ;; TRAMP でバックアップファイルを作成しない
 (add-to-list 'backup-directory-alist
 			 (cons tramp-file-name-regexp nil))
