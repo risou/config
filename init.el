@@ -606,6 +606,7 @@
 
 ;; editorconfig
 ;; M-x package-install RET editorconfig RET
+(load "editorconfig")
 
 ;; TRAMP でバックアップファイルを作成しない
 (add-to-list 'backup-directory-alist
