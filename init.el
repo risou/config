@@ -26,6 +26,11 @@
 (set-language-environment "Japanese")
 (prefer-coding-system 'utf-8)
 
+(custom-set-variables
+ '(inhibit-default-init t)
+ '(inhibit-startup-buffer-menu t)
+ '(inhibit-startup-screen t))
+
 ;; ファイル名の設定
 (when (eq system-type 'darwin)
   (require 'ucs-normalize)
@@ -48,6 +53,10 @@
 (setq frame-title-format "%f")
 ;; 行番号を常に表示
 (global-linum-mode t)
+(set-face-attribute 'linum nil
+					:foreground "#ccc"
+					:height 0.9)
+(setq linum-format "%4d  ")
 ;; 半透明
 (setq default-frame-alist
 	  (append
@@ -296,6 +305,7 @@
    anything-enable-shortcuts 'alphabet ;; 候補選択ショートカットをアルファベットに
    )
   (when (require 'anything-config nil t)
+	(add-to-list 'anything-sources 'anything-c-source-emacs-commands)
 	(setq anything-su-or-sudo "sudo"))
   (require 'anything-match-plugin nil t)
   (when (and (executable-find "cmigemo")
@@ -310,6 +320,7 @@
 	(descbinds-anything-install)))
 (define-key global-map (kbd "C-;") 'anything)
 (define-key anything-map (kbd "C-;") 'abort-recursive-edit)
+(define-key global-map (kbd "C-c r") 'anything-imenu)
 ;; M-yにanything-show-kill-ringを割り当てる
 (define-key global-map (kbd "M-y") 'anything-show-kill-ring)
 ;; anything-c-moccurの設定
@@ -596,8 +607,13 @@
 ;; (install-elisp "https://raw.github.com/byplayer/egg/master/egg.el")
 ;; -> el-get
 ;; (install-elisp "https://raw.github.com/byplayer/egg/master/egg-grep.el")
-(when (executable-find "git")
-  (require 'egg nil t))
+;; (when (executable-find "git")
+;;   (require 'egg nil t))
+(require 'magit)
+(set-face-foreground 'magit-diff-add "#b9ca4a")
+(set-face-foreground 'magit-diff-del "#d54e453")
+(set-face-background 'magit-item-highlight "#000000")
+(define-key global-map (kbd "C-c m") 'magit-status)
 
 ;; multi-term
 ;; M-x package-install RET multi-term RET
@@ -607,6 +623,7 @@
 ;; editorconfig
 ;; M-x package-install RET editorconfig RET
 (load "editorconfig")
+(setq edconf-exec-path "/usr/local/bin/editorconfig")
 
 ;; TRAMP でバックアップファイルを作成しない
 (add-to-list 'backup-directory-alist
@@ -639,3 +656,5 @@
 ; (unless (server-running-p)
 ;   (server-start)
 ;   (remove-hook 'kill-buffer-query-functions 'server-kill-buffer-query-function))
+
+(require 'w3m-load)
