@@ -86,3 +86,7 @@ export PGDATA=/usr/local/var/postgres
 
 # grunt
 export NODE_PATH='/usr/local/lib/node_modules'
+
+# ghq
+export GOPATH=$HOME
+
