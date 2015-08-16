@@ -1,0 +1,16 @@
+[ghq]
+	root = /Users/risou/src
+[user]
+	name = risou
+	email = risou.f@gmail.com
+[core]
+	pager = less -r
+	precomposeunicode = true
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[alias]
+	graph-all = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	graph = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative -n 30
+

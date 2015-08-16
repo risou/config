@@ -7,6 +7,10 @@ setopt prompt_subst
 # PATH の設定(perl-completion.vim)
 # PATH=$PATH:/Users/risou/.vim/bin
 
+HISTFILE=~/.histfile
+HISTSIZE=10000
+SAVEHIST=10000
+
 # デフォルトの補完機能を有効
 autoload -U compinit
 compinit -u
