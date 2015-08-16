@@ -89,4 +89,4 @@ export NODE_PATH='/usr/local/lib/node_modules'
 
 # ghq
 export GOPATH=$HOME
-
+export PATH=$PATH:$GOPATH/bin
