@@ -7,10 +7,6 @@ setopt prompt_subst
 # PATH の設定(perl-completion.vim)
 # PATH=$PATH:/Users/risou/.vim/bin
 
-HISTFILE=~/.histfile
-HISTSIZE=10000
-SAVEHIST=10000
-
 # デフォルトの補完機能を有効
 autoload -U compinit
 compinit -u
@@ -68,18 +64,58 @@ export LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx
 
 # emacsclient
 #export EDITOR="emacsclient"
-export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 alias e="emacsclient -nw"
 alias emacsd="emacs --daemon"
 alias emacsk="emacsclient -e '(kill-emacs)'"
 
 eval "$(plenv init - zsh)"
-export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH=$HOME/.phpenv/bin:$HOME/.phpenv/shims:$PATH
+eval "$(phpenv init - zsh)"
+export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
 eval "$(rbenv init - zsh)"
 
 export TERM=xterm-256color
 
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
+
+# tmux mouse
+function tmux-mouse-on {
+	if [ -z $TMUX ]; then
+		return
+	fi
+	tmux set-option -w mode-mouse on > /dev/null
+	tmux set-option -w mouse-resize-pane on > /dev/null
+	tmux set-option -w mouse-select-pane on > /dev/null
+	tmux set-option -w mouse-select-window on > /dev/null
+}
+function tmux-mouse-off {
+	if [ -z $TMUX ]; then
+		return
+	fi
+	tmux set-option -w mode-mouse off > /dev/null
+	tmux set-option -w mouse-resize-pane off > /dev/null
+	tmux set-option -w mouse-select-pane off > /dev/null
+	tmux set-option -w mouse-select-window off > /dev/null
+}
+tmuxOffCmds=("man" "less" "vi" "vim" "emacs")
+function preexec_for_tmux {
+	command=`echo "$1" | cut -f 1 -d " "`
+	for cmd in $tmuxOffCmds; do
+		if [ "$cmd" = "$command" ]; then
+			tmux-mouse-off
+			export SHOULD_TMUX_ON=t
+		fi
+	done
+}
+function precmd_for_tmux {
+	if [ -n $SHOULD_TMUX_ON ]; then
+		tmux-mouse-on
+		unset SHOULD_TMUX_ON
+	fi
+}
+preexec_functions=($preexec_functions preexec_for_tmux)
+precmd_functions=($precmd_functions precmd_for_tmux)
 
 # coosy dev
 export PGDATA=/usr/local/var/postgres
@@ -90,3 +126,6 @@ export NODE_PATH='/usr/local/lib/node_modules'
 # ghq
 export GOPATH=$HOME
 export PATH=$PATH:$GOPATH/bin
+
+# javac encoding
+export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
