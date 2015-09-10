@@ -32,8 +32,14 @@ zstyle ':chpwd:*' recent-dirs-max 5000
 zstyle ':chpwd:*' recent-dirs-default yes
 zstyle ':completion:*' recent-dirs-insert both
 
+# zsh powerline
+#export PATH=$PATH:~/Library/Python/2.7/bin
+#powerline-daemon -q
+#. ~/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
+
 # プロンプトの右端にパスを表示
-RPROMPT=$'%{\e[32m%}%/%{\e[m%}${vcs_info_msg_0_}'
+PROMPT=$'[%{${fg[cyan]}%}%n%{${reset_color}%}@%{${bg[blue]}%}%m%{${reset_color}%}] %# '
+RPROMPT=$'%{\e[32m%}%~%{\e[m%}${vcs_info_msg_0_}[%D %*]'
 # RPROMPT="$vcs_info_msg_0_"
 
 # コマンド履歴機能
