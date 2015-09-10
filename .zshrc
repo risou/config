@@ -70,10 +70,10 @@ alias emacsd="emacs --daemon"
 alias emacsk="emacsclient -e '(kill-emacs)'"
 
 #eval "$(plenv init - zsh)"
-#export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
-#eval "$(rbenv init - zsh)"
-#export PATH="$HOME/.phpenv/bin:$HOME/.phpenv/shims:$PATH"
-#eval "$(phpenv init - zsh)"
+export PATH="$HOME/.phpenv/bin:$HOME/.phpenv/shims:$PATH"
+eval "$(phpenv init - zsh)"
+export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
+eval "$(rbenv init - zsh)"
 
 export TERM=xterm-256color
 
