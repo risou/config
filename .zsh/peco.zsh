@@ -5,3 +5,4 @@ bindkey '^r' peco-select-history
 bindkey '^x;' peco-cdr
 bindkey '^x^b' peco-git-recent-branches
 bindkey '^xb' peco-git-recent-all-branches
+bindkey '^]' peco-src
