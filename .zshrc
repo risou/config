@@ -81,6 +81,9 @@ eval "$(phpenv init - zsh)"
 export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
 eval "$(rbenv init - zsh)"
 
+# PHPENV <-> Apache2 連携用
+export PHPENV_APACHE_MODULE_PATH="$HOME/.phpenv"
+
 export TERM=xterm-256color
 
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
