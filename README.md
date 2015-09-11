@@ -108,3 +108,15 @@ $ brew unlink openssl
 $ brew unlink libxml2
 ```
 
+## phpenv-apache-version
+
+以下 Mac にデフォルトで入っている Apache を使う場合。
+
+```sh
+$ git clone https://github.com/garamon/phpenv-apache-version ~/.phpenv/plugins/phpenv-apache-version
+$ cp -p ~/.phpenv/versions/{version}/libexec/apache2/libphp5.so ~/.phpenv/versions/{version}/
+    # .zshrc で export PHPENV_APACHE_MODULE_PATH がコメントアウトされていたら外す
+$ vim /etc/apache2/httpd.conf
+    # LoadModule php5_module $HOME/.phpenv <- フルパスで記述
+$ phpenv apache-version {version}
+```
