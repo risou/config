@@ -80,17 +80,31 @@ $ source $HOME/.zshrc
 
 # phpenv
 
-このインストール方法では上手くいかない。
+```sh
+$ brew install homebrew/php
+$ brew install phpenv
+$ git clone https://github.com/CHH/php-build ~/.phpenv/plugins/php-build
+$ cp ~/.phpenv/plugins/php-build/bin/phpenv-install ~/.phpenv/plugins/php-build/bin/rbenv-install
+$ sed -i -e "s/# Provide phpenv completions/# Provide rbenv completions/g" ~/.rbenv/plugins/php-build/bin/rbenv-install
+$ brew install re2c
+$ brew install jpeg
+$ brew install mcrypt
+$ brew install libpng
+$ brew install libtool
+$ brew install openssl
+$ brew install libxml2
+$ vim ~/.phpenv/plugins/php-build/share/php-build/default_configure_options
+    # --without-pear -> --with-pear
+    # --with-apxs2=/usr/sbin/apxs # 追加
+$ phpenv install 5.6.*
+```
 
-明日確認して修正する。
+openssl関連でlinkエラーになる場合などは以下を試してみる。
 
 ```sh
-$ breww tap josegonzalez/homebrew-php
-$ brew install phpenv
-$ brew install --HEAD php-build
-$ vim $HOME/.zshrc
-    # 以下2行のコメントを外す
-    # export PATH="$HOME/.phpenv/bin:$HOME/.phpenv/shims:$PATH
-    # eval "$(phpenv init - zsh)"
-$ source $HOME/.zshrc
+$ brew doctor
+    # brew doctorの結果必要であれば以下も
+$ brew unlink openssl
+$ brew unlink libxml2
 ```
+
