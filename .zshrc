@@ -136,5 +136,8 @@ export NODE_PATH='/usr/local/lib/node_modules'
 export GOPATH=$HOME
 export PATH=$PATH:$GOPATH/bin
 
+# Visual Studio Code
+code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
+
 # javac encoding
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
