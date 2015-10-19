@@ -141,3 +141,6 @@ code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 
 # javac encoding
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
+
+export PATH=$PATH:$HOME/.zsh/bin
+
