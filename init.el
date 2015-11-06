@@ -1,4 +1,3 @@
-
 ;; load-path を追加する関数を定義
 (defun add-to-load-path (&rest paths)
   (let (path)
@@ -711,6 +710,11 @@
   (define-key helm-command-map (kbd "g") 'helm-ag)
   (define-key helm-command-map (kbd "o") 'helm-occur)
   )
+
+;; editorconfig
+;; M-x package-install editorconfig
+(setq edconf-exec-path "/usr/local/bin/editorconfig")
+(editorconfig-mode 1)
 
 ;; Emacs server を起動
 ; (require 'server)
