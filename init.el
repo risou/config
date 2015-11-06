@@ -274,6 +274,8 @@
 			   '("marmalade" . "http://marmalade-repo.org/packages/"))
   (add-to-list 'package-archives
 			   '("ELPA" . "http://tromey.com/elpa/"))
+  (add-to-list 'package-archives
+			   '("melpa" . "http://melpa.milkbox.net/packages/"))
   ;; (setq url-proxy-services '(("http" . "10.42.5.10:8000")))
   ;; melpa.el のインストール
   ;; https://raw.github.com/milkypostman/melpa/master/melpa.el
@@ -296,43 +298,43 @@
 ;; anything
 ;; M-x auto-install-batch RET anything RET
 ;; -> el-get
-(when (require 'anything nil t)
-  (setq
-   anything-idle-delay 0.3 ;; 候補を表示するまでの時間
-   anything-input-idle-delay 0.2 ;; タイプして再描写までの時間
-   anything-candidate-number-limit 100 ;; 候補の最大表示数
-   anything-quick-update t ;; 候補が多いときに体感速度を早くする
-   anything-enable-shortcuts 'alphabet ;; 候補選択ショートカットをアルファベットに
-   )
-  (when (require 'anything-config nil t)
-	(add-to-list 'anything-sources 'anything-c-source-emacs-commands)
-	(setq anything-su-or-sudo "sudo"))
-  (require 'anything-match-plugin nil t)
-  (when (and (executable-find "cmigemo")
-			 (require 'migemo nil t))
-	(require 'anything-migemo nil t))
-  (when (require 'anything-complete nil t)
-	(anything-lisp-complete-symbol-set-timer 150))
-  (require 'anything-show-completion nil t)
-  (when (require 'auto-install nil t)
-	(require 'anything-auto-install nil t))
-  (when (require 'descbinds-anything nil t)
-	(descbinds-anything-install)))
-(define-key global-map (kbd "C-;") 'anything)
-(define-key anything-map (kbd "C-;") 'abort-recursive-edit)
-(define-key global-map (kbd "C-c r") 'anything-imenu)
+;; (when (require 'anything nil t)
+;;   (setq
+;;    anything-idle-delay 0.3 ;; 候補を表示するまでの時間
+;;    anything-input-idle-delay 0.2 ;; タイプして再描写までの時間
+;;    anything-candidate-number-limit 100 ;; 候補の最大表示数
+;;    anything-quick-update t ;; 候補が多いときに体感速度を早くする
+;;    anything-enable-shortcuts 'alphabet ;; 候補選択ショートカットをアルファベットに
+;;    )
+;;   (when (require 'anything-config nil t)
+;; 	(add-to-list 'anything-sources 'anything-c-source-emacs-commands)
+;; 	(setq anything-su-or-sudo "sudo"))
+;;   (require 'anything-match-plugin nil t)
+;;   (when (and (executable-find "cmigemo")
+;; 			 (require 'migemo nil t))
+;; 	(require 'anything-migemo nil t))
+;;   (when (require 'anything-complete nil t)
+;; 	(anything-lisp-complete-symbol-set-timer 150))
+;;   (require 'anything-show-completion nil t)
+;;   (when (require 'auto-install nil t)
+;; 	(require 'anything-auto-install nil t))
+;;   (when (require 'descbinds-anything nil t)
+;; 	(descbinds-anything-install)))
+;; (define-key global-map (kbd "C-;") 'anything)
+;; (define-key anything-map (kbd "C-;") 'abort-recursive-edit)
+;; (define-key global-map (kbd "C-c r") 'anything-imenu)
 ;; M-yにanything-show-kill-ringを割り当てる
-(define-key global-map (kbd "M-y") 'anything-show-kill-ring)
+;; (define-key global-map (kbd "M-y") 'anything-show-kill-ring)
 ;; anything-c-moccurの設定
 ;; (install-elisp "http://svn.coderepos.org/share/lang/elisp/anything-c-moccur/trunk/anything-c-moccur.el")
 ;; -> el-get
-(when (require 'anything-c-moccur nil t)
-  (setq
-   anything-c-moccur-anything-idle-delay 0.1
-   anything-c-moccur-hilight-info-line-flag t
-   anything-c-moccur-enable-auto-look-flag t
-   anything-c-moccur-enable-initial-pattern t)
-  (global-set-key (kbd "C-M-o") 'anything-c-moccur-occur-by-moccur))
+;; (when (require 'anything-c-moccur nil t)
+;;   (setq
+;;    anything-c-moccur-anything-idle-delay 0.1
+;;    anything-c-moccur-hilight-info-line-flag t
+;;    anything-c-moccur-enable-auto-look-flag t
+;;    anything-c-moccur-enable-initial-pattern t)
+;;   (global-set-key (kbd "C-M-o") 'anything-c-moccur-occur-by-moccur))
 
 ;; ddskk info
 (require 'info)
@@ -562,6 +564,23 @@
   ;; (setq flymake-python-syntax-checker "pep8")
   )
 
+;; php-mode
+;; M-x package-list-packages -> php-mode
+(require 'php-mode)
+;; php-completion
+;; M-x package-list-packages -> php-completion
+(add-hook 'php-mode-hook
+  (lambda ()
+	(require 'php-completion)
+	(php-completion-mode t)
+	(define-key php-mode-map (kbd "C-o") 'phpcmp-complete)
+	(make-local-variable 'ac-sources)
+	(setq ac-sources '(
+						ac-source-words-in-same-mode-buffers
+						ac-source-php-completion
+						ac-source-filename
+						))))
+
 ;; gtags
 ;; curl -O http://tamacom.com/global/global-6.1.tar.gz
 ;; tar xvf global-6.1.tar.gz
@@ -587,21 +606,21 @@
 ;; -> el-get
 ;; (auto-install-from-emacswiki "anything-exuberant-ctags.el")
 ;; -> el-get
-(when (and (require 'anything-exuberant-ctags nil t)
-		   (require 'anything-gtags nil t))
-  (setq anything-for-tags
-		(list anything-c-source-imenu
-			  anything-c-source-gtags-select
-			  ;; anything-c-source-etags-select
-			  anything-c-source-exuberant-ctags-select
-			  ))
-  (defun anything-for-tags ()
-	"Preconfigured `anything' for anything-for-tags."
-	(interactive)
-	(anything anything-for-tags
-			  (thing-at-point 'symbol)
-			  nil nil nil "*anything for tags*"))
-  (define-key global-map (kbd "M-t") 'anything-for-tags))
+;; (when (and (require 'anything-exuberant-ctags nil t)
+;; 		   (require 'anything-gtags nil t))
+;;   (setq anything-for-tags
+;; 		(list anything-c-source-imenu
+;; 			  anything-c-source-gtags-select
+;; 			  ;; anything-c-source-etags-select
+;; 			  anything-c-source-exuberant-ctags-select
+;; 			  ))
+;;   (defun anything-for-tags ()
+;; 	"Preconfigured `anything' for anything-for-tags."
+;; 	(interactive)
+;; 	(anything anything-for-tags
+;; 			  (thing-at-point 'symbol)
+;; 			  nil nil nil "*anything for tags*"))
+;;   (define-key global-map (kbd "M-t") 'anything-for-tags))
 
 ;; git
 ;; (install-elisp "https://raw.github.com/byplayer/egg/master/egg.el")
@@ -635,21 +654,63 @@
 					  "/usr/local/share/man"
 					  "/usr/local/share/man/ja"))
 ;; anything man
-(setq anything-for-document-sources
-	  (list anything-c-source-man-pages
-			anything-c-source-info-cl
-			anything-c-source-info-pages
-			anything-c-source-info-elisp
-			anything-c-source-apropos-emacs-commands
-			anything-c-source-apropos-emacs-functions
-			anything-c-source-apropos-emacs-variables))
-(defun anything-for-document ()
-  "Preconfigured `anything' for anything-for-document."
-  (interactive)
-  (anything anything-for-document-sources
-			(thing-at-point 'symbol) nil nil nil
-			"*anything for document*"))
-(define-key global-map (kbd "s-d") 'anything-for-document)
+;; (setq anything-for-document-sources
+;; 	  (list anything-c-source-man-pages
+;; 			anything-c-source-info-cl
+;; 			anything-c-source-info-pages
+;; 			anything-c-source-info-elisp
+;; 			anything-c-source-apropos-emacs-commands
+;; 			anything-c-source-apropos-emacs-functions
+;; 			anything-c-source-apropos-emacs-variables))
+;; (defun anything-for-document ()
+;;   "Preconfigured `anything' for anything-for-document."
+;;   (interactive)
+;;   (anything anything-for-document-sources
+;; 			(thing-at-point 'symbol) nil nil nil
+;; 			"*anything for document*"))
+;; (define-key global-map (kbd "s-d") 'anything-for-document)
+
+;; helm
+;; M-x package-list-packages -> helm
+;; helm-ag
+;; need ag / brew install ag
+;; M-x package-list-packages -> helm-ag
+;; helm-descbinds
+;; M-x package-list-packages -> helm-descbinds
+;; helm-ls-git (エラーになるので一旦アンインストール)
+;; M-x package-list-packages -> helm-ls-git
+(progn
+  (require 'helm)
+  (require 'helm-config)
+  (global-unset-key (kbd "C-z"))
+  (custom-set-variables
+   '(helm-command-prefix-key "C-z"))
+  ;; (require 'helm-ls-git)
+  (custom-set-variables
+   '(helm-truncate-lines t)
+   '(helm-delete-minibuffer-contents-from-point t)
+   '(helm-mini-default-sources '(helm-source-buffers-list
+								 helm-source-recentf
+								 helm-source-files-in-current-dir
+;;								 helm-source-ls-git
+								 )))
+  (helm-mode 1)
+  (define-key global-map (kbd "C-;") 'helm-mini)
+  (define-key global-map (kbd "M-x") 'helm-M-x)
+  (define-key global-map (kbd "C-x C-f") 'helm-find-files)
+  (define-key global-map (kbd "C-x C-r") 'helm-recentf)
+  (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
+  (define-key global-map (kbd "C-c r") 'helm-imenu)
+  (define-key global-map (kbd "C-x C-b") 'helm-buffers-list)
+  (define-key global-map (kbd "C-x C-]") 'helm-ghq)
+  (define-key helm-read-file-map (kbd "TAB") 'helm-execute-persistent-action)
+  (define-key helm-find-files-map (kbd "TAB") 'helm-execute-persistent-action)
+  (define-key helm-read-file-map (kbd "C-i") 'helm-execute-persistent-action)
+  (define-key helm-find-files-map (kbd "C-i") 'helm-execute-persistent-action)
+  (define-key helm-command-map (kbd "d") 'helm-descbinds)
+  (define-key helm-command-map (kbd "g") 'helm-ag)
+  (define-key helm-command-map (kbd "o") 'helm-occur)
+  )
 
 ;; Emacs server を起動
 ; (require 'server)
