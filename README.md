@@ -23,6 +23,12 @@ $ mkdir ~/.emacs.d/public_repos
 $ ln -s $(pwd)/init.el $HOME/.emacs.d/init.el
 ```
 
+`C-;` で `helm-mini` を呼び出したいので、 iTerm2 の Profiles -> Keys で以下を設定。
+
+```
+^; Send Hex Codes: 0x18 0x40 0x63 0x3b
+```
+
 # zsh
 
 

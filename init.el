@@ -258,8 +258,7 @@
 (el-get 'sync)
 
 ;; redo+.elのインストール
-;; (install-elisp "http://www.emacswiki.org/emacs/download/redo+.el")
-;; -> el-get
+;; el-get-install redo+
 ;; redo+の設定
 (when (require 'redo+ nil t)
   ;; C-'にredoを割り当てる
@@ -267,6 +266,7 @@
 
 ;; package.elのインストール(24以降は不要)
 ;; M-x install-elisp RET http://bit.ly/pkg-el23 RET
+
 ;; package.elの設定
 (when (require 'package nil t)
   (add-to-list 'package-archives
@@ -433,10 +433,10 @@
 ;; cd ./html5-el
 ;; make relaxng
 ;; -> el-get
-(eval-after-load "rng-loc"
-  '(add-to-list 'rng-schema-locating-files
-				"~/.emacs.d/public_repos/html5-el/schemas.xml"))
-(require 'whattf-dt)
+;; (eval-after-load "rng-loc"
+;;   '(add-to-list 'rng-schema-locating-files
+;; 				"~/.emacs.d/public_repos/html5-el/schemas.xml"))
+;; (require 'whattf-dt)
 ;; </ を入力すると自動的にタグを閉じる
 (setq nxml-slash-auto-complete-flag t)
 ;; M-TAB でタグを補完する
@@ -638,9 +638,9 @@
 ;; (when (executable-find "git")
 ;;   (require 'egg nil t))
 (require 'magit)
-(set-face-foreground 'magit-diff-add "#b9ca4a")
-(set-face-foreground 'magit-diff-del "#d54e453")
-(set-face-background 'magit-item-highlight "#000000")
+;; (set-face-foreground 'magit-diff-add "#b9ca4a")
+;; (set-face-foreground 'magit-diff-del "#d54e453")
+;; (set-face-background 'magit-item-highlight "#000000")
 (define-key global-map (kbd "C-c m") 'magit-status)
 
 ;; multi-term
@@ -650,8 +650,8 @@
 
 ;; editorconfig
 ;; M-x package-install RET editorconfig RET
-(load "editorconfig")
-(setq edconf-exec-path "/usr/local/bin/editorconfig")
+;; (load "editorconfig")
+;; (setq edconf-exec-path "/usr/local/bin/editorconfig")
 
 ;; TRAMP でバックアップファイルを作成しない
 (add-to-list 'backup-directory-alist
@@ -686,6 +686,7 @@
 ;; M-x package-list-packages -> helm-ag
 ;; helm-descbinds
 ;; M-x package-list-packages -> helm-descbinds
+;; M-x package-list-packages -> helm-ghq
 ;; helm-ls-git (エラーになるので一旦アンインストール)
 ;; M-x package-list-packages -> helm-ls-git
 (progn
@@ -732,4 +733,4 @@
 ;   (server-start)
 ;   (remove-hook 'kill-buffer-query-functions 'server-kill-buffer-query-function))
 
-(require 'w3m-load)
+;; (require 'w3m-load)
