@@ -10,7 +10,21 @@ $ cd ../dotvim
 $ git submodule update --init
 ```
 
+# Emacs
+
+```sh
+$ brew install --gnutls --japanese emacs
+$ ln -sfv /usr/local/opt/emacs/*.plist ~/Library/LaunchAgents
+$ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.emacs.plist # out of tmux
+$ mkdir ~/.emacs.d
+$ mkdir ~/.emacs.d/elisp
+$ mkdir ~/.emacs.d/conf
+$ mkdir ~/.emacs.d/public_repos
+$ ln -s $(pwd)/init.el $HOME/.emacs.d/init.el
+```
+
 # zsh
+
 
 ```sh
 $ brew install zsh
