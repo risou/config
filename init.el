@@ -689,29 +689,29 @@
 ;; M-x package-list-packages -> helm-ghq
 ;; helm-ls-git (エラーになるので一旦アンインストール)
 ;; M-x package-list-packages -> helm-ls-git
-(defvar helm-source-emacs-commands
-  (helm-build-sync-source "Emacs commands"
-	:candidates (lambda ()
-				  (let ((cmds))
-					(mapatoms
-					 (lambda (elt) (when (commandp elt) (push elt cmds))))
-					cmds))
-	:coerce #'intern-soft
-	:action #'command-execute)
-  "A simple helm source for Emacs commands.")
-(defvar helm-source-emacs-commands-history
-  (helm-build-sync-source "Emacs commands history"
-	:candidates (lambda ()
-				  (let ((cmds))
-					(dolist (elem extended-command-history)
-					  (push (intern elem) cmds))
-					cmds))
-	:coerce #'intern-soft
-	:action #'command-execute)
-  "Emacs commands history")
 (progn
   (require 'helm)
   (require 'helm-config)
+  (defvar helm-source-emacs-commands
+	(helm-build-sync-source "Emacs commands"
+	  :candidates (lambda ()
+					(let ((cmds))
+					  (mapatoms
+					   (lambda (elt) (when (commandp elt) (push elt cmds))))
+					  cmds))
+	  :coerce #'intern-soft
+	  :action #'command-execute)
+	"A simple helm source for Emacs commands.")
+  (defvar helm-source-emacs-commands-history
+	(helm-build-sync-source "Emacs commands history"
+	  :candidates (lambda ()
+					(let ((cmds))
+					  (dolist (elem extended-command-history)
+						(push (intern elem) cmds))
+					  cmds))
+	  :coerce #'intern-soft
+	  :action #'command-execute)
+	"Emacs commands history")
   (global-unset-key (kbd "C-z"))
   (custom-set-variables
    '(helm-command-prefix-key "C-z"))
