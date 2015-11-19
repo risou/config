@@ -1,9 +1,8 @@
 bind generic g move-first-line
 bind generic G move-last-line
-set show-id = yes
+set tree-view = author:full date:local id:yes
+set blame-view = date:local author:full id:yes
 set split-view-height = 70%
-set show-author = full
-set show-date = local
 color date cyan default
 color graph-commit cyan default
 color diff-index cyan default
