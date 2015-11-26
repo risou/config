@@ -71,7 +71,9 @@
 		) default-frame-alist))
 
 ;; tabのサイズ
-(setq-default tab-width 4)
+(setq-default c-basic-offset 4
+			  tab-width 4
+			  indent-tabs-mode t)
 
 ;; color-theme
 (add-to-list 'load-path "~/.emacs.d/el-get/color-theme")
@@ -352,6 +354,7 @@
 ;; auto-complete
 ;; M-x package-install RET auto-complete RET
 ;; -> el-get
+(require 'auto-complete)
 (when (require 'auto-complete-config nil t)
   (add-to-list 'ac-dictionary-directories
 			   "~/.emacs.d/elisp/ac-dict")
@@ -444,16 +447,25 @@
 ;; nxml-mode で auto-complete-mode を利用する
 (add-to-list 'ac-modes 'nxml-mode)
 
+(autoload 'css-mode "css-mode" nil t)
+(setq auto-mode-alist
+	  (cons '("\\.css\\'" . css-mode) auto-mode-alist))
+(setq css-indent-level 4)
+(defun css-mode-hooks ()
+  (when (and (>= emacs-major-version 24) (>= emacs-minor-version 4))
+	(setq electric-indent-local-mode +1))
+  )
+(add-hook 'css-mode-hook 'css-mode-hooks)
 ;; altanative css-mode
 ;; M-x install-elisp RET http://www.garshol.priv.no/download/software/css-mode/css-mode.el RET
 ;; -> el-get
-(defun css-mode-hooks ()
-  "css-mode hooks"
-  (setq cssm-indent-function #'cssm-c-style-indenter) ;; C style indent
-  (setq cssm-indent-level 4) ;; indent-width
-  (setq-default indent-tabs-mode t) ;; tab indent
-  (setq cssm-newline-before-closing-bracket t))
-(add-hook 'css-mode-hook 'css-mode-hooks)
+;; (defun css-mode-hooks ()
+;;   "css-mode hooks"
+;;   (setq cssm-indent-function #'cssm-c-style-indenter) ;; C style indent
+;;   (setq cssm-indent-level 4) ;; indent-width
+;;   (setq-default indent-tabs-mode t) ;; tab indent
+;;   (setq cssm-newline-before-closing-bracket t))
+;; (add-hook 'css-mode-hook 'css-mode-hooks)
 
 ;; js2-mode
 ;; M-x package-install RET js2-mode RET
@@ -589,6 +601,39 @@
 		(vector (current-column))))
 	(c-set-offset 'arglist-intro 'ywb-php-lineup-arglist-intro)
 	(c-set-offset 'arglist-close 'ywb-php-lineup-arglist-close)))
+
+;; web-mode
+;; M-x package-install web-mode
+(progn
+  (require 'web-mode)
+  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.ctp\\'" . web-mode))
+  (defun web-mode-hook ()
+	(setq web-mode-markup-indent-offset 4)
+	(setq web-mode-css-indent-offset 4)
+	(setq web-mode-code-indent-offset 4)
+	(setq web-mode-php-indent-offset 4)
+	(setq web-mode-block-padding 4)
+	(setq web-mode-indent-style 2)
+	(setq web-mode-tag-auto-close-style 2)
+	(setq web-mode-enable-auto-closing t)
+	(setq web-mode-enable-auto-pairing t)
+	(setq indent-tab-mode t)
+	(setq tab-width 4)
+	;; (setq web-mode-enable-block-face t)
+	;; (custom-set-faces
+	;;  '(web-mode-server-face
+	;;    ((t (:background "grey"))))
+	;;  '(web-mode-css-face
+	;;    ((t (:background "grey18"))))
+	;;  '(web-mode-javascript-face
+	;;    ((t (:background "grey36"))))
+	;;  )
+	)
+  (add-hook 'web-mode-hook 'web-mode-hook)
+  )
+
 
 ;; gtags
 ;; curl -O http://tamacom.com/global/global-6.1.tar.gz
