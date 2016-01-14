@@ -381,8 +381,8 @@
 ;; undohist
 ;; (install-elisp "http://cx4a.org/pub/undohist.el")
 ;; -> el-get
-(when (require 'undohist nil t)
-  (undohist-initialize))
+;; (when (require 'undohist nil t)
+;;   (undohist-initialize))
 
 ;; undo-tree
 ;; M-x package-install RET undo-tree RET
