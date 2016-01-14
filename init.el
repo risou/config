@@ -526,9 +526,9 @@
   (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode)))
 
 ;; ruby-mode indent
-(setq ruby-indent-level 4
+(setq ruby-indent-level 2
 	  ruby-deep-indent-paren-style nil
-	  ruby-indent-tabs-mode t)
+	  ruby-indent-tabs-mode nil)
 ;; ruby-electric
 ;; (install-elisp "https://raw.github.com/ruby/ruby/trunk/misc/ruby-electric.el")
 ;; -> el-get
