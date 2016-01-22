@@ -16,4 +16,5 @@
 [url "git@github.com:risou"]
 	insteadOf = https://github.com/risou
 	pushInsteadOf = https://github.com/risou
-
+[help]
+	autocorrect = 1
