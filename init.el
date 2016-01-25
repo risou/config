@@ -816,6 +816,8 @@
 (setq org-startup-truncated nil)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (setq org-use-speed-commands t)
+(setq org-hide-leading-stars t)
+(setq org-indent-mode t)
 (setq org-directory "~/Dropbox/org/")
 (setq org-default-notes-file (concat org-directory "base.org"))
 (setq org-agenda-files (list org-directory))
@@ -827,7 +829,9 @@
 	  '(("t" "Todo" entry (file+headline nil "Tasks")
 		 "* TODO %?\n %i\n %a\n %t")
 		("m" "Memo" entry (file+headline nil "Memos")
-		 "* %?\n %U\n %i")
+		 "* %?\n %i\n %U")
+		("d" "Dairy" entry (file+headline nil "Dairy")
+		 "* %U\n %i%?\n %i")
 		))
 
 ;; Emacs server を起動
