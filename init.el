@@ -39,6 +39,9 @@
   (set-file-name-coding-system 'cp932)
   (setq locale-coding-system 'cp932))
 
+;; open init.el
+(define-key global-map (kbd "C-x ,") (lambda () (interactive) (switch-to-buffer (find-file-noselect "~/.emacs.d/init.el"))))
+
 ;; カラム番号も表示
 (column-number-mode t)
 ;; ファイルサイズを表示
@@ -805,6 +808,27 @@
 ;; M-x package-install editorconfig
 (setq edconf-exec-path "/usr/local/bin/editorconfig")
 (editorconfig-mode 1)
+
+;; org-mode
+;; M-x package-list-packages org
+(require 'org-install)
+(require 'org-capture)
+(setq org-startup-truncated nil)
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(setq org-use-speed-commands t)
+(setq org-directory "~/Dropbox/org/")
+(setq org-default-notes-file (concat org-directory "base.org"))
+(setq org-agenda-files (list org-directory))
+(define-key global-map (kbd "C-c n") (lambda () (interactive) (switch-to-buffer (find-file-noselect org-default-notes-file))))
+(define-key global-map (kbd "C-c c") 'org-capture)
+(define-key global-map (kbd "C-c a") 'org-agenda)
+(define-key global-map (kbd "C-c s") 'org-store-link)
+(setq org-capture-templates
+	  '(("t" "Todo" entry (file+headline nil "Tasks")
+		 "* TODO %?\n %i\n %a\n %t")
+		("m" "Memo" entry (file+headline nil "Memos")
+		 "* %?\n %U\n %i")
+		))
 
 ;; Emacs server を起動
 ; (require 'server)
