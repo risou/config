@@ -825,6 +825,7 @@
 (define-key global-map (kbd "C-c c") 'org-capture)
 (define-key global-map (kbd "C-c a") 'org-agenda)
 (define-key global-map (kbd "C-c s") 'org-store-link)
+(define-key global-map (kbd "C-c t") 'org-todo)
 (setq org-capture-templates
 	  '(("t" "Todo" entry (file+headline nil "Tasks")
 		 "* TODO %?\n %i\n %a\n %t")
