@@ -818,6 +818,7 @@
 (setq org-use-speed-commands t)
 (setq org-hide-leading-stars t)
 (setq org-indent-mode t)
+(setq org-startup-indented t)
 (setq org-directory "~/Dropbox/org/")
 (setq org-default-notes-file (concat org-directory "base.org"))
 (setq org-agenda-files (list org-directory))
