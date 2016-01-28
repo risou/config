@@ -829,11 +829,11 @@
 (define-key global-map (kbd "C-c t") 'org-todo)
 (setq org-capture-templates
 	  '(("t" "Todo" entry (file+headline nil "Tasks")
-		 "* TODO %?\n %i\n %a\n %t")
+		 "* TODO %?\n%i\n%a\n%t")
 		("m" "Memo" entry (file+headline nil "Memos")
-		 "* %?\n %i\n %U")
+		 "* %?\n%i\n%U")
 		("d" "Dairy" entry (file+headline nil "Dairy")
-		 "* %U\n %i%?\n %i")
+		 "* %U\n%i%?\n%i")
 		))
 
 ;; Emacs server を起動
