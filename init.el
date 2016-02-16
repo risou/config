@@ -158,12 +158,31 @@
 	  `((".*" ,(expand-file-name "~/.emacs.d/backups/") t)))
 
 ;; 検索時にカーソルを単語の先頭に移動する
-(defun isearch-forward-with-heading ()
-  "Search the word your cursor looking at."
-  (interactive)
-  (command-execute 'backward-word)
-  (command-execute 'isearch-forward))
-(global-set-key "\C-s" 'isearch-forward-with-heading)
+;; (defun isearch-forward-with-heading ()
+;;   "Search the word your cursor looking at."
+;;   (interactive)
+;;   (command-execute 'backward-word)
+;;   (command-execute 'isearch-forward))
+;; (global-set-key "\C-s" 'isearch-forward-with-heading)
+
+;; C-s/r C-w でカーソル位置の単語検索
+(defvar isearch-initial-string nil)
+(defun isearch-set-initial-string ()
+  (remove-hook 'isearch-mode-hook 'isearch-set-initial-string)
+  (setq isearch-string isearch-initial-string)
+  (isearch-search-and-update))
+(defun isearch-forward-at-point (&optional regexp-p no-recursive-edit)
+  "Interactive search forward for the symbol at point."
+  (interactive "P\np")
+  (if regexp-p (isearch-forward regexp-p no-recursive-edit)
+    (let* ((end (progn (skip-syntax-forward "w_") (point)))
+           (begin (progn (skip-syntax-backward "w_") (point))))
+      (if (eq begin end)
+          (isearch-forward regexp-p no-recursive-edit)
+        (setq isearch-initial-string (buffer-substring begin end))
+        (add-hook 'isearch-mode-hook 'isearch-set-initial-string)
+        (isearch-forward regexp-p no-recursive-edit)))))
+(define-key isearch-mode-map "\C-w" 'isearch-forward-at-point)
 
 ;; クリップボード同期
 (defun copy-from-osx ()
