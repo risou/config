@@ -275,6 +275,10 @@
 	(turn-on-eldoc-mode)))
 (add-hook 'emacs-lisp-mode-hook 'eldoc-print)
 
+;; ediff
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+(setq ediff-split-window-function 'split-window-horizontally)
+
 ;; auto-installの設定
 (when (require 'auto-install nil t)
   (setq auto-install-directory "~/.emacs.d/elisp/")
