@@ -322,6 +322,17 @@
   ;; 			   '("melpa" . "http://melpa.milkbox.net/packages"))
   (package-initialize))
 
+;; neotree
+(when (require 'neotree)
+  (global-set-key (kbd "C-x C-d") 'neotree-toggle)
+  (setq neo-show-hidden-files t)
+  (setq neo-create-file-auto-open t)
+  (setq neo-persist-show t)
+  (setq neo-keymap-style 'concise)
+  (setq neo-smart-open t)
+  (setq neo-pvc-integration '(face char))
+  )
+
 ;; color-moccur
 ;; (auto-install-from-emacswiki "color-moccur.el")
 ;; -> el-get
@@ -866,3 +877,7 @@
 ;   (remove-hook 'kill-buffer-query-functions 'server-kill-buffer-query-function))
 
 ;; (require 'w3m-load)
+
+;; start neotree
+(when (require 'neotree)
+  (neotree-show))
