@@ -634,3 +634,25 @@ you should place your code here."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(helm-command-prefix-key "C-z")
+ '(helm-delete-minibuffer-contents-from-point t)
+ '(helm-mini-default-sources
+   (quote
+	(helm-source-buffers-list helm-source-recentf helm-source-files-in-current-dir helm-source-emacs-commands-history helm-source-emacs-commands)))
+ '(helm-truncate-lines t t)
+ '(inhibit-default-init t)
+ '(inhibit-startup-buffer-menu t)
+ '(inhibit-startup-screen t)
+ '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256"))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
