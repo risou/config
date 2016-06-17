@@ -296,7 +296,7 @@ you should place your code here."
         (append
          (list
           ;; '(alpha . (75 50))
-          '(alpha . (85 70))
+          ;; '(alpha . (85 70))
           '(width . 200)
           '(height . 65)
           '(top . 50)
@@ -371,7 +371,7 @@ you should place your code here."
   (global-set-key (kbd "C-x C-j") 'skk-mode)
   (setq skk-byte-compile-init-file t)
   (setq skk-jisyo-code 'utf-8)
-  (setq skk-jisyo (concat (getenv "HOME") "/Dropbox/skk-jisyo.utf8"))
+  (setq skk-jisyo (concat (getenv "HOME") "/skk-jisyo.utf8"))
   (add-hook 'isearch-mode-hook
 			(function (lambda ()
 						(and (boundp 'skk-mode) skk-mode
@@ -577,6 +577,9 @@ you should place your code here."
 	(define-key helm-command-map (kbd "g") 'helm-ag)
 	(define-key helm-command-map (kbd "o") 'helm-occur)
 	)
+
+  ;; helm-projectile
+  (define-key global-map (kbd "C-x C-t") 'helm-projectile)
 
   ;; editorconfig
   ;; M-x package-install editorconfig
