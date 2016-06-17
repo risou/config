@@ -614,6 +614,23 @@ you should place your code here."
 		   "* %U\n%i%?\n%i")
 		  ))
 
+  ;; markdown preview
+  (require 'markdown-mode)
+  (defun eww-open-file-other-window (file)
+	(if (one-window-p) (split-window-horizontally))
+	(other-window 1)
+	(eww-open-file file))
+  (defun markdown-preview-eww ()
+	(interactive)
+	(message (buffer-file-name))
+	(call-process "/usr/local/bin/pandoc" nil nil nil
+				  "-f"
+				  "markdown"
+				  (buffer-file-name)
+				  "-o"
+				  "/tmp/markdown-preview-eww-result.html")
+	(eww-open-file-other-window "/tmp/markdown-preview-eww-result.html"))
   )
+
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
