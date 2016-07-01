@@ -68,14 +68,14 @@ alias e="emacsclient -nw"
 alias emacsd="emacs --daemon"
 alias emacsk="emacsclient -e '(kill-emacs)'"
 
-eval "$(plenv init - zsh)"
-export PATH="$HOME/.phpenv/bin:$HOME/.phpenv/shims:$PATH"
-eval "$(phpenv init - zsh)"
-export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
-eval "$(rbenv init - zsh)"
+# eval "$(plenv init - zsh)"
+# export PATH="$HOME/.phpenv/bin:$HOME/.phpenv/shims:$PATH"
+# eval "$(phpenv init - zsh)"
+# export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
+# eval "$(rbenv init - zsh)"
 
 # PHPENV <-> Apache2 連携用
-export PHPENV_APACHE_MODULE_PATH="$HOME/.phpenv"
+# export PHPENV_APACHE_MODULE_PATH="$HOME/.phpenv"
 
 export TERM=xterm-256color
 
@@ -89,19 +89,13 @@ function tmux-mouse-on {
 	if [ -z $TMUX ]; then
 		return
 	fi
-	tmux set-option -w mode-mouse on > /dev/null
-	tmux set-option -w mouse-resize-pane on > /dev/null
-	tmux set-option -w mouse-select-pane on > /dev/null
-	tmux set-option -w mouse-select-window on > /dev/null
+	tmux set-option -w mouse on > /dev/null
 }
 function tmux-mouse-off {
 	if [ -z $TMUX ]; then
 		return
 	fi
-	tmux set-option -w mode-mouse off > /dev/null
-	tmux set-option -w mouse-resize-pane off > /dev/null
-	tmux set-option -w mouse-select-pane off > /dev/null
-	tmux set-option -w mouse-select-window off > /dev/null
+	tmux set-option -w mouse off > /dev/null
 }
 tmuxOffCmds=("man" "less" "vi" "vim" "emacs")
 function preexec_for_tmux {
