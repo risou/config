@@ -26,9 +26,10 @@ zstyle ':chpwd:*' recent-dirs-default yes
 zstyle ':completion:*' recent-dirs-insert both
 
 # zsh powerline
-#export PATH=$PATH:~/Library/Python/2.7/bin
+# export PATH=$PATH:/usr/local/Cellar/python/2.7.12/bin
 #powerline-daemon -q
 #. ~/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
+. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # プロンプトの右端にパスを表示
 PROMPT=$'[%{${fg[cyan]}%}%n%{${reset_color}%}@%{${bg[blue]}%}%m%{${reset_color}%}] %# '
@@ -63,7 +64,6 @@ export LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx
 
 # emacsclient
 #export EDITOR="emacsclient"
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 alias e="emacsclient -nw"
 alias emacsd="emacs --daemon"
 alias emacsk="emacsclient -e '(kill-emacs)'"
@@ -122,15 +122,11 @@ export PGDATA=/usr/local/var/postgres
 # grunt
 export NODE_PATH='/usr/local/lib/node_modules'
 
-# ghq
-export GOPATH=$HOME
-export PATH=$PATH:$GOPATH/bin
-
 # Visual Studio Code
 code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 
 # javac encoding
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
 
-export PATH=$PATH:$HOME/.zsh/bin
-
+export NVM_DIR="/Users/risou/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
