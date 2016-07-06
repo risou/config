@@ -387,6 +387,7 @@ you should place your code here."
 	(require 'skk)
 	(skk-latin-mode t))
   (dolist (hook '(find-file-hook
+				  org-capture-mode-hook
 				  minibuffer-setup-hook))
 	(add-hook hook 'auto-skk-latin-mode))
 
