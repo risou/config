@@ -48,6 +48,7 @@ values."
 									  php-mode
 									  ddskk
 									  editorconfig
+									  helm-ghq
 									  )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
