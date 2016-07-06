@@ -613,6 +613,8 @@ you should place your code here."
 		   "* %?\n%i\n%U")
 		  ("d" "Dairy" entry (file+headline nil "Dairy")
 		   "* %U\n%i%?\n%i")
+		  ("l" "Daily Work Log" item (file+datetree nil)
+		   "%U %i%?")
 		  ))
   (eval-after-load "org"
 	'(progn
