@@ -382,6 +382,13 @@ you should place your code here."
 						(and (boundp 'skk-mode) skk-mode (skk-isearch-mode-cleanup))
 						(and (boundp 'skk-mode-invoked) skk-mode-invoked
 							 (skk-set-cursor-properly)))))
+  ;; skk-mode on when buffer open
+  (defun auto-skk-latin-mode ()
+	(require 'skk)
+	(skk-latin-mode t))
+  (dolist (hook '(find-file-hook
+				  minibuffer-setup-hook))
+	(add-hook hook 'auto-skk-latin-mode))
 
   ;;redo+の設定
   (when (require 'redo+ nil t)
