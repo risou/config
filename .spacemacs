@@ -614,6 +614,10 @@ you should place your code here."
 		  ("d" "Dairy" entry (file+headline nil "Dairy")
 		   "* %U\n%i%?\n%i")
 		  ))
+  (eval-after-load "org"
+	'(progn
+	   (define-key org-mode-map (kbd "C-'") nil)
+	   ))
 
   ;; markdown preview
   (require 'markdown-mode)
