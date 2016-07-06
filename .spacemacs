@@ -612,9 +612,11 @@ you should place your code here."
 		  ("m" "Memo" entry (file+headline nil "Memos")
 		   "* %?\n%i\n%U")
 		  ("d" "Dairy" entry (file+headline nil "Dairy")
-		   "* %U\n%i%?\n%i")
-		  ("l" "Daily Work Log" item (file+datetree nil)
+		   "* %U\n%i%?")
+		  ("w" "Daily Work Log" item (file+datetree nil)
 		   "%U %i%?")
+		  ("l" "List" checkitem (file+headline nil "Lists")
+		   " [ ] %i%? %U")
 		  ))
   (eval-after-load "org"
 	'(progn
