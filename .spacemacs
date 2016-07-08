@@ -49,6 +49,7 @@ values."
 									  ddskk
 									  editorconfig
 									  helm-ghq
+									  plenv
 									  )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
@@ -469,7 +470,21 @@ you should place your code here."
 		cperl-tab-always-indent t
 		;;	  cperl-indent-subs-specially nil) ;; need package-install
 		cperl-highlight-variables-indiscriminately t)
+  (require 'plenv)
   ;; perl flymake
+  (require 'flymake)
+  (defconst flymak-allowed-perl-file-name-masks
+	'(("\\.pl$" flymake-perl-init)
+	  ("\\.pm$" flymake-perl-init)
+	  ("\\.psgi$" flymake-perl-init)
+	  ("\\.t$" flymake-perl-init)))
+  (defun flymake-perl-init ()
+	(let* ((temp-file (flymake-init-create-temp-buffer-copy
+					   'flymake-create-temp-inplace))
+		   (local-file (file-relative-name
+						temp-file
+						(file-name-directory buffer-file-name))))
+	  (list (guess-plenv-perl-path) (list "-MProject::Libs lib_dirs => [qw(local/lib/perl5)]" "-wc" local-file))))
   (defun cperl-mode-hooks ()
 	(flymake-mode t))
   (add-hook 'cperl-mode-hook 'cperl-mode-hooks)
