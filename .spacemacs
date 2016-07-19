@@ -51,6 +51,7 @@ values."
 									  helm-ghq
 									  plenv
 									  go-mode
+									  comment-dwim-2
 									  )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
@@ -436,6 +437,9 @@ you should place your code here."
 	(set-face-background 'whitespace-trailing 'nil)
 	(set-face-underline 'whitespace-trailing t)
 	(global-whitespace-mode 1))
+
+  ;; comment-dwim-2
+  (define-key global-map (kbd "M-;") 'comment-dwim-2)
 
   ;; nxml-mode
   (add-to-list 'auto-mode-alist '("\\.[sx]?html?\\(\\.[a-zA-Z_]+\\)?\\'" . nxml-mode))
