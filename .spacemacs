@@ -50,6 +50,7 @@ values."
 									  editorconfig
 									  helm-ghq
 									  plenv
+									  go-mode
 									  )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
