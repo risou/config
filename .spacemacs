@@ -471,6 +471,10 @@ you should place your code here."
 		cperl-tab-always-indent t
 		;;	  cperl-indent-subs-specially nil) ;; need package-install
 		cperl-highlight-variables-indiscriminately t)
+  ;; disturb overlap bracket completion (by smartparents-mode and electric-pair)
+  ;; ref: https://github.com/syl20bnr/spacemacs/issues/480
+  (with-eval-after-load 'cperl-mode
+	(define-key cperl-mode-map "{" nil))
   (require 'plenv)
   ;; perl flymake
   (require 'flymake)
@@ -487,6 +491,7 @@ you should place your code here."
 						(file-name-directory buffer-file-name))))
 	  (list (guess-plenv-perl-path) (list "-MProject::Libs lib_dirs => [qw(local/lib/perl5)]" "-wc" local-file))))
   (defun cperl-mode-hooks ()
+	(setq indent-tabs-mode nil)
 	(flymake-mode t))
   (add-hook 'cperl-mode-hook 'cperl-mode-hooks)
   ;; perl-completion
