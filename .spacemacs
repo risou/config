@@ -391,7 +391,8 @@ you should place your code here."
 	(skk-latin-mode t))
   (dolist (hook '(find-file-hook
 				  org-capture-mode-hook
-				  minibuffer-setup-hook))
+				  minibuffer-setup-hook
+				  with-editor-mode-hook))
 	(add-hook hook 'auto-skk-latin-mode-hook))
 
   ;;redo+の設定
