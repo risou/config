@@ -479,7 +479,9 @@ you should place your code here."
   ;; disturb overlap bracket completion (by smartparents-mode and electric-pair)
   ;; ref: https://github.com/syl20bnr/spacemacs/issues/480
   (with-eval-after-load 'cperl-mode
-	(define-key cperl-mode-map "{" nil))
+	(define-key cperl-mode-map "{" nil)
+	(define-key cperl-mode-map "[" nil)
+	(define-key cperl-mode-map "(" nil))
   (require 'plenv)
   ;; perl flymake
   (require 'flymake)
