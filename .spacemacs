@@ -498,6 +498,7 @@ you should place your code here."
 						(file-name-directory buffer-file-name))))
 	  (list (guess-plenv-perl-path) (list "-MProject::Libs lib_dirs => [qw(local/lib/perl5)]" "-wc" local-file))))
   (defun cperl-mode-hooks ()
+        (cperl-set-style "PerlStyle")
 	(setq indent-tabs-mode nil)
 	(flymake-mode t))
   (add-hook 'cperl-mode-hook 'cperl-mode-hooks)
