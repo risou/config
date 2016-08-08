@@ -642,6 +642,7 @@ you should place your code here."
   (define-key global-map (kbd "C-c a") 'org-agenda)
   (define-key global-map (kbd "C-c s") 'org-store-link)
   (define-key global-map (kbd "C-c t") 'org-todo)
+  (define-key global-map (kbd "C-c l") 'windmove-right) ;; cancel overrided key map
   (setq org-capture-templates
 		'(("t" "Todo" entry (file+headline nil "Tasks")
 		   "* TODO %?\n%i\n%a\n%t")
