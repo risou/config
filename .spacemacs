@@ -313,7 +313,7 @@ you should place your code here."
   ;; tabのサイズ
   (setq-default c-basic-offset 4
                 tab-width 4
-                indent-tabs-mode t)
+                indent-tabs-mode nil)
 
   ;; C-s/r C-w でカーソル位置の単語検索
   (defvar isearch-initial-string nil)
