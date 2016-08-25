@@ -619,6 +619,7 @@ you should place your code here."
 
   ;; helm-projectile
   (define-key global-map (kbd "C-x C-t") 'helm-projectile)
+  (define-key global-map (kbd "C-x C-g") 'helm-projectile-ag)
 
   ;; editorconfig
   ;; M-x package-install editorconfig
