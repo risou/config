@@ -646,7 +646,7 @@ you should place your code here."
   (define-key global-map (kbd "C-c l") 'windmove-right) ;; cancel overrided key map
   (setq org-capture-templates
 		'(("t" "Todo" entry (file+headline nil "Tasks")
-		   "* TODO %?\n%i\n%a\n%t")
+		   "* TODO %i%?")
 		  ("m" "Memo" entry (file+headline nil "Memos")
 		   "* %?\n%i\n%U")
 		  ("d" "Dairy" entry (file+headline nil "Dairy")
