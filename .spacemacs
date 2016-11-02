@@ -256,6 +256,8 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  ;; change eyebrowse-keymap-prefix
+  (setq eyebrowse-keymap-prefix (kbd "C-c w"))
   )
 
 (defun dotspacemacs/user-config ()
@@ -561,6 +563,14 @@ you should place your code here."
   ;; 				  (vector (current-column))))
   ;; 			  (c-set-offset 'arglist-intro 'ywb-php-lineup-arglist-intro)
   ;; 			  (c-set-offset 'arglist-close 'ywb-php-lineup-arglist-close)))
+
+  ;; disable evil-exit-emacs-state by C-z
+  (define-key evil-emacs-state-map (kbd "C-z") nil)
+
+  ;; eyebrowse
+  (define-key eyebrowse-mode-map (kbd "C-c w d") 'eyebrowse-close-window-config)
+  (define-key eyebrowse-mode-map (kbd "<C-tab>") 'eyebrowse-next-window-config)
+  (define-key eyebrowse-mode-map (kbd "<C-S-tab>") 'eyebrowse-prev-window-config)
 
   ;; magit
   (define-key global-map (kbd "C-c m") 'magit-status)
