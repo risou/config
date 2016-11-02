@@ -46,7 +46,7 @@ values."
 									  neotree
 									  point-undo
 									  yaml-mode
-									  php-mode
+									  ;; php-mode
 									  ddskk
 									  editorconfig
 									  helm-ghq
@@ -534,7 +534,7 @@ you should place your code here."
 			   '("\\(.*\\):(\\([0-9]+\\)): \\(.*\\)" 1 2 nil 3))
 
   ;; php-mode
-  (require 'php-mode)
+  ;; (require 'php-mode)
   ;; php-completion
   ;; M-x package-list-packages -> php-completion
   ;; (add-hook 'php-mode-hook
