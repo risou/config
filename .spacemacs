@@ -288,6 +288,9 @@ you should place your code here."
   ;; open .spacemacs
   (define-key global-map (kbd "C-x  ,") (lambda () (interactive) (switch-to-buffer (find-file-noselect "~/.spacemacs"))))
 
+  ;; disable xterm-mouse-mode
+  (xterm-mouse-mode -1)
+
   ;; 時計を表示
   (setq display-time-24hr-format t)
   (display-time-mode t)
