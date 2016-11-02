@@ -316,6 +316,9 @@ you should place your code here."
                 tab-width 4
                 indent-tabs-mode nil)
 
+  ;; avoid to write `package-selected-packages' in init.el
+  (load (setq custom-file (expand-file-name "custom.el" user-emacs-directory)))
+
   ;; C-s/r C-w でカーソル位置の単語検索
   (defvar isearch-initial-string nil)
   (defun isearch-set-initial-string ()
