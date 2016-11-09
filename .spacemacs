@@ -663,7 +663,6 @@ you should place your code here."
   (define-key global-map (kbd "C-c a") 'org-agenda)
   (define-key global-map (kbd "C-c s") 'org-store-link)
   (define-key global-map (kbd "C-c t") 'org-todo)
-  (define-key global-map (kbd "C-c l") 'windmove-right) ;; cancel overrided key map
   (setq org-capture-templates
 		'(("t" "Todo" entry (file+headline nil "Tasks")
 		   "* TODO %i%?")
@@ -679,6 +678,7 @@ you should place your code here."
   (eval-after-load "org"
 	'(progn
 	   (define-key org-mode-map (kbd "C-'") nil)
+       (define-key org-mode-map (kbd "C-c l") nil)
 	   ))
 
   ;; markdown preview
