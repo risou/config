@@ -305,6 +305,20 @@ you should place your code here."
   (global-linum-mode t)
   (setq linum-format "%4d  ")
 
+  ;; spacemacs
+  ;; highlight current line
+  (spacemacs/toggle-highlight-current-line-globally-on)
+  ;; highlight indentation level
+  (spacemacs/toggle-highlight-indentation-on)
+  ;; highlight indentation current column
+  (spacemacs/toggle-highlight-indentation-current-column-on)
+  ;; battery
+  (spacemacs/toggle-mode-line-battery-on)
+  ;; point position
+  (spacemacs/toggle-mode-line-point-position-on)
+  ;; version control
+  (spacemacs/toggle-mode-line-version-control-on)
+
   ;; 半透明
   (setq default-frame-alist
         (append
