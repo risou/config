@@ -55,6 +55,7 @@ values."
 									  plenv
 									  go-mode
 									  comment-dwim-2
+									  migemo
 									  )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
@@ -388,15 +389,6 @@ you should place your code here."
   (setq skk-byte-compile-init-file t)
   (setq skk-jisyo-code 'utf-8)
   (setq skk-jisyo (concat (getenv "HOME") "/skk-jisyo.utf8"))
-  (add-hook 'isearch-mode-hook
-			(function (lambda ()
-						(and (boundp 'skk-mode) skk-mode
-							 (skk-isearch-mode-setup)))))
-  (add-hook 'isearch-mode-end-hook
-			(function (lambda ()
-						(and (boundp 'skk-mode) skk-mode (skk-isearch-mode-cleanup))
-						(and (boundp 'skk-mode-invoked) skk-mode-invoked
-							 (skk-set-cursor-properly)))))
   ;; skk-mode on when buffer open
   (defun auto-skk-latin-mode-hook ()
 	(require 'skk)
@@ -572,6 +564,17 @@ you should place your code here."
   ;; disable evil-exit-emacs-state by C-z
   (define-key evil-emacs-state-map (kbd "C-z") nil)
 
+  ;; migemo
+  (require 'migemo)
+  (setq migemo-command "cmigemo")
+  (setq migemo-options '("-q" "--emacs" "-i" "\a"))
+  (setq migemo-user-dictionary nil)
+  (setq migemo-regex-dictionary nil)
+  (setq migemo-coding-system 'utf-8-unix)
+  (setq migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict")
+  (load-library "migemo")
+  (migemo-init)
+
   ;; eyebrowse
   (define-key eyebrowse-mode-map (kbd "C-c w d") 'eyebrowse-close-window-config)
   (define-key eyebrowse-mode-map (kbd "<C-tab>") 'eyebrowse-next-window-config)
@@ -635,10 +638,13 @@ you should place your code here."
 	(define-key helm-command-map (kbd "g") 'helm-ag)
 	(define-key helm-command-map (kbd "o") 'helm-occur)
 	)
+  (eval-after-load "helm"
+    (helm-migemo-mode +1)
+    )
 
   ;; helm-projectile
-  (define-key global-map (kbd "C-x C-t") 'helm-projectile)
-  (define-key global-map (kbd "C-x C-g") 'helm-projectile-ag)
+  (define-key global-map (kbd "C-x t") 'helm-projectile)
+  (define-key global-map (kbd "C-x g") 'helm-projectile-ag)
 
   ;; editorconfig
   ;; M-x package-install editorconfig
