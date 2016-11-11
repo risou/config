@@ -306,18 +306,21 @@ you should place your code here."
   (setq linum-format "%4d  ")
 
   ;; spacemacs
-  ;; highlight current line
-  (spacemacs/toggle-highlight-current-line-globally-on)
-  ;; highlight indentation level
-  (spacemacs/toggle-highlight-indentation-on)
-  ;; highlight indentation current column
-  (spacemacs/toggle-highlight-indentation-current-column-on)
-  ;; battery
-  (spacemacs/toggle-mode-line-battery-on)
-  ;; point position
-  (spacemacs/toggle-mode-line-point-position-on)
-  ;; version control
-  (spacemacs/toggle-mode-line-version-control-on)
+  (defun toggle-spacemacs-config ()
+    ;; highlight current line
+    (spacemacs/toggle-highlight-current-line-globally-on)
+    ;; highlight indentation level
+    (spacemacs/toggle-highlight-indentation-on)
+    ;; highlight indentation current column
+    (spacemacs/toggle-highlight-indentation-current-column-on)
+    ;; battery
+    (spacemacs/toggle-mode-line-battery-on)
+    ;; point position
+    (spacemacs/toggle-mode-line-point-position-on)
+    ;; version control
+    (spacemacs/toggle-mode-line-version-control-on)
+    )
+  (add-hook 'find-file-hook 'toggle-spacemacs-config)
 
   ;; 半透明
   (setq default-frame-alist
