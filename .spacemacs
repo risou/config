@@ -56,6 +56,9 @@ values."
 									  go-mode
 									  comment-dwim-2
 									  migemo
+									  ace-isearch
+									  rotate
+									  e2wm
 									  )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
@@ -361,7 +364,10 @@ you should place your code here."
           (setq isearch-initial-string (buffer-substring begin end))
           (add-hook 'isearch-mode-hook 'isearch-set-initial-string)
           (isearch-forward regexp-p no-recursive-edit)))))
-  (define-key isearch-mode-map "\C-w" 'isearch-forward-at-point)
+  ;; (define-key isearch-mode-map "\C-w" 'isearch-forward-at-point)
+  (define-key global-map (kbd "C-c C-s") 'isearch-forward-at-point)
+
+  (global-ace-isearch-mode 1)
 
   ;; C-cC-rでリサイズ（hjkl）
   (defun window-resizer ()
@@ -462,6 +468,15 @@ you should place your code here."
 
   ;; comment-dwim-2
   (define-key global-map (kbd "M-;") 'comment-dwim-2)
+
+  ;; rotate
+  (require 'rotate)
+  (define-key global-map (kbd "C-c TAB") 'rotate-window)
+  (defadvice rotate-window (after rotate-cursor activate)
+    (other-window -1))
+  ;; e2wm
+  (require 'e2wm)
+  (define-key global-map (kbd "C-c ; X") 'e2wm:start-management)
 
   ;; nxml-mode
   (add-to-list 'auto-mode-alist '("\\.[sx]?html?\\(\\.[a-zA-Z_]+\\)?\\'" . nxml-mode))
