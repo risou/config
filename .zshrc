@@ -123,6 +123,17 @@ function precmd_for_tmux {
 preexec_functions=($preexec_functions preexec_for_tmux)
 precmd_functions=($precmd_functions precmd_for_tmux)
 
+# ssh
+ssh() {
+    if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then
+        tmux rename-window ${@: -1}
+        command ssh "$@"
+        tmux set-window-option automatic-rename "on" 1>/dev/null
+    else
+        command ssh "$@"
+    fi
+}
+
 # grunt
 export NODE_PATH='/usr/local/lib/node_modules'
 
