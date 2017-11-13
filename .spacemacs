@@ -18,6 +18,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     javascript
      ruby
      sql
      ;; ----------------------------------------------------------------
@@ -38,6 +39,11 @@ values."
      spell-checking
      syntax-checking
      version-control
+     go
+     (go :variables
+         go-use-gometalinter t
+         go-tab-width 4
+         gofmt-command "goimports")
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -59,6 +65,9 @@ values."
 									  ace-isearch
 									  rotate
 									  e2wm
+									  flycheck
+                                      all-the-icons
+                                      minimap
 									  )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
@@ -117,19 +126,25 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light
-                         solarized-light
-                         solarized-dark
-                         leuven
-                         monokai
-                         zenburn)
+   dotspacemacs-themes '(spacemacs-dark)
+   ;; dotspacemacs-themes '(spacemacs-dark
+   ;;                       spacemacs-light
+   ;;                       solarized-light
+   ;;                       solarized-dark
+   ;;                       leuven
+   ;;                       monokai
+   ;;                       zenburn)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+   ;; dotspacemacs-default-font '("Source Code Pro"
+   ;;                             :size 13
+   ;;                             :weight normal
+   ;;                             :width normal
+   ;;                             :powerline-scale 1.1)
+   dotspacemacs-default-font '("Menlo"
+                               :size 12
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -274,6 +289,10 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+  ;; set $GOPATH
+  (add-to-list 'exec-path (expand-file-name "~/bin"))
+  (setenv "GOPATH" "/Users/risou/")
+
   ;; C-h でバックスペース
   (define-key key-translation-map [?\C-h] [?\C-?])
 
@@ -307,6 +326,9 @@ you should place your code here."
   ;; 行番号を常に表示
   (global-linum-mode t)
   (setq linum-format "%4d  ")
+
+  ;; 行間
+  (setq-default line-spacing 0.5)
 
   ;; spacemacs
   (defun toggle-spacemacs-config ()
@@ -369,6 +391,9 @@ you should place your code here."
 
   (global-ace-isearch-mode 1)
 
+  ;; minimap
+  (require 'minimap)
+
   ;; C-cC-rでリサイズ（hjkl）
   (defun window-resizer ()
     "Control window size and position."
@@ -426,15 +451,39 @@ you should place your code here."
   (when (require 'redo+ nil t)
 	(global-set-key (kbd "C-'") 'redo))
 
+  ;; all-the-icons
+  (require 'all-the-icons)
+
   ;; neotree
   (when (require 'neotree)
-	(global-set-key (kbd "C-x C-d") 'neotree-toggle)
+    (defun neotree-projectile-dir ()
+      "Open NeoTree using the project root, using find-file-in-project, or the current buffer directory."
+      (let ((project-dir
+             (ignore-errors
+               (projectile-project-root)
+               ))
+            (file-name (buffer-file-name))
+            (neo-smart-open t))
+        (progn
+          (neotree-show)
+          (if project-dir
+              (neotree-dir project-dir))
+          (if file-name
+              (neotree-find file-name)))))
+	;;(global-set-key (kbd "C-x C-d") 'neotree-toggle)
+	(global-set-key (kbd "C-x C-d") (lambda ()
+                                      (interactive)
+                                      (if (neo-global--window-exists-p)
+                                          (neotree-hide)
+                                        (neotree-projectile-dir))))
+                                        ; (neotree-projectile-action))))
 	(setq neo-show-hidden-files t)
 	(setq neo-create-file-auto-open t)
 	(setq neo-persist-show t)
 	(setq neo-keymap-style 'concise)
 	(setq neo-smart-open t)
-	(setq neo-pvc-integration '(face char)))
+	(setq neo-pvc-integration '(face char))
+	(setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
 
   ;; auto-complete
   (when (require 'auto-complete-config nil t)
@@ -487,6 +536,8 @@ you should place your code here."
   ;; nxml-mode で auto-complete-mode を利用する
   (add-to-list 'ac-modes 'nxml-mode)
 
+  (add-hook 'after-init-hook #'global-flycheck-mode)
+
   ;; css-mode
   (autoload 'css-mode "css-mode" nil t)
   (setq auto-mode-alist
@@ -520,23 +571,24 @@ you should place your code here."
 	(define-key cperl-mode-map "(" nil))
   (require 'plenv)
   ;; perl flymake
-  (require 'flymake)
-  (defconst flymak-allowed-perl-file-name-masks
-	'(("\\.pl$" flymake-perl-init)
-	  ("\\.pm$" flymake-perl-init)
-	  ("\\.psgi$" flymake-perl-init)
-	  ("\\.t$" flymake-perl-init)))
-  (defun flymake-perl-init ()
-	(let* ((temp-file (flymake-init-create-temp-buffer-copy
-					   'flymake-create-temp-inplace))
-		   (local-file (file-relative-name
-						temp-file
-						(file-name-directory buffer-file-name))))
-	  (list (guess-plenv-perl-path) (list "-MProject::Libs lib_dirs => [qw(local/lib/perl5)]" "-wc" local-file))))
+  ;; (require 'flymake)
+  ;; (defconst flymak-allowed-perl-file-name-masks
+  ;;       '(("\\.pl$" flymake-perl-init)
+  ;;         ("\\.pm$" flymake-perl-init)
+  ;;         ("\\.psgi$" flymake-perl-init)
+  ;;         ("\\.t$" flymake-perl-init)))
+  ;; (defun flymake-perl-init ()
+  ;;       (let* ((temp-file (flymake-init-create-temp-buffer-copy
+  ;;       				   'flymake-create-temp-inplace))
+  ;;       	   (local-file (file-relative-name
+  ;;       					temp-file
+  ;;       					(file-name-directory buffer-file-name))))
+  ;;         (list (guess-plenv-perl-path) (list "-MProject::Libs lib_dirs => [qw(local/lib/perl5)]" "-wc" local-file))))
   (defun cperl-mode-hooks ()
         (cperl-set-style "PerlStyle")
 	(setq indent-tabs-mode nil)
-	(flymake-mode t))
+	;; (flymake-mode t))
+        )
   (add-hook 'cperl-mode-hook 'cperl-mode-hooks)
   ;; perl-completion
   (defun perl-completion-hook ()
@@ -595,6 +647,40 @@ you should place your code here."
 
   ;; disable evil-exit-emacs-state by C-z
   (define-key evil-emacs-state-map (kbd "C-z") nil)
+
+  ;; ggtags-mode
+  ;; (require 'ggtags)
+  ;; (add-hook 'cperl-mode-hook (lambda () (ggtags-mode)))
+  ;; (add-hook 'go-mode-hook (lambda () (ggtags-mode)))
+  ;; helm-gtags-mode
+  (require 'helm-gtags)
+  (add-hook 'helm-gtags-mode-hook
+            '(lambda ()
+               (local-set-key (kbd "M-.") 'helm-gtags-find-tag)
+               (local-set-key (kbd "M-,") 'helm-gtags-pop-stack)
+               (local-set-key (kbd "M-t") 'helm-gtags-find-rtag)
+               )
+            )
+  (add-hook 'cperl-mode-hook (lambda () (helm-gtags-mode)))
+  (add-hook 'go-mode-hook (lambda () (helm-gtags-mode)))
+
+  ;; flycheck-gometalinter
+  ;; skips 'vendor' directories and sets GO15VENDOREXPERIMENT=1
+  (setq flycheck-gometalinter-vendor t)
+  ;; only show errors
+  (setq flycheck-gometalinter-errors-only t)
+  ;; only run fast linters
+  (setq flycheck-gometalinter-fast t)
+  ;; use in tests files
+  (setq flycheck-gometalinter-test t)
+  ;; disable linters
+  (setq flycheck-gometalinter-disable-linters '("gotype" "gocyclo"))
+  ;; Only enable selected linters
+  (setq flycheck-gometalinter-disable-all t)
+  (setq flycheck-gometalinter-enable-linters '("golint"))
+  ;; Set different deadline (default: 5s)
+  (setq flycheck-gometalinter-deadline "10s")
+
 
   ;; migemo
   (require 'migemo)
@@ -674,6 +760,10 @@ you should place your code here."
     (helm-migemo-mode +1)
     )
 
+  ;; helm-ag add option
+  ;; to avoid bug https://github.com/ggreer/the_silver_searcher/issues/1038#issuecomment-322267309
+  (custom-set-variables '(helm-ag-command-option "--mmap"))
+
   ;; helm-projectile
   (define-key global-map (kbd "C-x t") 'helm-projectile)
   (define-key global-map (kbd "C-x g") 'helm-projectile-ag)
@@ -748,12 +838,15 @@ you should place your code here."
  '(helm-delete-minibuffer-contents-from-point t)
  '(helm-mini-default-sources
    (quote
-	(helm-source-buffers-list helm-source-recentf helm-source-files-in-current-dir helm-source-emacs-commands-history helm-source-emacs-commands)))
+    (helm-source-buffers-list helm-source-recentf helm-source-files-in-current-dir helm-source-emacs-commands-history helm-source-emacs-commands)))
  '(helm-truncate-lines t t)
  '(inhibit-default-init t)
  '(inhibit-startup-buffer-menu t)
  '(inhibit-startup-screen t)
- '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256"))))
+ '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256")))
+ '(package-selected-packages
+   (quote
+    (web-beautify minimap livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode all-the-icons memoize font-lock+ go-guru go-eldoc flycheck-gometalinter company-go atom-one-dark-theme yaml-mode xterm-color ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org sql-indent spacemacs-theme spaceline smeargle shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode rotate robe restart-emacs redo+ rbenv rake rainbow-delimiters quelpa popwin point-undo plenv persp-mode paradox orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode minitest migemo markdown-toc magit-gitflow macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-ghq helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-mode gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md ggtags flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig e2wm dumb-jump diff-hl define-word ddskk company-statistics comment-dwim-2 column-enforce-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ace-isearch ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
