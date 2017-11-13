@@ -37,9 +37,10 @@ zstyle ':completion:*' recent-dirs-insert both
 
 # zsh powerline
 # export PATH=$PATH:/usr/local/Cellar/python/2.7.12/bin
+export PATH=$PATH:/Users/risou/Library/Python/2.7/bin
 #powerline-daemon -q
-#. ~/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
-. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+. ~/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
+#. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # プロンプトの右端にパスを表示
 PROMPT=$'[%{${fg[cyan]}%}%n%{${reset_color}%}@%{${bg[blue]}%}%m%{${reset_color}%}] %# '
@@ -78,11 +79,11 @@ alias e="emacsclient -nw"
 alias emacsd="emacs --daemon"
 alias emacsk="emacsclient -e '(kill-emacs)'"
 
-# eval "$(plenv init - zsh)"
-# export PATH="$HOME/.phpenv/bin:$HOME/.phpenv/shims:$PATH"
+eval "$(plenv init - zsh)"
+export PATH="$HOME/.phpenv/bin:$HOME/.phpenv/shims:$PATH"
 # eval "$(phpenv init - zsh)"
-# export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
-# eval "$(rbenv init - zsh)"
+export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
+eval "$(rbenv init - zsh)"
 
 # PHPENV <-> Apache2 連携用
 # export PHPENV_APACHE_MODULE_PATH="$HOME/.phpenv"
@@ -138,7 +139,7 @@ ssh() {
 export NODE_PATH='/usr/local/lib/node_modules'
 
 # Visual Studio Code
-code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
+# code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 
 # javac encoding
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
