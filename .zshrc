@@ -24,8 +24,8 @@ zstyle ':vcs_info:git:*' unstagedstr "-"
 zstyle ':vcs_info:*' actionformats ' %F{1}(%b%u%c:%a)%f'
 zstyle ':vcs_info:*' formats ' %F{2}(%b%u%c)%f' '%r'
 precmd () {
-  vcs_info
-  [[ -n ${vcs_info_msg_1_} ]] && tmux rename-window $vcs_info_msg_1_
+    vcs_info
+    [[ -n ${vcs_info_msg_1_} ]] && tmux rename-window $vcs_info_msg_1_
 }
 
 # cdr
