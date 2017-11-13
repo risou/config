@@ -91,9 +91,6 @@ export TERM=xterm-256color
 
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
 
-# coosy dev
-export PGDATA=/usr/local/var/postgres
-
 # tmux mouse
 function tmux-mouse-on {
 	if [ -z $TMUX ]; then
@@ -125,9 +122,6 @@ function precmd_for_tmux {
 }
 preexec_functions=($preexec_functions preexec_for_tmux)
 precmd_functions=($precmd_functions precmd_for_tmux)
-
-# coosy dev
-export PGDATA=/usr/local/var/postgres
 
 # grunt
 export NODE_PATH='/usr/local/lib/node_modules'
