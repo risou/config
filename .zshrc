@@ -4,10 +4,13 @@ setopt prompt_subst
 autoload -U compinit
 compinit -u
 
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
 export GOPATH=/Users/risou
 
 export PATH=/usr/local/bin:$PATH
 export PATH=$PATH:$GOPATH/bin
+
 # プロンプトのカラー表示を有効
 autoload -U colors
 colors
