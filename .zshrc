@@ -23,6 +23,10 @@ zstyle ':vcs_info:git:*' stagedstr "+"
 zstyle ':vcs_info:git:*' unstagedstr "-"
 zstyle ':vcs_info:*' actionformats ' %F{1}(%b%u%c:%a)%f'
 zstyle ':vcs_info:*' formats ' %F{2}(%b%u%c)%f' '%r'
+preexec () {
+    command=(${(s/ /)${1}})
+    [[ `echo $command[1] | grep 'vagrant'` ]] && tmux rename-window $command[1]
+}
 precmd () {
     vcs_info
     [[ -n ${vcs_info_msg_1_} ]] && tmux rename-window $vcs_info_msg_1_
