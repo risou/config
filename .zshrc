@@ -4,6 +4,10 @@ setopt prompt_subst
 autoload -U compinit
 compinit -u
 
+export GOPATH=/Users/risou
+
+export PATH=/usr/local/bin:$PATH
+export PATH=$PATH:$GOPATH/bin
 # プロンプトのカラー表示を有効
 autoload -U colors
 colors
