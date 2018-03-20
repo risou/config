@@ -18,6 +18,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     html
      javascript
      ruby
      sql
@@ -68,6 +69,7 @@ values."
 									  flycheck
                                       all-the-icons
                                       minimap
+                                      vue-mode
 									  )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
@@ -538,6 +540,10 @@ you should place your code here."
 
   (add-hook 'after-init-hook #'global-flycheck-mode)
 
+  ;; javascript-mode
+  (add-to-list 'auto-mode-alist '("\\.js$" . javascript-mode))
+  (setq js-indent-level 2)
+
   ;; css-mode
   (autoload 'css-mode "css-mode" nil t)
   (setq auto-mode-alist
@@ -846,7 +852,7 @@ you should place your code here."
  '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256")))
  '(package-selected-packages
    (quote
-    (web-beautify minimap livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode all-the-icons memoize font-lock+ go-guru go-eldoc flycheck-gometalinter company-go atom-one-dark-theme yaml-mode xterm-color ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org sql-indent spacemacs-theme spaceline smeargle shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode rotate robe restart-emacs redo+ rbenv rake rainbow-delimiters quelpa popwin point-undo plenv persp-mode paradox orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode minitest migemo markdown-toc magit-gitflow macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-ghq helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-mode gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md ggtags flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig e2wm dumb-jump diff-hl define-word ddskk company-statistics comment-dwim-2 column-enforce-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ace-isearch ac-ispell))))
+    (vue-mode edit-indirect ssass-mode vue-html-mode web-beautify minimap livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode all-the-icons memoize font-lock+ go-guru go-eldoc flycheck-gometalinter company-go atom-one-dark-theme yaml-mode xterm-color ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org sql-indent spacemacs-theme spaceline smeargle shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode rotate robe restart-emacs redo+ rbenv rake rainbow-delimiters quelpa popwin point-undo plenv persp-mode paradox orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode minitest migemo markdown-toc magit-gitflow macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-ghq helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-mode gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md ggtags flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig e2wm dumb-jump diff-hl define-word ddskk company-statistics comment-dwim-2 column-enforce-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ace-isearch ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
