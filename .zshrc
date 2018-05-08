@@ -131,6 +131,18 @@ function precmd_for_tmux {
 preexec_functions=($preexec_functions preexec_for_tmux)
 precmd_functions=($precmd_functions precmd_for_tmux)
 
+if [[ -z $TMUX && -n $PS1 ]]; then
+    function tmux() {
+        if [[ $# == 0 ]] && tmux has-session 2>/dev/null; then
+            command tmux attach-session
+        elif [[ $# != 0 ]]; then
+            command tmux "$@"
+        else
+            command tmux new-session
+        fi
+    }
+fi
+
 # ssh
 ssh() {
     if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then
