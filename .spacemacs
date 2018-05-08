@@ -70,6 +70,7 @@ values."
                                       all-the-icons
                                       minimap
                                       vue-mode
+                                      use-package
 									  )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
@@ -838,7 +839,20 @@ you should place your code here."
 				  "-o"
 				  "/tmp/markdown-preview-eww-result.html")
 	(eww-open-file-other-window "/tmp/markdown-preview-eww-result.html"))
+
+  ;; This is only needed once, near the top of the file
+  (eval-when-compile
+    ;; Following line is not needed if use-package.el is in ~/.emacs.d
+    (add-to-list 'load-path "<path where use-package is installed>")
+    (require 'use-package))
+
+  ;; bind-key (from use-package)
+  (bind-key* "C-;" 'helm-mini)
+  (bind-key* "C-'" 'redo)
+
+
   )
+
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
