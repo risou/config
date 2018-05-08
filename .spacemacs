@@ -359,8 +359,8 @@ you should place your code here."
           '(height . 65)
           '(top . 50)
           '(left . 50)
-          '(foreground-color . "white")
-          '(background-color . "black")
+          ;; '(foreground-color . "white")
+          ;; '(background-color . "black")
           ) default-frame-alist))
 
   ;; tabのサイズ
