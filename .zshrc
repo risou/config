@@ -50,8 +50,8 @@ export PATH=$PATH:/Users/risou/Library/Python/3.6/bin
 #. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # プロンプトの右端にパスを表示
-PROMPT=$'[%{${fg[cyan]}%}%n%{${reset_color}%}@%{${bg[blue]}%}%m%{${reset_color}%}] %# '
-RPROMPT=$'%{\e[32m%}%~%{\e[m%}${vcs_info_msg_0_}[%D %*]'
+# PROMPT=$'[%{${fg[cyan]}%}%n%{${reset_color}%}@%{${bg[blue]}%}%m%{${reset_color}%}] %# '
+# RPROMPT=$'%{\e[32m%}%~%{\e[m%}${vcs_info_msg_0_}[%D %*]'
 # RPROMPT="$vcs_info_msg_0_"
 
 # コマンド履歴機能
