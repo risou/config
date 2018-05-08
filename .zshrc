@@ -41,9 +41,12 @@ zstyle ':completion:*' recent-dirs-insert both
 
 # zsh powerline
 # export PATH=$PATH:/usr/local/Cellar/python/2.7.12/bin
-export PATH=$PATH:/Users/risou/Library/Python/2.7/bin
+# export PATH=$PATH:/Users/risou/Library/Python/2.7/bin
+export PATH=$PATH:/usr/local/Cellar/python/3.6.5/bin
+export PATH=$PATH:/Users/risou/Library/Python/3.6/bin
 #powerline-daemon -q
-. ~/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
+. ~/Library/Python/3.6/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
+# . ~/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
 #. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # プロンプトの右端にパスを表示
