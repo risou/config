@@ -391,7 +391,7 @@ you should place your code here."
   ;; (define-key isearch-mode-map "\C-w" 'isearch-forward-at-point)
   (define-key global-map (kbd "C-c C-s") 'isearch-forward-at-point)
 
-  (global-ace-isearch-mode 1)
+  ;; (global-ace-isearch-mode 1)
 
   ;; minimap
   (require 'minimap)
