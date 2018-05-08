@@ -624,6 +624,8 @@ you should place your code here."
   (setq ruby-indent-level 2
 		ruby-deep-indent-paren-style nil
 		ruby-indent-tabs-mode nil)
+  (custom-set-variables
+   '(ruby-insert-encoding-magic-comment nil))
   ;; ruby flymake
   (require 'flymake)
   (defun flymake-ruby-init ()
