@@ -69,6 +69,12 @@ $ vim $HOME/.pydistutils.cfg
 $ pip install --user powerline-status
 ```
 
+今後は powerline/powerline を使っていくのが正しそう。
+
+```sh
+$ ln -s $(pwd)/powerline $HOME/.config/powerline
+```
+
 powerline font の取得
 
 ```sh
@@ -139,4 +145,20 @@ $ cp -p ~/.phpenv/versions/{version}/libexec/apache2/libphp5.so ~/.phpenv/versio
 $ vim /etc/apache2/httpd.conf
     # LoadModule php5_module $HOME/.phpenv <- フルパスで記述
 $ phpenv apache-version {version}
+```
+
+## global
+
+```sh
+$ ln -s $(pwd).globalrc $HOME/.globalrc
+```
+
+## ranger
+
+```sh
+$ brew install ranger w3m lynx highlight atool mediainfo xpdf libcaca imlib2
+$
+$ ln -s $(pwd)/ranger/rc.conf $HOME/.config/ranger/rc.conf
+$ ln -s $(pwd)/ranger/rifle.conf $HOME/.config/ranger/rifle.conf
+$ ln -s $(pwd)/ranger/scope.conf $HOME/.config/ranger/scope.conf
 ```
