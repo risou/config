@@ -36,7 +36,8 @@ $ ln -s $(pwd)/init.el $HOME/.emacs.d/init.el
 $ brew install zsh
 $ ln -s $(pwd)/.zshrc $HOME/.zshrc
 $ ln -s $(pwd)/.zsh $HOME/.zsh
-A
+
+$ brew install zplug
 ```
 
 # go & ghq

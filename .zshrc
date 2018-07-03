@@ -11,6 +11,23 @@ export GOPATH=/Users/risou
 export PATH=/usr/local/bin:$PATH
 export PATH=$PATH:$GOPATH/bin
 
+# zplug
+export ZPLUG_HOME=/usr/local/opt/zplug
+source $ZPLUG_HOME/init.zsh
+
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-syntax-highlighting"
+
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+zplug load
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=cyan'
+
 # プロンプトのカラー表示を有効
 autoload -U colors
 colors
