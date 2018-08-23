@@ -97,6 +97,9 @@ source ~/.zsh/peco.zsh
 # 色情報
 export LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx
 
+# GnuPG
+export GPG_TTY=$(tty)
+
 # emacsclient
 #export EDITOR="emacsclient"
 alias e="emacsclient -nw"
