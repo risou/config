@@ -94,6 +94,13 @@ $ ln -s $(pwd)/origtheme.sh $HOME/src/github.com/erikw/tmux-powerline/themes/ori
 $ vim $HOME/src/github.com/erikw/tmux-powerline/segments/vcs_branch.sh # change git_colour from "5" to "253"
 ```
 
+# gnupg
+
+```sh
+$ brew install gnupg pinentry-mac
+$ ln -s $(pwd)/gnupg/gpg-agent.conf $HOME/.gnupg/gpg-agent.conf
+```
+
 # rbenv
 
 ```sh
