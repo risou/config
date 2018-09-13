@@ -504,8 +504,8 @@ you should place your code here."
 
   ;; point-undo
   (when (require 'point-undo nil t)
-	(define-key global-map (kbd "M-[") 'point-undo)
-	(define-key global-map (kbd "M-]") 'point-redo))
+	(define-key global-map (kbd "<f5>") 'point-undo)
+	(define-key global-map (kbd "<f6>") 'point-redo))
 
   ;; whitespace-mode
   (when (require 'whitespace nil t)
