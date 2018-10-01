@@ -779,7 +779,7 @@ you should place your code here."
 
   ;; helm-ag add option
   ;; to avoid bug https://github.com/ggreer/the_silver_searcher/issues/1038#issuecomment-322267309
-  (custom-set-variables '(helm-ag-command-option "--mmap"))
+  (custom-set-variables '(helm-ag-command-option "--mmap --ignore /dist/"))
 
   ;; helm-projectile
   (define-key global-map (kbd "C-x t") 'helm-projectile)
