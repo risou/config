@@ -371,6 +371,12 @@ you should place your code here."
           ;; '(foreground-color . "white")
           ;; '(background-color . "black")
           ) default-frame-alist))
+  ;; transparent on iTerm2
+  (defun make-term-frame-trans (frame)
+    (unless (display-graphic-p frame)
+      (set-face-background 'default "unspecified-bg" frame)
+      (set-face-background 'font-lock-comment-face "unspecified-bg" frame)))
+  (add-hook 'after-make-frame-functions 'make-term-frame-trans)
 
   ;; tabのサイズ
   (setq-default c-basic-offset 4
