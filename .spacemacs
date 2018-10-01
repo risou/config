@@ -717,6 +717,7 @@ you should place your code here."
 
   ;; magit
   (define-key global-map (kbd "C-c m") 'magit-status)
+  (setq-default git-magit-status-fullscreen t)
 
   ;; helm
   (progn
