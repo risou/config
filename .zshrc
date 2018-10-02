@@ -101,9 +101,9 @@ export LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx
 export GPG_TTY=$(tty)
 
 # for iTerm2
-echo -e "\033]6;1;bg;red;brightness;0\a"
-echo -e "\033]6;1;bg;green;brightness;36\a"
-echo -e "\033]6;1;bg;blue;brightness;81\a"
+echo -en "\033]6;1;bg;red;brightness;0\a"
+echo -en "\033]6;1;bg;green;brightness;36\a"
+echo -en "\033]6;1;bg;blue;brightness;81\a"
 
 # emacsclient
 #export EDITOR="emacsclient"
