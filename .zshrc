@@ -33,20 +33,23 @@ autoload -U colors
 colors
 
 # Git との連携
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' stagedstr "+"
-zstyle ':vcs_info:git:*' unstagedstr "-"
-zstyle ':vcs_info:*' actionformats ' %F{1}(%b%u%c:%a)%f'
-zstyle ':vcs_info:*' formats ' %F{2}(%b%u%c)%f' '%r'
+# autoload -Uz vcs_info
+# zstyle ':vcs_info:*' enable git
+# zstyle ':vcs_info:git:*' check-for-changes true
+# zstyle ':vcs_info:git:*' stagedstr "+"
+# zstyle ':vcs_info:git:*' unstagedstr "-"
+# zstyle ':vcs_info:*' actionformats ' %F{1}(%b%u%c:%a)%f'
+# zstyle ':vcs_info:*' formats ' %F{2}(%b%u%c)%f' '%r'
 preexec () {
     command=(${(s/ /)${1}})
     [[ `echo $command[1] | grep 'vagrant'` ]] && tmux rename-window $command[1]
 }
 precmd () {
-    vcs_info
-    [[ -n ${vcs_info_msg_1_} ]] && tmux rename-window $vcs_info_msg_1_
+    # vcs_info
+    # [[ -n ${vcs_info_msg_1_} ]] && tmux rename-window $vcs_info_msg_1_
+    if [ ! -z $TMUX ]; then
+        tmux refresh-client -S
+    fi
 }
 
 # cdr
