@@ -29,6 +29,20 @@ $ ln -s $(pwd)/init.el $HOME/.emacs.d/init.el
 ^; Send Hex Codes: 0x18 0x40 0x63 0x3b
 ```
 
+Use Spacemacs
+
+- install https://github.com/syl20bnr/spacemacs
+
+```sh
+$ ln -s $(pwd).spacemacs $HOME/.spacemacs
+```
+
+install cmigemo for emacs
+
+```sh
+$ brew install cmigemo
+```
+
 # zsh
 
 
@@ -94,11 +108,18 @@ $ ln -s $(pwd)/origtheme.sh $HOME/src/github.com/erikw/tmux-powerline/themes/ori
 $ vim $HOME/src/github.com/erikw/tmux-powerline/segments/vcs_branch.sh # change git_colour from "5" to "253"
 ```
 
+OS X と tmux のクリップボードを共有するため以下をインストール
+
+```sh
+$ brew install reattach-to-user-namespace
+```
+
 # gnupg
 
 ```sh
 $ brew install gnupg pinentry-mac
 $ ln -s $(pwd)/gnupg/gpg-agent.conf $HOME/.gnupg/gpg-agent.conf
+$ git config --global user.signingkey <public key>
 ```
 
 # rbenv
@@ -158,7 +179,7 @@ $ phpenv apache-version {version}
 ## global
 
 ```sh
-$ ln -s $(pwd).globalrc $HOME/.globalrc
+$ ln -s $(pwd)/.globalrc $HOME/.globalrc
 ```
 
 ## ranger
@@ -169,4 +190,10 @@ $
 $ ln -s $(pwd)/ranger/rc.conf $HOME/.config/ranger/rc.conf
 $ ln -s $(pwd)/ranger/rifle.conf $HOME/.config/ranger/rifle.conf
 $ ln -s $(pwd)/ranger/scope.conf $HOME/.config/ranger/scope.conf
+```
+
+## ag
+
+```sh
+$ brew install ag
 ```
