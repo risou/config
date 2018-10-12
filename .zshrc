@@ -175,7 +175,10 @@ fi
 ssh() {
     if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then
         tmux rename-window ${@: -1}
+        local pane_id=`tmux display -p '#{pane_id}'`
+        tmux select-pane -P 'bg=colour60'
         command ssh "$@"
+        tmux select-pane -t $pane_id -P 'default'
         tmux set-window-option automatic-rename "on" 1>/dev/null
     else
         command ssh "$@"
