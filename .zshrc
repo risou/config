@@ -11,6 +11,8 @@ export GOPATH=/Users/risou
 export PATH=/usr/local/bin:$PATH
 export PATH=$PATH:$GOPATH/bin
 
+export PATH=$PATH:$HOME/.zsh/bin
+
 # zplug
 export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
@@ -62,10 +64,10 @@ zstyle ':completion:*' recent-dirs-insert both
 # zsh powerline
 # export PATH=$PATH:/usr/local/Cellar/python/2.7.12/bin
 # export PATH=$PATH:/Users/risou/Library/Python/2.7/bin
-export PATH=$PATH:/usr/local/Cellar/python/3.6.5/bin
-export PATH=$PATH:/Users/risou/Library/Python/3.6/bin
+export PATH=$PATH:/usr/local/Cellar/python/3.7.0/bin
+export PATH=$PATH:/Users/risou/Library/Python/3.7/bin
 #powerline-daemon -q
-. ~/Library/Python/3.6/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
+. ~/Library/Python/3.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
 # . ~/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
 #. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
@@ -122,6 +124,9 @@ eval "$(rbenv init - zsh)"
 
 # PHPENV <-> Apache2 連携用
 # export PHPENV_APACHE_MODULE_PATH="$HOME/.phpenv"
+
+# nodebrew
+export PATH="$PATH:$HOME/.nodebrew/current/bin"
 
 export TERM=xterm-256color
 
