@@ -1,9 +1,5 @@
 setopt prompt_subst
 
-# デフォルトの補完機能を有効
-autoload -U compinit
-compinit -u
-
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 export GOPATH=/Users/risou
@@ -13,21 +9,34 @@ export PATH=$PATH:$GOPATH/bin
 
 export PATH=$PATH:$HOME/.zsh/bin
 
-# zplug
-export ZPLUG_HOME=/usr/local/opt/zplug
-source $ZPLUG_HOME/init.zsh
+# Zplugin
+### Added by Zplugin's installer
+source "$HOME/.zplugin/bin/zplugin.zsh"
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
+### End of Zplugin's installer chunk
+zplugin light zsh-users/zsh-autosuggestions
+zplugin light zsh-users/zsh-syntax-highlighting
 
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-syntax-highlighting"
+# デフォルトの補完機能を有効
+autoload -U compinit
+compinit -u
 
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
-
-zplug load
+# # zplug
+# export ZPLUG_HOME=/usr/local/opt/zplug
+# source $ZPLUG_HOME/init.zsh
+# 
+# zplug "zsh-users/zsh-autosuggestions"
+# zplug "zsh-users/zsh-syntax-highlighting"
+# 
+# # if ! zplug check --verbose; then
+# #     printf "Install? [y/N]: "
+# #     if read -q; then
+# #         echo; zplug install
+# #     fi
+# # fi
+# 
+# zplug load
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=cyan'
 
 # プロンプトのカラー表示を有効
