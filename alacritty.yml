@@ -660,6 +660,10 @@ key_bindings:
   - { key: F12,      mods: Super,   chars: "\x1b[24;3~"                      }
   - { key: NumpadEnter,             chars: "\n"                              }
 
+  # Mac OS
+  - { key: Comma,     mods: Command,   command:
+      { program: "open", args: ["~/.config/alacritty/alacritty.yml"] }      }
+  - { key: N,         mods: Command,   action: SpawnNewInstance             }
   # Custom
   - { key: Semicolon, mods: Control,   chars: "\x18\x40\x63\x3b"            }
   # meta
