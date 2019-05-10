@@ -812,6 +812,9 @@ you should place your code here."
   ;; helm-projectile
   (define-key global-map (kbd "C-x t") 'helm-projectile)
   (define-key global-map (kbd "C-x g") 'helm-projectile-ag)
+  (custom-set-variables
+   '(projectile-enable-caching t))
+  (projectile-global-mode t)
 
   ;; editorconfig
   ;; M-x package-install editorconfig
