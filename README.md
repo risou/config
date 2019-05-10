@@ -51,7 +51,8 @@ $ brew install zsh
 $ ln -s $(pwd)/.zshrc $HOME/.zshrc
 $ ln -s $(pwd)/.zsh $HOME/.zsh
 
-$ brew install zplug
+$ sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)"
+# $ brew install zplug
 ```
 
 # go & ghq
@@ -121,6 +122,19 @@ $ brew install gnupg pinentry-mac
 $ ln -s $(pwd)/gnupg/gpg-agent.conf $HOME/.gnupg/gpg-agent.conf
 $ git config --global user.signingkey <public key>
 ```
+
+# alacritty
+
+```sh
+$ brew cask install alacritty
+```
+
+https://github.com/jwilm/alacritty
+https://github.com/jwilm/alacritty/blob/master/INSTALL.md
+
+# anyenv
+
+see: https://github.com/riywo/anyenv
 
 # rbenv
 
