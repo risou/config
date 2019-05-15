@@ -3,9 +3,11 @@
 [user]
 	name = risou
 	email = risou.f@gmail.com
+	signingkey = ****************
 [core]
 	pager = less -r
 	precomposeunicode = true
+	excludesfile = /Users/risou/.gitignore_global
 [color]
 	diff = auto
 	status = auto
@@ -13,11 +15,15 @@
 [alias]
 	graph-all = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --abbrev-commit --date=iso
 	graph = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --abbrev-commit --date=iso -n 30
-	pr = !"f() { git log --merges --oneline --reverse --ancestry-path $1...master | grep 'Merge pull request #' | head -n 1; }; f"
+	merged = !"f() { git log --merges --oneline --reverse --ancestry-path $1...master | grep 'Merge pull request #' | head -n 1; }; f"
+    open = browse
 [url "git@github.com:risou"]
 	insteadOf = https://github.com/risou
 	pushInsteadOf = https://github.com/risou
 [help]
 	autocorrect = 1
+[github]
+	user = risou
+	oauth-token = ****************************************
 [commit]
 	gpgsign = true
