@@ -21,3 +21,13 @@ function peco-github-select-pr() {
     zle clear-screen
 }
 zle -N peco-github-select-pr
+
+function peco-github-open-issue() {
+    local repo=$(ghq list | peco --query "$LBUFFER" | sed -e 's/^.*\/\([^/]*\)\/\([^/]*\)$/\1\/\2/1')
+    $ same 'hub browse'
+    BUFFER="git view $repo 'issues/"
+    CURSOR=$#BUFFER
+    BUFFER=$BUFFER\'
+    zle reset-prompt
+}
+zle -N peco-github-open-issue
