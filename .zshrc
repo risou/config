@@ -108,6 +108,9 @@ alias ll='ls -l'
 # peco
 source ~/.zsh/peco.zsh
 
+# hub
+function git(){hub "$@"}
+
 # 色情報
 export LSCOLORS=gxfxxxxxcxxxxxxxxxxxxx
 
