@@ -16,7 +16,10 @@
     graph-all = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --abbrev-commit --date=iso
     graph = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --abbrev-commit --date=iso -n 30
     merged = !"f() { git log --merges --oneline --reverse --ancestry-path $1...master | grep 'Merge pull request #' | head -n 1; }; f"
-    open = browse
+    view = browse
+    view-issue = "!f() { hub browse -- \"issues/$1\"; };f"
+    merged-pr = "!f() { hub browse -- `git log --merges --oneline --reverse --ancestry-path $1...master | grep 'Merge pull request #' | head -n 1 | cut -f5 -d' ' | sed -e 's%#%pull/%'`; }; f"
+    blame-pr = "!f() { git blame $1 |peco| cut -f 1 -d ' ' | xargs -I@ git merged-pr @; };f"
 [url "git@github.com:risou"]
     insteadOf = https://github.com/risou
     pushInsteadOf = https://github.com/risou

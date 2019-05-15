@@ -9,3 +9,5 @@ bindkey '^]' peco-src
 bindkey '^x^x' peco-insert-selected-git-files
 bindkey '^x/' peco-ssh
 bindkey '^xk' peco-tmux-select-window
+bindkey '^xi' peco-github-select-issue
+bindkey '^xp' peco-github-select-pr
