@@ -86,6 +86,7 @@ $ pip install --user powerline-status
 ```
 
 今後は powerline/powerline を使っていくのが正しそう。
+https://qiita.com/tkhr/items/8cc17c02dea1803be9c6
 
 ```sh
 $ ln -s $(pwd)/powerline $HOME/.config/powerline
