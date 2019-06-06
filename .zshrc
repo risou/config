@@ -9,6 +9,8 @@ export PATH=$PATH:$GOPATH/bin
 
 export PATH=$PATH:$HOME/.zsh/bin
 
+export LANG="ja_JP.UTF-8"
+
 # Zplugin
 ### Added by Zplugin's installer
 source "$HOME/.zplugin/bin/zplugin.zsh"
@@ -73,12 +75,13 @@ zstyle ':completion:*' recent-dirs-insert both
 # zsh powerline
 # export PATH=$PATH:/usr/local/Cellar/python/2.7.12/bin
 # export PATH=$PATH:/Users/risou/Library/Python/2.7/bin
-export PATH=$PATH:/usr/local/Cellar/python/3.7.0/bin
-export PATH=$PATH:/Users/risou/Library/Python/3.7/bin
+# export PATH=$PATH:/usr/local/Cellar/python/3.7.0/bin
+# export PATH=$PATH:/Users/risou/Library/Python/3.7/bin
 #powerline-daemon -q
-. ~/Library/Python/3.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
+# . ~/Library/Python/3.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
 # . ~/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
 #. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+. /usr/local/lib/python3.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # プロンプトの右端にパスを表示
 # PROMPT=$'[%{${fg[cyan]}%}%n%{${reset_color}%}@%{${bg[blue]}%}%m%{${reset_color}%}] %# '
@@ -128,12 +131,13 @@ alias e="emacsclient -nw"
 alias emacsd="emacs --daemon"
 alias emacsk="emacsclient -e '(kill-emacs)'"
 
+eval "$(anyenv init - zsh)"
+
 eval "$(plenv init - zsh)"
 export PATH="$HOME/.phpenv/bin:$HOME/.phpenv/shims:$PATH"
 # eval "$(phpenv init - zsh)"
 export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
 eval "$(rbenv init - zsh)"
-
 # PHPENV <-> Apache2 連携用
 # export PHPENV_APACHE_MODULE_PATH="$HOME/.phpenv"
 
@@ -211,5 +215,8 @@ export NODE_PATH='/usr/local/lib/node_modules'
 # javac encoding
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
 
-export NVM_DIR="/Users/risou/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+# export NVM_DIR="/Users/risou/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+export PATH="$HOME/.nodenv/bin:$PATH"
+eval "$(nodenv init -)"
