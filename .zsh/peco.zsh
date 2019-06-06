@@ -11,4 +11,5 @@ bindkey '^x/' peco-ssh
 bindkey '^xk' peco-tmux-select-window
 bindkey '^xi' peco-github-select-issue
 bindkey '^xp' peco-github-select-pr
-bindkey '^x^o' peco-github-open-issue
+bindkey '^x^o' peco-github-open-current-issue
+bindkey '^xo' peco-github-open-issue
