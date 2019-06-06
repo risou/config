@@ -746,6 +746,15 @@ you should place your code here."
   (define-key global-map (kbd "C-c m") 'magit-status)
   (setq-default git-magit-status-fullscreen t)
 
+  ;; vc-annotate で現在の行が merge された PR を開く
+  (require 'vc-annotate)
+  (defun vc-annotate-open-pr-at-line ()
+    (interactive)
+    (let* ((rev-at-line (vc-annotate-extract-revision-at-line))
+           (rev (car rev-at-line)))
+      (shell-command (concat "open-pr-from-commit " rev))))
+  (define-key vc-annotate-mode-map (kbd "P") 'vc-annotate-open-pr-at-line)
+
   ;; helm
   (progn
 	(require 'helm)
@@ -884,6 +893,7 @@ you should place your code here."
   (bind-key* "C-;" 'helm-mini)
   (bind-key* "C-'" 'redo)
 
+  (bind-key* "C-c b" 'vc-annotate)
 
   )
 
