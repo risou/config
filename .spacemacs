@@ -743,6 +743,7 @@ you should place your code here."
   (define-key eyebrowse-mode-map (kbd "<C-S-tab>") 'eyebrowse-prev-window-config)
 
   ;; magit
+  (define-key magit-file-mode-map (kbd "C-x g") nil)
   (define-key global-map (kbd "C-c m") 'magit-status)
   (setq-default git-magit-status-fullscreen t)
 
@@ -892,7 +893,7 @@ you should place your code here."
   ;; bind-key (from use-package)
   (bind-key* "C-;" 'helm-mini)
   (bind-key* "C-'" 'redo)
-
+  (bind-key* "C-x g" 'helm-projectile-ag)
   (bind-key* "C-c b" 'vc-annotate)
 
   )
