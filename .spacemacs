@@ -887,6 +887,12 @@ you should place your code here."
 				  "/tmp/markdown-preview-eww-result.html")
 	(eww-open-file-other-window "/tmp/markdown-preview-eww-result.html"))
 
+  ;; emacs-open-github-from-here
+  ;; install: ghq get -p shibayu36/emacs-open-github-from-here.git
+  (eval-when-compile
+    (add-to-list 'load-path "/Users/risou/src/github.com/shibayu36/emacs-open-github-from-here/")
+    (require 'open-github-from-here))
+
   ;; This is only needed once, near the top of the file
   (eval-when-compile
     ;; Following line is not needed if use-package.el is in ~/.emacs.d
@@ -898,6 +904,7 @@ you should place your code here."
   (bind-key* "C-'" 'redo)
   (bind-key* "C-x g" 'helm-projectile-ag)
   (bind-key* "C-c b" 'vc-annotate)
+  (bind-key* "C-c o" 'open-github-from-here)
   (bind-key* "C-c C-s" 'isearch-forward-at-point)
   (bind-key* "C-c C-r" 'window-resizer)
 
