@@ -746,9 +746,11 @@ you should place your code here."
   (define-key eyebrowse-mode-map (kbd "<C-S-tab>") 'eyebrowse-prev-window-config)
 
   ;; magit
+  (require 'magit)
   (define-key magit-file-mode-map (kbd "C-x g") nil)
   (define-key global-map (kbd "C-c m") 'magit-status)
-  (setq-default git-magit-status-fullscreen t)
+  ;; (setq-default git-magit-status-fullscreen t) 
+  (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
 
   ;; vc-annotate で現在の行が merge された PR を開く
   (require 'vc-annotate)
