@@ -658,6 +658,8 @@ you should place your code here."
 			   '("\\.rb\\'" flymake-ruby-init))
   (add-to-list 'flymake-err-line-patterns
 			   '("\\(.*\\):(\\([0-9]+\\)): \\(.*\\)" 1 2 nil 3))
+  (define-key ruby-mode-map (kbd "C-c C-s") nil)
+  (define-key ruby-mode-map (kbd "C-c C-r") nil)
 
   ;; web-mode
   (require 'web-mode)
@@ -896,6 +898,8 @@ you should place your code here."
   (bind-key* "C-'" 'redo)
   (bind-key* "C-x g" 'helm-projectile-ag)
   (bind-key* "C-c b" 'vc-annotate)
+  (bind-key* "C-c C-s" 'isearch-forward-at-point)
+  (bind-key* "C-c C-r" 'window-resizer)
 
   )
 
