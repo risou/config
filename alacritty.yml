@@ -448,7 +448,8 @@ live_config_reload: true
 #  args:
 #    - --login
 shell:
-  program: /usr/local/bin/zsh
+#  program: /usr/local/bin/zsh
+  program: /usr/local/bin/fish
   args:
     - --login
 
