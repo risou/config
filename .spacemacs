@@ -344,11 +344,12 @@ you should place your code here."
   ;; spacemacs
   (defun toggle-spacemacs-config ()
     ;; highlight current line
-    (spacemacs/toggle-highlight-current-line-globally-on)
+    ;; (spacemacs/toggle-highlight-current-line-globally-on)
     ;; highlight indentation level
-    (spacemacs/toggle-highlight-indentation-on)
+    ;; (spacemacs/toggle-highlight-indentation-on)
     ;; highlight indentation current column
     (spacemacs/toggle-highlight-indentation-current-column-on)
+    (set-face-background  'highlight-indentation-current-column-face "#00ADB9")
     ;; battery
     (spacemacs/toggle-mode-line-battery-on)
     ;; point position
