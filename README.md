@@ -55,6 +55,12 @@ $ sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/d
 # $ brew install zplug
 ```
 
+# fish & fzf
+
+scrapbox に書いた。
+
+https://scrapbox.io/risou/fish%2Ffzf_%E3%81%B8%E3%81%AE%E7%A7%BB%E8%A1%8C
+
 # go & ghq
 
 ```sh
