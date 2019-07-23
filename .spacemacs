@@ -335,8 +335,8 @@ you should place your code here."
   (setq frame-title-format "%f")
 
   ;; 行番号を常に表示
-  (global-linum-mode t)
-  (setq linum-format "%4d  ")
+  ;; (global-linum-mode t)
+  ;; (setq linum-format "%4d  ")
 
   ;; 行間
   (setq-default line-spacing 0.5)
