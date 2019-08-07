@@ -93,7 +93,7 @@ end
 
 function ssh
   if test -n (echo $TMUX)
-    tmux select-pane -P 'bg=colour20'
+    tmux select-pane -P 'bg=colour17'
     command ssh $argv
     tmux select-pane -P 'default'
   else
