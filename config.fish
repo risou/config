@@ -54,6 +54,12 @@ function fzf-github-open-issue
   commandline -C (string length $prefix)
 end
 
+function graph
+    # git log --graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" $argv | fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+    git log --graph --color=always --format="%C(red)%h%C(reset) %C(yellow)%d%C(reset) %s %C(green)(%ad)%C(reset) %C(bold blue)<%an>%C(reset)" --abbrev-commit --date=iso $argv | fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+    --bind "ctrl-m:execute(grep -o '[a-f0-9]\{7,\}' | head -1 | xargs -I % git show --color=always % | less -R)"
+end
+
 # function open-pr-from-commit
 #   set -l current (git rev-parse HEAD)
 #   set -l default_branch (git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
