@@ -865,7 +865,7 @@ you should place your code here."
   (setq org-hide-leading-stars t)
   (setq org-indent-mode t)
   (setq org-startup-indented t)
-  (setq org-directory "~/.org/")
+  (setq org-directory "~/GoogleDrive/org/")
   (setq org-default-notes-file (concat org-directory "base.org"))
   (setq org-agenda-files (list org-directory))
   (define-key global-map (kbd "C-c n") (lambda () (interactive) (switch-to-buffer (find-file-noselect org-default-notes-file))))
