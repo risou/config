@@ -46,6 +46,7 @@ values."
          go-use-gometalinter t
          go-tab-width 4
          gofmt-command "goimports")
+     tabbar ;; git clone https://github.com/evacchi/tabbar-layer ~/.emacs.d/private/tabbar
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -292,6 +293,15 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   ;; change eyebrowse-keymap-prefix
   (setq eyebrowse-keymap-prefix (kbd "C-c w"))
+
+  ;; tabbar
+  (setq tabbar-use-images nil) 
+  ;; 左に表示されるボタンを無効化
+  (dolist (btn '(tabbar-buffer-home-button
+                 tabbar-scroll-left-button
+                 tabbar-scroll-right-button))
+    (set btn (cons (cons "" nil)
+                   (cons "" nil))))
   )
 
 (defun dotspacemacs/user-config ()
@@ -743,13 +753,16 @@ you should place your code here."
   (migemo-init)
 
   ;; eyebrowse
-  (define-key eyebrowse-mode-map (kbd "C-c w d") 'eyebrowse-close-window-config)
-  (define-key eyebrowse-mode-map (kbd "<C-tab>") 'eyebrowse-next-window-config)
-  (define-key eyebrowse-mode-map (kbd "<C-S-tab>") 'eyebrowse-prev-window-config)
+  ;; (define-key eyebrowse-mode-map (kbd "C-c w d") 'eyebrowse-close-window-config)
+  ;; (define-key eyebrowse-mode-map (kbd "<C-tab>") 'eyebrowse-next-window-config)
+  ;; (define-key eyebrowse-mode-map (kbd "<C-S-tab>") 'eyebrowse-prev-window-config)
 
   ;; magit
   (require 'magit)
   (define-key magit-file-mode-map (kbd "C-x g") nil)
+  (define-key magit-mode-map (kbd "M-n") nil)
+  (define-key magit-mode-map (kbd "M-p") nil)
+  (define-key magit-mode-map (kbd "<C-tab>") nil)
   (define-key global-map (kbd "C-c m") 'magit-status)
   ;; (setq-default git-magit-status-fullscreen t) 
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
@@ -855,7 +868,109 @@ you should place your code here."
   (setq edconf-exec-path "/usr/local/bin/editorconfig")
   (editorconfig-mode 1)
 
-  ;; org-mode
+  ;; tabbar
+  (require 'tabbar)
+  (tabbar-mode 1)
+  (setq tabbar-buffer-groups-function nil)
+  ;; (setq tabbar-separator '(0.5))
+  (set-face-attribute
+   'tabbar-default nil
+   :background "#34495E"
+   :foreground "#EEEEEE"
+   :bold nil
+   :height 0.95
+   ;; :background "brightblue"
+   ;; :foreground "white"
+   )
+  (set-face-attribute
+   'tabbar-unselected nil
+   :background "#34495E"
+   :foreground "#EEEEEE"
+   :bold nil
+   :box nil
+   )
+  (set-face-attribute
+   'tabbar-modified nil
+   :background "#E67E22"
+   :foreground "#EEEEEE"
+   :bold t
+   :box nil
+   ;; :background "brightred"
+   ;; :foreground "brightwhite"
+   )
+  (set-face-attribute
+   'tabbar-selected nil
+   :background "#E74C3C"
+   :foreground "#EEEEEE"
+   :bold nil
+   ;; :background "#ff5f00"
+   ;˜; :foreground "brightwhite"
+   :box nil
+   )
+  (set-face-attribute
+   'tabbar-button nil
+   :box nil)
+  (set-face-attribute
+   'tabbar-separator nil
+   :height 2.0)
+  (defun tabbar-buffer-tab-label (tab)
+    "Return a label for TAB.
+That is, a string used to represent it on the tab bar."
+    (let ((label  (if tabbar--buffer-show-groups
+                      (format "[%s]" (tabbar-tab-tabset tab))
+                    (format "%s" (tabbar-tab-value tab)))))
+      ;; Unless the tab bar auto scrolls to keep the selected tab
+      ;; visible, shorten the tab label to keep as many tabs as possible
+      ;; in the visible area of the tab bar.
+      (if tabbar-auto-scroll-flag
+          label
+        (tabbar-shorten
+         label (max 1 (/ (window-width)
+                         (length (tabbar-view
+                                  (tabbar-current-tabset)))))))))
+
+  ;; タブに表示するバッファをフィルタするカスタム関数
+  ;; (defun my-tabbar-buffer-list ()
+  ;;   (delq nil
+  ;;         (mapcar #'(lambda (b)
+  ;;                     (cond
+  ;;                      ((eq (current-buffer) b) b)
+  ;;                      ((buffer-file-name b) b)
+  ;;                      ((char-equal ?\  (aref (buffer-name b) 0)) nil)
+  ;;                      ;;((equal "*scratch*" (buffer-name b)) b)
+  ;;                      ((char-equal ?* (aref (buffer-name b) 0)) nil)
+  ;;                      ((buffer-live-p b) b)))
+  ;;                 (buffer-list))))
+  ;; ;; カスタム関数を登録
+  ;; (setq tabbar-buffer-list-function 'my-tabbar-buffer-list)
+  ;; タブの長さ
+  (setq tabbar-separator '(2.2))
+  ;; タブに表示させるバッファの設定
+  (defvar my-tabbar-displayed-buffers
+    '("*vc-")
+    "*Regexps matches buffer names always included tabs.")
+  (defun my-tabbar-buffer-list ()
+    "Return the list of buffers to show in tabs.
+Exclude buffers whose name starts with a space or an asterisk.
+The current buffer and buffers matches `my-tabbar-displayed-buffers'
+are always included."
+    (let* ((hides (list ?\  ?\*))
+           (re (regexp-opt my-tabbar-displayed-buffers))
+           (cur-buf (current-buffer))
+           (tabs (delq nil
+                       (mapcar (lambda (buf)
+                                 (let ((name (buffer-name buf)))
+                                   (when (or (string-match re name)
+                                             (not (memq (aref name 0) hides)))
+                                     buf)))
+                               (buffer-list)))))
+      ;; Always include the current buffer.
+      (if (memq cur-buf tabs)
+          tabs
+        (cons cur-buf tabs))))
+  (setq tabbar-buffer-list-function 'my-tabbar-buffer-list)
+
+;; org-mode
   ;; M-x package-list-packages org
   (require 'org-install)
   (require 'org-capture)
@@ -928,7 +1043,16 @@ you should place your code here."
   (bind-key* "C-c o" 'open-github-from-here)
   (bind-key* "C-c C-s" 'isearch-forward-at-point)
   (bind-key* "C-c C-r" 'window-resizer)
-
+  (bind-key* "C-c l" 'windmove-right)
+  (bind-key* "C-c h" 'windmove-left)
+  (bind-key* "C-c j" 'windmove-down)
+  (bind-key* "C-c k" 'windmove-up)
+  (bind-key* "M-n" 'tabbar-forward-tab)
+  (bind-key* "M-p" 'tabbar-backward-tab)
+  ;; (bind-key* "C-TAB" 'tabbar-forward-tab)
+  ;; (bind-key* "C-S-TAB" 'tabbar-backward-tab)
+  (bind-key* "<C-tab>" 'tabbar-forward-tab)
+  (bind-key* "<C-S-tab>" 'tabbar-backward-tab)
   )
 
 
@@ -951,7 +1075,8 @@ you should place your code here."
  '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256")))
  '(package-selected-packages
    (quote
-    (lsp-ui yapfify web-mode unfill tagedit slim-mode scss-mode sass-mode pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements org-category-capture alert log4e gntp org-mime markdown-mode magit-popup live-py-mode hy-mode helm-pydoc helm-css-scss haml-mode gitignore-mode fringe-helper git-gutter+ git-gutter fuzzy flyspell-correct pos-tip flycheck magit transient git-commit with-editor emmet-mode window-layout vue-mode edit-indirect ssass-mode vue-html-mode web-beautify minimap livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode all-the-icons memoize font-lock+ go-guru go-eldoc flycheck-gometalinter company-go atom-one-dark-theme yaml-mode xterm-color ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org sql-indent spacemacs-theme spaceline smeargle shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode rotate robe restart-emacs redo+ rbenv rake rainbow-delimiters quelpa popwin point-undo plenv persp-mode paradox orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode minitest migemo markdown-toc magit-gitflow macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-ghq helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-mode gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md ggtags flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig e2wm dumb-jump diff-hl define-word ddskk company-statistics comment-dwim-2 column-enforce-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ace-isearch ac-ispell))))
+    (tabbar lsp-ui yapfify web-mode unfill tagedit slim-mode scss-mode sass-mode pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements org-category-capture alert log4e gntp org-mime markdown-mode magit-popup live-py-mode hy-mode helm-pydoc helm-css-scss haml-mode gitignore-mode fringe-helper git-gutter+ git-gutter fuzzy flyspell-correct pos-tip flycheck magit transient git-commit with-editor emmet-mode window-layout vue-mode edit-indirect ssass-mode vue-html-mode web-beautify minimap livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode all-the-icons memoippze font-lock+ go-guru go-eldoc flycheck-gometalinter company-go atom-one-dark-theme yaml-mode xterm-color ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org sql-indent spacemacs-theme spaceline smeargle shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode rotate robe restart-emacs redo+ rbenv rake rainbow-delimiters quelpa popwin point-undo plenv persp-mode paradox orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode minitest migemo markdown-toc magit-gitflow macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-ghq helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-mode gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md ggtags flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig e2wm dumb-jump diff-hl define-word ddskk company-statistics comment-dwim-2 column-enforce-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ace-isearch ac-ispell)))
+ '(tabbar-separator (quote (0.5))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

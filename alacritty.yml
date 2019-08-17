@@ -786,3 +786,6 @@ key_bindings:
   - { key: Semicolon, mods: Alt,       chars: "\x1b;"                       } # Alt + ;
   - { key: Slash,     mods: Control,   chars: "\x1f"                        } # Ctrl + /
   - { key: Apostrophe, mods: Control,  chars: "\x18\x40\x63\x27"            } # Ctrl + '
+  # - { key: Tab,       mods: Control,   chars: "\x18\x40\x63\x09"            } # Ctrl + Tab
+  - { key: Tab,       mods: Control,   chars: "\x1b[27;5;9~"                } # Ctrl + Tab
+  - { key: Tab,       mods: Control|Shift, chars: "\x1b[27;6;9~"            } # Ctrl + Shift + Tab
