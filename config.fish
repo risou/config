@@ -28,6 +28,7 @@ bind \cx\cx fzf-select-from-git-status
 bind \cx\co github-open-current-issue
 bind \cxo fzf-github-open-issue
 # bind \cxp open-pr-from-commit
+bind \cxz 'cat ~/.zsh_history | fzf-tmux | read -l result; and commandline "$result"'
 
 function fzf-select-from-git-status
   set -l list (git status --porcelain | fzf-tmux -m | awk -F ' ' '{print $NF}' | tr '\n' ' ')
