@@ -61,12 +61,10 @@ function graph
     --bind "ctrl-m:execute(grep -o '[a-f0-9]\{7,\}' | head -1 | xargs -I % git show --color=always % | less -R)"
 end
 
-# function open-pr-from-commit
-#   set -l current (git rev-parse HEAD)
-#   set -l default_branch (git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
-#   hub browse -- (git log --merges --oneline --reverse --ancestry-path "$current"..."$default_branch" | grep 'Merge pull request #' | head -n 1 | cut -f5 -d' ' | sed -e 's%#%pull/%')
-#   commandline -f repaint
-# end
+function open-pr-from-commit
+  set -l default_branch (git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+  hub browse -- (git log --merges --oneline --reverse --ancestry-path $argv..."$default_branch" | grep 'Merge pull request #' | head -n 1 | cut -f5 -d' ' | sed -e 's%#%pull/%')
+end
 
 # original: decors/fish-ghq
 function __ghq_repository_search -d 'Repository search'
