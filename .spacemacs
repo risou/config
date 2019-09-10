@@ -546,7 +546,7 @@ you should place your code here."
 
   ;; whitespace-mode
   (when (require 'whitespace nil t)
-	(setq whitespace-style '(face tabs tab-mark  spaces space-mark trailing))
+	(setq whitespace-style '(face tabs tab-mark spaces space-mark trailing))
 	(setq whitespace-display-mappings
 		  '((space-mark ?\u3000 [?\u25a1])
 			(tab-mark ?\t [?\xBB ?\t] [?\\ ?\t])))
@@ -559,7 +559,7 @@ you should place your code here."
 	(set-face-background 'whitespace-space 'nil)
 	(set-face-bold-p 'whitespace-space t)
 	(set-face-foreground 'whitespace-trailing "#ff0000")
-	(set-face-background 'whitespace-trailing 'nil)
+	(set-face-background 'whitespace-trailing "#ffc0c0")
 	(set-face-underline 'whitespace-trailing t)
 	(global-whitespace-mode 1))
 
