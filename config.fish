@@ -1,6 +1,7 @@
 set -x GOPATH /Users/risou
 set -x PATH /usr/local/bin $PATH
 set -x PATH $PATH $GOPATH/bin
+set -x PATH $PATH /usr/local/Cellar/rakudo-star/2019.03/share/perl6/site/bin
 
 set -x LANG ja_JP.UTF-8
 

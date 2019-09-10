@@ -76,6 +76,7 @@ values."
                                       use-package
                                       lsp-mode
                                       lsp-ui
+                                      perl6-mode
 									  )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
