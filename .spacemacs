@@ -787,6 +787,7 @@ you should place your code here."
   (require 'lsp-mode)
   (require 'lsp-ui)
   (add-hook 'ruby-mode-hook #'lsp)
+  (add-hook 'web-mode-hook #'lsp)
   (defun lsp-mode-init ()
     (lsp)
     (global-set-key (kbd "M-*") 'xref-pop-marker-stack)
@@ -838,6 +839,7 @@ you should place your code here."
 								   helm-source-emacs-commands-history
 								   helm-source-emacs-commands
 								   )))
+    ;; (setq helm-exit-idle-delay nil)
 	(helm-mode 1)
 	(define-key global-map (kbd "C-;") 'helm-mini)
 	;; (define-key global-map (kbd "M-x") 'helm-M-x)
@@ -968,7 +970,8 @@ are always included."
                        (mapcar (lambda (buf)
                                  (let ((name (buffer-name buf)))
                                    (when (or (string-match re name)
-                                             (not (memq (aref name 0) hides)))
+                                             (not (or (memq (aref name 0) hides)
+                                                      (string-match "magit" name))))
                                      buf)))
                                (buffer-list)))))
       ;; Always include the current buffer.
