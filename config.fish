@@ -12,6 +12,8 @@ set -x GPG_TTY (tty)
 
 set -x fish_color_search_match --background='#4169e1'
 
+set fish_greeting "..."
+
 alias e="emacsclient -nw"
 alias emacsd="emacs --daemon"
 alias emacsk="emacsclient -e '(kill-emacs)'"
@@ -100,3 +102,4 @@ function ssh
     command ssh $argv
   end
 end
+set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
