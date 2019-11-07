@@ -34,7 +34,7 @@ values."
      git
      markdown
      org
-     gtags
+     ;; gtags
      (shell :variables
             shell-default-term-shell "/usr/local/bin/fish"
             shell-default-height 30
@@ -719,16 +719,16 @@ you should place your code here."
   ;; (add-hook 'cperl-mode-hook (lambda () (ggtags-mode)))
   ;; (add-hook 'go-mode-hook (lambda () (ggtags-mode)))
   ;; helm-gtags-mode
-  (require 'helm-gtags)
-  (add-hook 'helm-gtags-mode-hook
-            '(lambda ()
-               (local-set-key (kbd "M-.") 'helm-gtags-find-tag)
-               (local-set-key (kbd "M-,") 'helm-gtags-pop-stack)
-               (local-set-key (kbd "M-t") 'helm-gtags-find-rtag)
-               )
-            )
-  (add-hook 'cperl-mode-hook (lambda () (helm-gtags-mode)))
-  (add-hook 'go-mode-hook (lambda () (helm-gtags-mode)))
+  ;; (require 'helm-gtags)
+  ;; (add-hook 'helm-gtags-mode-hook
+  ;;           '(lambda ()
+  ;;              (local-set-key (kbd "M-.") 'helm-gtags-find-tag)
+  ;;              (local-set-key (kbd "M-,") 'helm-gtags-pop-stack)
+  ;;              (local-set-key (kbd "M-t") 'helm-gtags-find-rtag)
+  ;;              )
+  ;;           )
+  ;; (add-hook 'cperl-mode-hook (lambda () (helm-gtags-mode)))
+  ;; (add-hook 'go-mode-hook (lambda () (helm-gtags-mode)))
 
   ;; flycheck-gometalinter
   ;; skips 'vendor' directories and sets GO15VENDOREXPERIMENT=1
