@@ -159,8 +159,13 @@ values."
    ;;                             :weight normal
    ;;                             :width normal
    ;;                             :powerline-scale 1.1)
-   dotspacemacs-default-font '("Menlo for Powerline"
-                               :size 12
+   ;; dotspacemacs-default-font '("Menlo for Powerline"
+   ;;                             :size 12
+   ;;                             :weight normal
+   ;;                             :width normal
+   ;;                             :powerline-scale 1.1)
+   dotspacemacs-default-font '("Cica"
+                               :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
