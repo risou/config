@@ -25,6 +25,7 @@ values."
      html
      javascript
      ruby
+     (ruby :variables ruby-version-manager 'rbenv)
      sql
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
