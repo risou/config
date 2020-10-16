@@ -233,6 +233,26 @@
   ((neo-theme . 'nerd2)
    (neo-autorefresh . t)
    (neo-toggle-window-keep-p . t))
+  :bind (("C-x C-d" . neotree-projectile-toggle))
+  :preface
+  (defun neotree-projectile-toggle ()
+    (interactive)
+    (let ((project-dir
+	   (ignore-errors
+	     (projectile-project-root)
+	     ))
+	  (file-name (buffer-file-name))
+	  (neo-smart-open t))
+      (if (and (fboundp 'neo-global--window-exists-p)
+	       (neo-global--window-exists-p))
+	  (neotree-hide)
+	(progn
+	  (neotree-show)
+	  (if project-dir
+	      (neotree-dir project-dir))
+	  (if file-name
+	      (neotree-find file-name)))))
+    )
   )
 
 (leaf doom-themes
