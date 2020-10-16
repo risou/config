@@ -201,6 +201,21 @@
   :config
   (add-to-list 'company-backends 'company-c-headers))
 
+(leaf projectile
+  :ensure t
+  :custom ((projectile-completion-system . 'ivy))
+  :blackout t
+  :config
+  (projectile-mode 1)
+  (leaf counsel-projectile
+    :ensure t
+    :config
+    (counsel-projectile-mode 1)
+    :bind (("C-x t" . counsel-projectile)
+	   ("C-x g" . counsel-projectile-ag))
+    ))
+
+
 (leaf all-the-icons
   :ensure t
   :init (leaf memoize :ensure t)
