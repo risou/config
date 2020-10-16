@@ -259,7 +259,13 @@
 (leaf ivy-ghq
   :if (executable-find "ghq")
   :el-get analyticd/ivy-ghq
-  :bind (("C-x C-]" . ivy-ghq-open))
+  :commands (ivy-ghq-open)
+  :bind (("C-x C-]" . ivy-ghq-open-and-fzf))
+  :preface
+  (defun ivy-ghq-open-and-fzf ()
+    (interactive)
+    (ivy-ghq-open)
+    (counsel-fzf))
   )
 
 (leaf undo-tree
