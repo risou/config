@@ -12,6 +12,15 @@ $ git submodule update --init
 
 # Emacs
 
+2020/10~
+
+```sh
+$ brew cask install emacs
+$ ln -s $(pwd)/init.el $HOME/.emacs.d/init.el
+```
+
+~2020/09
+
 ```sh
 $ brew install --gnutls --japanese emacs
 $ ln -sfv /usr/local/opt/emacs/*.plist ~/Library/LaunchAgents
