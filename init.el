@@ -252,7 +252,7 @@
   :init
   :config
   (setq magit-completing-read-function 'ivy
-	magit-refs-show-commit-count all
+	magit-refs-show-commit-count 'all
 	magit-log-buffer-file-locked t
 	))
 
