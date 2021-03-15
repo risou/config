@@ -1,8 +1,7 @@
 ;; cl は deplicated だよの警告を非表示にする
 (setq byte-compile-warnings '(not cl-functions obsolete))
 
-;; ----------------
-
+;; ---------------- 
 ;; <leaf-install-code>
 (eval-and-compile
   (customize-set-variable
@@ -61,7 +60,7 @@
 (setq inhibit-splash-screen t)
 
 ;; ウィンドウサイズ
-(if (boundp 'window-system)
+(when (display-graphic-p)
     (add-hook 'after-init-hook (lambda()
 				 (set-frame-position
 				  (selected-frame)
@@ -80,6 +79,18 @@
 		    :height 240)
 
 ;; ----------------
+
+;; fish の PATH を引き継ぐための設定
+(leaf exec-path-from-shell
+  :ensure t
+  :defun (exec-path-from-shell-initialize)
+  :custom
+  ((exec-path-from-shell-check-startup-files . nil)
+   (exec-path-from-shell-shell-name . "/usr/local/bin/fish")
+   (exec-path-from-shell-variables . '("PATH")))
+  :config
+  (exec-path-from-shell-initialize)
+  )
 
 (leaf ivy
   :doc "Incremental Vertical completYon"
@@ -261,7 +272,8 @@
   (doom-themes-enable-italic . nil)
   (doom-themes-enable-bold . nil)
   :config
-  (load-theme 'deeper-blue t)
+  (when (display-graphic-p)
+    (load-theme 'deeper-blue t))
   (doom-themes-neotree-config)
   (doom-themes-org-config)
   )
@@ -271,7 +283,7 @@
   :ensure t
   :init
   :config
-  (setq magit-completing-read-function 'ivy
+  (setq magit-completing-read-function 'ivy-completing-read
 	magit-refs-show-commit-count 'all
 	magit-log-buffer-file-locked t
 	))
