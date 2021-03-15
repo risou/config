@@ -96,11 +96,13 @@ end
 
 function ssh
   if test -n (echo $TMUX)
-    tmux select-pane -P 'bg=colour17'
+#    tmux select-pane -P 'bg=colour17'
     command ssh $argv
-    tmux select-pane -P 'default'
+#    tmux select-pane -P 'default'
   else
     command ssh $argv
   end
 end
 set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
+
+starship init fish | source
