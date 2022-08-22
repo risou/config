@@ -1,8 +1,11 @@
 set -x GOPATH /Users/risou
 set -x PATH /usr/local/bin $PATH
 set -x PATH $PATH $GOPATH/bin
-set -x PATH $PATH /usr/local/Cellar/rakudo-star/2020.10/share/perl6/site/bin
+set -x PATH $PATH $HOME/go/bin
+set -x PATH $PATH /usr/local/Cellar/rakudo-star/2021.04/share/perl6/site/bin
 set -x PATH $PATH $HOME/.cargo/bin
+
+set -x PATH $PATH /usr/local/Cellar/python@3.9/3.9.6/Frameworks/Python.framework/Versions/3.9/bin
 
 set -x LANG ja_JP.UTF-8
 
@@ -12,6 +15,9 @@ set -x FZF_TMUX 1
 set -x GPG_TTY (tty)
 
 set -x fish_color_search_match --background='#4169e1'
+
+# deny overwrite "ctrl+f" by fig.io
+set -x FIG_WORKFLOWS_KEYBIND "^\\"
 
 set fish_greeting "..."
 
@@ -106,3 +112,4 @@ end
 set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
 
 starship init fish | source
+eval (direnv hook fish)
