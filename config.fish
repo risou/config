@@ -1,3 +1,8 @@
+if status is-interactive
+    eval (/opt/homebrew/bin/brew shellenv)
+    rbenv init - fish | source
+end
+
 set -x GOPATH /Users/risou
 set -x PATH /usr/local/bin $PATH
 set -x PATH $PATH $GOPATH/bin
@@ -7,17 +12,26 @@ set -x PATH $PATH $HOME/.cargo/bin
 
 set -x PATH $PATH /usr/local/Cellar/python@3.9/3.9.6/Frameworks/Python.framework/Versions/3.9/bin
 
-set -x LANG ja_JP.UTF-8
-
-set -x FZF_DEFAULT_OPTS '--reverse --bind=ctrl-j:accept,ctrl-k:kill-line,ctrl-space:toggle-down'
+set -x LANG ja_JP.UTF-8 set -x FZF_DEFAULT_OPTS '--reverse --bind=ctrl-j:accept,ctrl-k:kill-line,ctrl-space:toggle-down'
 set -x FZF_TMUX 1
-
 set -x GPG_TTY (tty)
 
 set -x fish_color_search_match --background='#4169e1'
 
 # deny overwrite "ctrl+f" by fig.io
 set -x FIG_WORKFLOWS_KEYBIND "^\\"
+
+# use gpg-agent instead of ssh-agent
+gpgconf --launch gpg-agent
+set -e SSH_AUTH_SOCK
+set -U -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+
+# for deploy salak
+set -x PERL_CPANM_OPT "--local-lib=~/local/lib/perl5"
+set -x PERL5LIB $HOME/local/lib/perl5/lib/perl5 $PERL5LIB
+
+# for protoc-gen-gohttp
+set -x GOPRIVATE github.com/heyinc/protoc-gen-gohttp
 
 set fish_greeting "..."
 
@@ -27,13 +41,14 @@ alias emacsk="emacsclient -e '(kill-emacs)'"
 
 set -x PATH $PATH $HOME/.anyenv/bin
 anyenv init - fish | source
+# set $GOPATH/bin again because anyenv update $GOPATH
+set -x PATH $PATH $GOPATH/bin
 
 bind \cs __fzf_find_file
 bind \c] __ghq_repository_search
 bind -e \cg
 bind \cx/ 'ag --ignore-case \'^host [^*]\' ~/.ssh/config | cut -d \' \' -f 2 | fzf-tmux | read -l result; and commandline "ssh $result"; and commandline -f execute'
-bind \cx\cb 'git branch | grep -v HEAD | sed -e \'s/* /  /g\' | string trim | fzf-tmux | read -l result; and commandline "git checkout $result"; and commandline -f execute'
-bind \cxb 'git branch --all | grep -v HEAD | sed -e \'s/* /  /g\' | string trim | fzf-tmux | read -l result; and commandline "git checkout -t $result"; and commandline -f execute'
+bind \cx\cb 'git branch | grep -v HEAD | sed -e \'s/* /  /g\' | string trim | fzf-tmux | read -l result; and commandline "git checkout $result"; and commandline -f execute' bind \cxb 'git branch --all | grep -v HEAD | sed -e \'s/* /  /g\' | string trim | fzf-tmux | read -l result; and commandline "git checkout -t $result"; and commandline -f execute'
 bind \cx\cx fzf-select-from-git-status
 bind \cx\co github-open-current-issue
 bind \cxo fzf-github-open-issue
@@ -110,6 +125,10 @@ function ssh
   end
 end
 set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
+
+# startup yabai & skhd
+# brew services restart yabai
+# brew services restart skhd
 
 starship init fish | source
 eval (direnv hook fish)
