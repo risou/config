@@ -1,7 +1,9 @@
 if status is-interactive
     eval (/opt/homebrew/bin/brew shellenv)
-    rbenv init - fish | source
 end
+
+# asdf
+source (brew --prefix asdf)/libexec/asdf.fish
 
 set -x GOPATH /Users/risou
 set -x PATH /usr/local/bin $PATH
@@ -39,9 +41,9 @@ alias e="emacsclient -nw"
 alias emacsd="emacs --daemon"
 alias emacsk="emacsclient -e '(kill-emacs)'"
 
-set -x PATH $PATH $HOME/.anyenv/bin
-anyenv init - fish | source
-# set $GOPATH/bin again because anyenv update $GOPATH
+# set -x PATH $PATH $HOME/.anyenv/bin
+# anyenv init - fish | source
+# # set $GOPATH/bin again because anyenv update $GOPATH
 set -x PATH $PATH $GOPATH/bin
 
 bind \cs __fzf_find_file
