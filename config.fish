@@ -59,7 +59,8 @@ bind \cxo fzf-github-open-issue
 bind \cxz 'cat ~/.zsh_history | fzf-tmux | read -l result; and commandline "$result"'
 
 function fzf-select-from-git-status
-  set -l list (git status --porcelain | fzf-tmux -m | awk -F ' ' '{print $NF}' | tr '\n' ' ')
+  set -l root (git rev-parse --show-superproject-working-tree --show-toplevel | head -1)
+  set -l list (git status --porcelain | fzf-tmux -m | awk -F ' ' '{print $NF}' | sed -e "s|^|$root/|g" | tr '\n' ' ')
   [ -n "$list" ]; and commandline -i $list
 end
 
