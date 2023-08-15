@@ -46,6 +46,9 @@ alias emacsk="emacsclient -e '(kill-emacs)'"
 # # set $GOPATH/bin again because anyenv update $GOPATH
 set -x PATH $PATH $GOPATH/bin
 
+# setup gcloud
+source "$(brew --prefix)/share/google-cloud-sdk/path.fish.inc"
+
 bind \cs __fzf_find_file
 bind \c] __ghq_repository_search
 bind -e \cg
