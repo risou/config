@@ -50,7 +50,8 @@ bind \cs __fzf_find_file
 bind \c] __ghq_repository_search
 bind -e \cg
 bind \cx/ 'ag --ignore-case \'^host [^*]\' ~/.ssh/config | cut -d \' \' -f 2 | fzf-tmux | read -l result; and commandline "ssh $result"; and commandline -f execute'
-bind \cx\cb 'git branch | grep -v HEAD | sed -e \'s/* /  /g\' | string trim | fzf-tmux | read -l result; and commandline "git checkout $result"; and commandline -f execute' bind \cxb 'git branch --all | grep -v HEAD | sed -e \'s/* /  /g\' | string trim | fzf-tmux | read -l result; and commandline "git checkout -t $result"; and commandline -f execute'
+bind \cx\cb 'git branch | grep -v HEAD | sed -e \'s/* /  /g\' | string trim | fzf-tmux | read -l result; and commandline "git switch $result"; and commandline -f execute'
+bind \cxb 'git branch --all | grep -v HEAD | sed -e \'s/* /  /g\' | string trim | fzf-tmux | read -l result; and commandline "git switch (echo \"$result\" | sed \"s|remotes/[^/]*/||\")"; and commandline -f execute'
 bind \cx\cx fzf-select-from-git-status
 bind \cx\co github-open-current-issue
 bind \cxo fzf-github-open-issue
