@@ -14,7 +14,8 @@ set -x PATH $PATH $HOME/.cargo/bin
 
 set -x PATH $PATH /usr/local/Cellar/python@3.9/3.9.6/Frameworks/Python.framework/Versions/3.9/bin
 
-set -x LANG ja_JP.UTF-8 set -x FZF_DEFAULT_OPTS '--reverse --bind=ctrl-j:accept,ctrl-k:kill-line,ctrl-space:toggle-down'
+set -x LANG ja_JP.UTF-8
+set -x FZF_DEFAULT_OPTS '--reverse --bind=ctrl-j:accept,ctrl-k:kill-line,ctrl-space:toggle-down'
 set -x FZF_TMUX 1
 set -x GPG_TTY (tty)
 
