@@ -229,3 +229,20 @@ $ ln -s $(pwd)/ranger/scope.conf $HOME/.config/ranger/scope.conf
 ```sh
 $ brew install ag
 ```
+
+## simple-bar
+
+- install Uebershict https://github.com/felixhageloh/uebersicht
+- install simple-bar https://github.com/Jean-Tinland/simple-bar
+    - use `git clone` at `$HOME/Library/Application\ Support/Übersicht/widgets/simple-bar`
+
+```sh
+$ ln -s $(pwd)/.simplebarrc $HOME/.simplebarrc
+```
+
+- `.simplebarrc`
+    - simple-bar の settings から import できる
+- `.simplebarrc.orig`
+    - 元の状態（こうしたい、という状態）
+    - process がセンタリングされている
+    - ウィジェットの幅の上限が 160px
