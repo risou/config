@@ -1,4 +1,6 @@
 format = """
+$fill\
+$line_break\
 $username\
 $hostname\
 $localip\
@@ -74,7 +76,6 @@ $crystal\
 $custom\
 $sudo\
 $cmd_duration\
-$fill\
 $line_break\
 $jobs\
 $battery\
@@ -85,7 +86,7 @@ $container\
 $shell\
 $character"""
 [fill]
-symbol = ' '
-style = 'bg:#01B1E1'
+symbol = '*'
+style = 'fg:#01B1E1'
 [time]
 disabled = false
