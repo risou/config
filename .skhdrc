@@ -42,6 +42,12 @@ alt + shift - r : yabai -m space --rotate 90
 alt + shift - b : yabai -m space --balance
 alt + shift - s : yabai -m window --toggle split
 
+# cycle
+# alt + shift - n : ~/.config/yabai/cycle_clockwise.sh
+# alt + shift - p : ~/.config/yabai/cycle_counterclockwise.sh
+alt + shift - n : ~/.config/yabai/rotate_next_on_multi_display.sh
+alt + shift - p : ~/.config/yabai/rotate_prev_on_multi_display.sh
+
 # float
 alt + shift - f : yabai -m window --toggle float
 
