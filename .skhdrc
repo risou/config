@@ -1,3 +1,7 @@
+# reload
+# ctrl + alt + cmd - r : yabai --restart-service
+ctrl + alt + cmd - r : ~/.yabairc
+
 # focus window
 alt - h : yabai -m window --focus west
 alt - j : yabai -m window --focus south
@@ -19,8 +23,8 @@ ctrl + alt - h : yabai -m window --warp west
 ctrl + alt - l : yabai -m window --warp east
 
 # move display
-ctrl + alt - left  : yabai -m window --display west
-ctrl + alt - right : yabai -m window --display east
+ctrl + alt - left  : yabai -m window --display west; yabai -m display --focus west
+ctrl + alt - right : yabai -m window --display east; yabai -m display --focus east
 
 # fast focus desktop
 # (need Disabling System Integrity Protection)
