@@ -99,7 +99,7 @@
   "dateWidgetOptions": {
     "refreshFrequency": 30000,
     "shortDateFormat": true,
-    "locale": "en-UK",
+    "locale": "",
     "calendarApp": ""
   },
   "timeWidgetOptions": {
@@ -192,6 +192,6 @@
     }
   },
   "customStyles": {
-    "styles": "/* your custom css styles here */"
+    "styles": "/* your custom css styles here */\n.time {\n  background-color: #DAA520 !important;\n}\n"
   }
 }
