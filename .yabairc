@@ -43,9 +43,16 @@ yabai -m rule --add app="^(Arc)$" subrole="^AXSystemDialog$" manage=off mouse_fo
 # yabai -m rule --add app="^Google Chrome$" space=4
 yabai -m rule --add app="^WezTerm$" space=^4
 yabai -m rule --add app="^Code$" space=^5
+yabai -m rule --add app="^RubyMine" manage=off
+yabai -m rule --add app="^WebStorm" manage=off
+yabai -m rule --add app="^GoLand$" manage=off
+yabai -m rule --add app="^GoLand-EAP$" manage=off
+yabai -m rule --add app="^GoLand" title=".* – .*" manage=on
+yabai -m rule --add app="^RubyMine" title=".* – .*" manage=on
+yabai -m rule --add app="^WebStorm" title=".* – .*" manage=on
 
-yabai -m rule --add app="^WezTerm$" space=9
-yabai -m rule --add app="^GoLand$" space=10
+yabai -m rule --add app="^Spotify$" space=^6
+
 # floating little arc
 yabai -m rule --add app="^Arc$" title="^Space 1" manage=off
 
