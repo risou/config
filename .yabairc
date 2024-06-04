@@ -35,12 +35,12 @@ yabai -m rule --add app="^Logi Options" manage=off
 yabai -m rule --add app="^Karabiner" manage=off
 yabai -m rule --add app="^KeyCastr" manage=off
 
-yabai -m rule --add app="^Inkdrop$" space=1
-yabai -m rule --add app="^Slack$" space=2
-yabai -m rule --add app="^Arc$" space=3
+yabai -m rule --add app="^Inkdrop$" space=^1
+yabai -m rule --add app="^Slack$" space=^2
+yabai -m rule --add app="^Arc$" space=^3
 # yabai -m rule --add app="^Google Chrome$" space=4
-yabai -m rule --add app="^Code$" space=4
-yabai -m rule --add app="^Spotify$" space=5
+yabai -m rule --add app="^WezTerm$" space=^4
+yabai -m rule --add app="^Code$" space=^5
 
 yabai -m rule --add app="^WezTerm$" space=9
 yabai -m rule --add app="^GoLand$" space=10
