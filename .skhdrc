@@ -1,6 +1,6 @@
 # reload
-# ctrl + alt + cmd - r : yabai --restart-service
-ctrl + alt + cmd - r : ~/.yabairc
+ctrl + alt + cmd - r : yabai --restart-service
+# ctrl + alt + cmd - r : ~/.yabairc
 
 # focus window
 alt - h : yabai -m window --focus west
