@@ -46,5 +46,8 @@ yabai -m rule --add app="^Code$" space=^5
 
 yabai -m rule --add app="^WezTerm$" space=9
 yabai -m rule --add app="^GoLand$" space=10
+# floating little arc
+yabai -m rule --add app="^Arc$" title="^Space 1" manage=off
+
 
 echo "yabai configuration loaded..."
