@@ -25,7 +25,8 @@ yabai -m config \
     mouse_action1               move         \
     mouse_action2               resize       \
     mouse_drop_action           swap         \
-    external_bar                all:24:0       # +24 for simple-bar
+    external_bar                all:39:0       # +39 for sketchybar
+    # external_bar                all:24:0       # +24 for simple-bar
 
 yabai -m rule --add app="^システム設定$" manage=off
 yabai -m rule --add app="^アクティビティモニタ$" manage=off
@@ -65,5 +66,13 @@ yabai -m signal --add event=space_changed action="yabai -m window --focus \$(yab
 
 # focus window after active display changes
 # yabai -m signal --add event=display_changed action="yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)"
+
+# for sketchybar
+yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
+yabai -m signal --add event=window_created action="sketchybar --trigger windows_on_spaces"
+yabai -m signal --add event=window_destroyed action="sketchybar --trigger windows_on_spaces"
+# add for me
+yabai -m signal --add event=application_activated action="sketchybar --trigger windows_on_spaces"
+yabai -m signal --add event=window_focused action="sketchybar --trigger windows_on_spaces"
 
 echo "yabai configuration loaded..."
