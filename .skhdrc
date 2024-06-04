@@ -73,3 +73,6 @@ alt + shift - return : ~/.config/yabai/switch_to_main.sh
 alt + shift - f1 : perl ~/.config/yabai/switchJetBrainsFontSize.pl 10
 alt + shift - f2 : perl ~/.config/yabai/switchJetBrainsFontSize.pl 14
 
+# centering floated window
+alt + ctrl - c : ~/.config/yabai/centering-floated-window.sh
+
