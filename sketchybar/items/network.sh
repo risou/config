@@ -2,7 +2,7 @@
 
 network=(
   label.drawing=on
-  update_freq=10
+  update_freq=300
   script="$PLUGIN_DIR/network.sh"
 )
 
