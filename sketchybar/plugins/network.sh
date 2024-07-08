@@ -8,7 +8,7 @@ PORT_NAME=$(networksetup -listallhardwareports | awk -v dev="$DEVICE" '
   END { if (!found) { print "N/A" } }')
 
 if [ "$PORT_NAME" = "Wi-Fi" ]; then
-  NETWORK_NAME=$(networksetup -getairportnetwork en0 | awk -F': ' '{print $2}')
+  NETWORK_NAME=$(networksetup -getairportnetwork $DEVICE | awk -F': ' '{print $2}')
   sketchybar --set $NAME label="$NETWORK_NAME"
 #   sketchybar --set $NAME icon=""
 else
