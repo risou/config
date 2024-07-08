@@ -46,11 +46,15 @@ yabai -m rule --add app="^WezTerm$" space=^4
 yabai -m rule --add app="^Code$" space=^5
 yabai -m rule --add app="^RubyMine" manage=off
 yabai -m rule --add app="^WebStorm" manage=off
+yabai -m rule --add app="^CLion" manage=off
+yabai -m rule --add app="^IntelliJ IDEA" manage=off
 yabai -m rule --add app="^GoLand$" manage=off
 yabai -m rule --add app="^GoLand-EAP$" manage=off
 yabai -m rule --add app="^GoLand" title=".* – .*" manage=on
 yabai -m rule --add app="^RubyMine" title=".* – .*" manage=on
 yabai -m rule --add app="^WebStorm" title=".* – .*" manage=on
+yabai -m rule --add app="^CLion" title=".* – .*" manage=on
+yabai -m rule --add app="^Intellij IDEA" title=".* – .*" manage=on
 
 yabai -m rule --add app="^Spotify$" space=^6
 
