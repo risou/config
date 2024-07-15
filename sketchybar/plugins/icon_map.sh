@@ -287,6 +287,9 @@ case $@ in
 "IntelliJ IDEA")
   icon_result=":idea:"
   ;;
+"GoLand")
+  icon_result=":goland:"
+  ;;
 "Drafts")
   icon_result=":drafts:"
   ;;
@@ -359,8 +362,11 @@ case $@ in
 "Podcasts")
   icon_result=":podcasts:"
   ;;
-"Alacritty" | "Hyper" | "iTerm2" | "kitty" | "Terminal" | "WezTerm")
+"Alacritty" | "Hyper" | "iTerm2" | "kitty" | "Terminal")
   icon_result=":terminal:"
+  ;;
+"WezTerm")
+  icon_result=":wezterm:"
   ;;
 "Tor Browser")
   icon_result=":tor_browser:"
@@ -376,6 +382,15 @@ case $@ in
   ;;
 "Sequel Ace")
   icon_result=":sequel_ace:"
+  ;;
+"Arc")
+  icon_result=":arc:"
+  ;;
+"Inkdrop")
+  icon_result=":inkdrop:"
+  ;;
+"1Password")
+  icon_result=":one_password:"
   ;;
 *)
   icon_result=":default:"
