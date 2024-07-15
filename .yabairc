@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+# yabai -m config debug_output on
+
 yabai -m config \
     mouse_follows_focus         off          \
     focus_follows_mouse         off          \
@@ -66,6 +68,9 @@ yabai -m rule --add app="^Arc$" title="^Space 1" manage=off
 # yabai -m signal --add event=space_changed action="yabai -m window --focus \$(yabai -m query --windows --space | jq -r '[.[]|select(.\"is-visible\")][0].id')"
 # exclude "AXSystemDialog" for avoiding Arc PinP window
 yabai -m signal --add event=space_changed action="yabai -m window --focus \$(yabai -m query --windows --space | jq -r '[.[]|select(contains({subrole:\"AXSystemDialog\"})|not)|select(.\"is-visible\")][0].id')"
+# for debug
+# yabai -m signal --add event=window_focused action="echo \"focus:\" \$YABAI_WINDOW_ID >> ~/yabai_debug.log"
+# yabai -m signal --add event=space_changed action="echo \"space:\" \$YABAI_RECENT_SPACE_INDEX \"->\" \$YABAI_SPACE_INDEX >> ~/yabai_debug.log"
 
 
 # focus window after active display changes
