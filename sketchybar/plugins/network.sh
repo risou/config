@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source "$HOME/.config/sketchybar/icons.sh"
+
 DEVICE=$(route get default | grep interface | awk '{print $2}')
 PORT_NAME=$(networksetup -listallhardwareports | awk -v dev="$DEVICE" '
   BEGIN { found=0 }
@@ -10,8 +12,8 @@ PORT_NAME=$(networksetup -listallhardwareports | awk -v dev="$DEVICE" '
 if [ $PORT_NAME = "Wi-Fi" ]; then
   NETWORK_NAME=$(networksetup -getairportnetwork $DEVICE | awk -F': ' '{print $2}')
   sketchybar --set $NAME label="$NETWORK_NAME"
-#   sketchybar --set $NAME icon=""
+  sketchybar --set $NAME icon="$WIFI"
 else
   sketchybar --set $NAME label="$PORT_NAME"
-#   sketchybar --set $NAME icon=""
+  sketchybar --set $NAME icon="$LAN"
 fi

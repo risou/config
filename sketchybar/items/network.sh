@@ -1,8 +1,9 @@
 #!/bin/bash
 
 network=(
+  icon.font="Hack Nerd Font:Bold:14.0"
   label.drawing=on
-  update_freq=300
+  update_freq=60
   script="$PLUGIN_DIR/network.sh"
 )
 

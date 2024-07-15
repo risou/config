@@ -46,4 +46,5 @@ VOLUME_10=􀊡
 VOLUME_0=􀊣
 
 # Network Icons
-NETWORK=
+WIFI=
+LAN=

@@ -246,3 +246,12 @@ $ ln -s $(pwd)/.simplebarrc $HOME/.simplebarrc
     - 元の状態（こうしたい、という状態）
     - process がセンタリングされている
     - ウィジェットの幅の上限が 160px
+
+# sketchybar
+
+- install sketchy-bar-app-font
+    - set latest version in URL
+
+```sh
+$ curl -L https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v2.0.19/sketchybar-app-font.ttf -o $HOME/Library/Fonts/sketchybar-app-font.ttf
+```
