@@ -129,7 +129,12 @@ mouse_clicked () {
 }
 
 popup () {
-  sketchybar --set spotify.anchor popup.drawing=$1
+  RUNNING=$(osascript -e 'application "Spotify" is running')
+  if [ "$RUNNING" = "true" ]; then
+    sketchybar --set spotify.anchor popup.drawing=$1
+  else
+    sketchybar --set spotify.anchor popup.drawing=off
+  fi
 }
 
 routine() {
