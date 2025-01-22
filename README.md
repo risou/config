@@ -14,6 +14,16 @@ $ git submodule update --init
 
 # Emacs
 
+2025/01~
+
+use Emacs Mac Port
+
+```sh
+$ brew tap "railwaycat/emacsmacport"
+$ brew install --cask "emacs-mac"
+```
+No need to run the above commands as it is managed by Brewfile(homebrew-bundle).
+
 2020/10~
 
 ```sh
