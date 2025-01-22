@@ -86,7 +86,7 @@
   :defun (exec-path-from-shell-initialize)
   :custom
   ((exec-path-from-shell-check-startup-files . nil)
-   (exec-path-from-shell-shell-name . "/usr/local/bin/fish")
+   (exec-path-from-shell-shell-name . "/opt/homebrew/bin/fish")
    (exec-path-from-shell-variables . '("PATH")))
   :config
   (exec-path-from-shell-initialize)
