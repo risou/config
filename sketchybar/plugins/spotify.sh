@@ -42,6 +42,7 @@ shuffle ()
 update ()
 {
   PLAYING=1
+  QUITTED=1
   if [ "$(echo "$INFO" | jq -r '.["Player State"]')" = "Playing" ]; then
     PLAYING=0
     TRACK="$(echo "$INFO" | jq -r .Name | sed 's/\(.\{20\}\).*/\1.../')"
@@ -50,6 +51,8 @@ update ()
     SHUFFLE=$(osascript -e 'tell application "Spotify" to get shuffling')
     REPEAT=$(osascript -e 'tell application "Spotify" to get repeating')
     COVER=$(osascript -e 'tell application "Spotify" to get artwork url of current track')
+  elif [ "$(echo "$INFO" | jq -r '.["Player State"]')" = "Stopped" ]; then
+    QUITTED=0
   fi
 
   args=()
@@ -75,6 +78,9 @@ update ()
     args+=(--set spotify.anchor drawing=on popup.drawing=off
            --subscribe spotify.anchor mouse.entered mouse.exited mouse.exited.global mouse.clicked
            --set spotify.play icon=􀊄                         )
+    if [ $QUITTED -eq 0 ]; then
+      args+=(--set spotify.anchor drawing=on label="")
+    fi
   fi
   sketchybar -m "${args[@]}"
 }
