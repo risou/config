@@ -112,6 +112,14 @@ end
 local function updateRightStatus(window, pane)
   local elements = {}
 
+  -- font
+  local config = window:effective_config()
+  local font_size = config.font_size
+  local main_font = config.font.font[1] and config.font.font[1].family or "Unknown"
+  table.insert(elements, { Text = ' Font ' })
+  table.insert(elements, { Attribute = { Intensity = 'Bold' } })
+  table.insert(elements, { Text = string.format('%s:%s', main_font, font_size) })
+
   -- cwd
   local uri = pane:get_current_working_dir()
   if uri then
