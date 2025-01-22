@@ -4,6 +4,8 @@ end
 
 # asdf
 source (brew --prefix asdf)/libexec/asdf.fish
+set -x ASDF_RUBY_VERSION_FILE ".ruby-version,.tool-versions"
+set -x ASDF_NODEJS_VERSION_FILE ".node-version,.tool-versions"
 
 set -x GOPATH /Users/risou
 set -x PATH /usr/local/bin $PATH
