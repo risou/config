@@ -172,6 +172,26 @@ wezterm.on('update-status', function(window, pane)
   updateRightStatus(window, pane)
 end)
 
+-- local function get_display_info()
+--   local handle = io.popen("system_profiler SPDisplaysDataType | grep Resolution")
+--   local result = handle:read("*a")
+--   handle:close()
+--   return result
+-- end
+-- 
+-- wezterm.on('window-resized', function(window)
+--   local dimensions = window:get_dimensions()
+--   local width = dimensions.pixel_width
+--   local display_info = get_display_info()
+--   wezterm.log_info('width: ' .. width)
+--   wezterm.log_info('display: ' .. display_info)
+--   if width >= 2560 then
+--     window:set_config_overrides({ font_size = 14 })
+--   else
+--     window:set_config_overrides({ font_size = 12 })
+--   end
+-- end)
+
 config.status_update_interval = 1000
 
 config.leader = { key = 't', mods = 'CTRL', timeout_milliseconds = 1000 }
