@@ -19,8 +19,9 @@ config.color_scheme = 'Palenight (Gogh)'
 -- config.text_background_opacity = 0.9
 
 config.font = wezterm.font_with_fallback({
+  -- { family = "UDEV Gothic 35NFLG" },
   -- { family = "Monaspace Neon", harfbuzz_features = { "calt", "clig", "liga" } },
-  { family = "Fira Code", harfbuzz_features = { "onum", "cv24", "ss07" } },
+  { family = "FiraCode Nerd Font Mono", harfbuzz_features = { "onum", "cv24", "ss07" } },
   { family = "Cica" },
   { family = "Cica", assume_emoji_presentation = true },
   { family = "JetBrains Mono" },
