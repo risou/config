@@ -115,25 +115,26 @@ local function updateRightStatus(window, pane)
   -- cwd
   local uri = pane:get_current_working_dir()
   if uri then
-    local cwd_uri = uri:sub(8)
-    local slash = cwd_uri:find('/')
-    if slash then
-      local host = cwd_uri:sub(1, slash - 1)
-      local dot = host:find '[.]'
-
-      table.insert(elements, { Foreground = { Color = '#75b1a9' }})
-      table.insert(elements, { Background = { Color = '#333333' }})
-      table.insert(elements, { Text = '' .. ' ' })
-      table.insert(elements, { Foreground = { Color = '#9a9eab' }})
-      table.insert(elements, { Background = { Color = '#333333' }})
-      table.insert(elements, { Text = (dot and host:sub(1, dot - 1) or host) .. '   ' })
-
-      table.insert(elements, { Foreground = { Color = '#92aac7' }})
-      table.insert(elements, { Background = { Color = '#333333' }})
-      table.insert(elements, { Text = '' .. ' ' })
-      table.insert(elements, { Foreground = { Color = '#9a9eab' }})
-      table.insert(elements, { Background = { Color = '#333333' }})
-      table.insert(elements, { Text = cwd_uri:sub(slash) .. '   ' })
+    if type(uri) == "userdata" then
+      if uri.scheme == 'file' then
+        local cwd = uri.file_path
+        table.insert(elements, { Foreground = { Color = '#92aac7' }})
+        table.insert(elements, { Background = { Color = '#333333' }})
+        table.insert(elements, { Text = '' .. ' ' })
+        table.insert(elements, { Foreground = { Color = '#9a9eab' }})
+        table.insert(elements, { Background = { Color = '#333333' }})
+        table.insert(elements, { Text = cwd .. '   ' })
+      else
+        local host = uri:host() or "unknown"
+        local path = uri:path() or "/"
+        local dot = host:find '[.]'
+        table.insert(elements, { Foreground = { Color = '#75b1a9' }})
+        table.insert(elements, { Background = { Color = '#333333' }})
+        table.insert(elements, { Text = '' .. ' ' })
+        table.insert(elements, { Foreground = { Color = '#9a9eab' }})
+        table.insert(elements, { Background = { Color = '#333333' }})
+        table.insert(elements, { Text = (dot and host:sub(1, dot - 1) or host) .. '   ' })
+      end
     end
   end
 
