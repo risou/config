@@ -15,8 +15,8 @@ config.default_prog = { '/opt/homebrew/bin/fish', '-l' }
 config.color_scheme = 'Palenight (Gogh)'
 -- config.color_scheme = 'Selenized White (Gogh)'
 
-config.window_background_opacity = 0.7
-config.text_background_opacity = 0.9
+-- config.window_background_opacity = 0.7
+-- config.text_background_opacity = 0.9
 
 config.font = wezterm.font_with_fallback({
   -- { family = "Monaspace Neon", harfbuzz_features = { "calt", "clig", "liga" } },
