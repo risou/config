@@ -13,6 +13,7 @@ config.default_prog = { '/opt/homebrew/bin/fish', '-l' }
 -- config.color_scheme = 'iceberg-dark'
 -- config.color_scheme = 'iceberg-light'
 config.color_scheme = 'Palenight (Gogh)'
+-- config.color_scheme = 'Selenized White (Gogh)'
 
 config.window_background_opacity = 0.7
 config.text_background_opacity = 0.9
