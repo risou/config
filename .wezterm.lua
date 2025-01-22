@@ -72,7 +72,10 @@ wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_wid
   local pane = tab.active_pane
   local title = ""
   local index = tab.tab_index + 1
-  local cwd = basename(pane.current_working_dir)
+  local cwd = ""
+  if pane.current_working_dir ~= nil then
+    cwd = basename(pane.current_working_dir.file_path)
+  end
   local process = basename(pane.foreground_process_name)
   if string.sub(process, 1, 5) == "fish " then
     title = index .. ": " .. cwd
