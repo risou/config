@@ -76,3 +76,6 @@ alt + shift - f2 : perl ~/.config/yabai/switchJetBrainsFontSize.pl 14
 # centering floated window
 alt + ctrl - c : ~/.config/yabai/centering-floated-window.sh
 
+# swap windows between displays
+ctrl + alt - x : ~/.config/yabai/swap_displays.sh
+
