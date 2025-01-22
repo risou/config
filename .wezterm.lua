@@ -215,6 +215,33 @@ config.keys = {
     mods = 'LEADER|SHIFT',
     action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
   },
+  {
+    key = 'F1',
+    mods = 'CMD',
+    action = wezterm.action_callback(function(window,  pane)
+      window:set_config_overrides({
+        font_size = 16.0,
+      })
+    end),
+  },
+  {
+    key = 'F2',
+    mods = 'CMD',
+    action = wezterm.action_callback(function(window,  pane)
+      window:set_config_overrides({
+        font_size = 14.0,
+      })
+    end),
+  },
+  {
+    key = 'F3',
+    mods = 'CMD',
+    action = wezterm.action_callback(function(window,  pane)
+      window:set_config_overrides({
+        font_size = 12.0,
+      })
+    end),
+  },
 }
 
 return config
