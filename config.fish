@@ -35,9 +35,6 @@ set -U -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 set -x PERL_CPANM_OPT "--local-lib=~/local/lib/perl5"
 set -x PERL5LIB $HOME/local/lib/perl5/lib/perl5 $PERL5LIB
 
-# for protoc-gen-gohttp
-set -x GOPRIVATE github.com/heyinc/protoc-gen-gohttp
-
 set fish_greeting "..."
 
 alias e="emacsclient -nw"
