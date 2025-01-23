@@ -2,33 +2,38 @@
 ctrl + alt + cmd - r : yabai --restart-service
 # ctrl + alt + cmd - r : ~/.yabairc
 
+#  ctrl + alt - * : move window
+# shift + alt - * : move focus
+
 # focus window
-alt - h : yabai -m window --focus west
-alt - j : yabai -m window --focus south
-alt - k : yabai -m window --focus north
-alt - l : yabai -m window --focus east
+alt + shift - h : yabai -m window --focus west
+alt + shift - j : yabai -m window --focus south
+alt + shift - k : yabai -m window --focus north
+alt + shift - l : yabai -m window --focus east
 
 # focus display
 alt + shift - left  : yabai -m display --focus west
 alt + shift - right : yabai -m display --focus east
-alt + shift - up : yabai -m display --focus north
-alt + shift - down : yabai -m display --focus south
+alt + shift - up    : yabai -m display --focus north
+alt + shift - down  : yabai -m display --focus south
 
 # swap window
-alt + shift - h : yabai -m window --swap west
-alt + shift - j : yabai -m window --swap south
-alt + shift - k : yabai -m window --swap north
-alt + shift - l : yabai -m window --swap east
+ctrl + alt - h : yabai -m window --swap west
+ctrl + alt - j : yabai -m window --swap south
+ctrl + alt - k : yabai -m window --swap north
+ctrl + alt - l : yabai -m window --swap east
 
 # warp window
-ctrl + alt - h : yabai -m window --warp west
-ctrl + alt - l : yabai -m window --warp east
+ctrl + alt - home     : yabai -m window --warp west
+ctrl + alt - pagedown : yabai -m window --warp south
+ctrl + alt - pageup   : yabai -m window --warp north
+ctrl + alt - end      : yabai -m window --warp east
 
 # move display
 ctrl + alt - left  : yabai -m window --display west; yabai -m display --focus west
 ctrl + alt - right : yabai -m window --display east; yabai -m display --focus east
-ctrl + alt - up : yabai -m window --display north; yabai -m display --focus north
-ctrl + alt - down : yabai -m window --display south; yabai -m display --focus south
+ctrl + alt - up    : yabai -m window --display north; yabai -m display --focus north
+ctrl + alt - down  : yabai -m window --display south; yabai -m display --focus south
 
 # fast focus desktop
 # (need Disabling System Integrity Protection)
@@ -39,7 +44,7 @@ ctrl + alt - p : yabai -m window --space prev
 ctrl + alt - n : yabai -m window --space next
 
 # fullscreen
-alt - f : yabai -m window --toggle zoom-fullscreen
+alt + shift - m : yabai -m window --toggle zoom-fullscreen
 
 # rotate
 alt + shift - r : yabai -m space --rotate 90
@@ -74,7 +79,7 @@ alt + shift - f1 : perl ~/.config/yabai/switchJetBrainsFontSize.pl 10
 alt + shift - f2 : perl ~/.config/yabai/switchJetBrainsFontSize.pl 14
 
 # centering floated window
-alt + ctrl - c : ~/.config/yabai/centering-floated-window.sh
+alt + shift - c : ~/.config/yabai/centering-floated-window.sh
 
 # swap windows between displays
 ctrl + alt - x : ~/.config/yabai/swap_displays.sh
