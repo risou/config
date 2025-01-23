@@ -1,11 +1,12 @@
 [ghq]
-    root = /Users/risou/src
+#    root = /Users/risou/src
+    root = ~/ghq
 [user]
     name = risou
     email = risou.f@gmail.com
     signingkey = ****************
 [core]
-    pager = less -r
+    pager = less -
     precomposeunicode = true
     excludesfile = /Users/risou/.gitignore_global
 [color]
@@ -32,3 +33,6 @@
     gpgsign = true
 [gpg]
     program = /usr/local/bin/gpg
+[pager]
+    diff = diff-so-fancy | less --tabs=4 -RFX --pattern='^(added|deleted|modified): '
+    show = diff-so-fancy | less --tabs=4 -RFX --pattern='^(added|deleted|modified): '
