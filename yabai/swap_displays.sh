@@ -16,14 +16,16 @@ else
     destination_display=$current_display
 fi
 
+# 移動先のディスプレイのアクティブなスペースの番号を取得
+target_space=$(yabai -m query --spaces --display $target_display | jq '.[] | select(."is-visible" == true) | .index')
 
 # フォーカスされているウィンドウを目標のディスプレイに移動
 yabai -m window --display $target_display
 
 # 元のディスプレイにあった全てのウィンドウを現在のディスプレイに移動
-yabai -m query --windows | jq -r ".[] | select(.display == $target_display and .id != $focused_window).id" | while read -r window_id; do
+yabai -m query --windows | jq -r ".[] | select(.space == $target_space and .id != $focused_window).id" | while read -r window_id; do
     yabai -m window $window_id --display $destination_display
 done
 
 # 移動したウィンドウにフォーカスを移す
-yabai -m display --focus $target_display 
+yabai -m display --focus $target_display
