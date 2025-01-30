@@ -36,8 +36,10 @@ yabai -m rule --add app="^1Password$" manage=off
 yabai -m rule --add app="^JetBrains Toolbox$" manage=off
 yabai -m rule --add app="^Logi Options" manage=off
 yabai -m rule --add app="^Karabiner" manage=off
+yabai -m rule --add app="^Karabiner-EventViewer" manage=off
 yabai -m rule --add app="^KeyCastr" manage=off
 yabai -m rule --add app="^Structured$" manage=off
+yabai -m rule --add app="^Raycast" manage=off
 
 yabai -m rule --add app="^Inkdrop$" space=^1
 yabai -m rule --add app="^Slack$" space=^2
