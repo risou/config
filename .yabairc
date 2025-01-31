@@ -90,7 +90,7 @@ yabai -m signal --add event=window_destroyed action="sketchybar --trigger window
 yabai -m signal --add event=application_activated action="sketchybar --trigger windows_on_spaces"
 yabai -m signal --add event=window_focused action="sketchybar --trigger windows_on_spaces"
 
-# setup JankyBorder
-borders active_color=0xcc00ff80 width=6.0 &
+# setup JankyBorder (use `brew services start borders` and settings in .bordersrc)
+# borders active_color=0xcc00ff80 width=6.0 &
 
 echo "yabai configuration loaded..."
