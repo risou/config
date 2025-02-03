@@ -92,5 +92,6 @@ yabai -m signal --add event=window_focused action="sketchybar --trigger windows_
 
 # setup JankyBorder (use `brew services start borders` and settings in .bordersrc)
 # borders active_color=0xcc00ff80 width=6.0 &
+yabai -m signal --add event=window_focused action='[ "$(yabai -m query --windows --window | jq -r ".[\"is-floating\"]")" = "false" ] && { borders active_color=0xc000ff80; :; } || borders active_color=0xc0ffff00'
 
 echo "yabai configuration loaded..."
