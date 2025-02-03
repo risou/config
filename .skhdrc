@@ -58,13 +58,20 @@ alt + shift - n : ~/.config/yabai/rotate_next_on_multi_display.sh
 alt + shift - p : ~/.config/yabai/rotate_prev_on_multi_display.sh
 
 # float
-alt + shift - f : yabai -m window --toggle float
+alt + shift - f : yabai -m window --toggle float; [ "$(yabai -m query --windows --window | jq -r '.["is-floating"]')" = "false" ] && { borders active_color=0xc000ff80; :; } || borders active_color=0xc0ffff00
 
 # disable : float window can't focus
 # float && top 1/3 (mainly for WezTerm)
 # alt + shift - p : yabai -m window --toggle float && yabai -m window --grid 3:1:0:0:1:1
 # float && bottom 2/3 (mainly for IDE)
 # alt + shift - n : yabai -m window --toggle float && yabai -m window --grid 3:1:0:1:1:2
+
+alt + shift - 0x21 : [ "$(yabai -m query --windows --window | jq -r '.["is-floating"]')" = "false" ] && yabai -m window --toggle float && borders active_color=0xc0ffff00; yabai -m window --grid 1:2:0:0:1:1
+alt + shift - 0x1E : [ "$(yabai -m query --windows --window | jq -r '.["is-floating"]')" = "false" ] && yabai -m window --toggle float && borders active_color=0xc0ffff00; yabai -m window --grid 1:2:1:0:1:1
+alt + shift - 1 : [ "$(yabai -m query --windows --window | jq -r '.["is-floating"]')" = "false" ] && yabai -m window --toggle float && borders active_color=0xc0ffff00; yabai -m window --grid 2:2:0:0:1:1
+alt + shift - 2 : [ "$(yabai -m query --windows --window | jq -r '.["is-floating"]')" = "false" ] && yabai -m window --toggle float && borders active_color=0xc0ffff00; yabai -m window --grid 2:2:1:0:1:1
+alt + shift - 3 : [ "$(yabai -m query --windows --window | jq -r '.["is-floating"]')" = "false" ] && yabai -m window --toggle float && borders active_color=0xc0ffff00; yabai -m window --grid 2:2:0:1:1:1
+alt + shift - 4 : [ "$(yabai -m query --windows --window | jq -r '.["is-floating"]')" = "false" ] && yabai -m window --toggle float && borders active_color=0xc0ffff00; yabai -m window --grid 2:2:1:1:1:1
 
 # window resize
 # height 1/2 -> 1/3 in rotate 90 degree 4K (mainly for WezTerm)
