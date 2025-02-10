@@ -3,7 +3,7 @@
 source "$HOME/.config/sketchybar/colors.sh"
 
 # uncommit following environment variables
-GITHUB_ORG=""
+GITHUB_ORG="heyinc"
 
 if [ $(date +%m) -le 6 ]; then
   START_DATE=$(date +%Y-01-01)

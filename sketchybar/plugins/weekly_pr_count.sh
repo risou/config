@@ -3,7 +3,7 @@
 source "$HOME/.config/sketchybar/colors.sh"
 
 # uncommit following environment variables
-GITHUB_ORG=""
+GITHUB_ORG="heyinc"
 
 WEEK_START_DATE=$(date -v-monday +%Y-%m-%d)
 WEEK_END_DATE=$(date -v+sunday +%Y-%m-%d)
