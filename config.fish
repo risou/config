@@ -60,7 +60,7 @@ bind \cx\co github-open-current-issue
 bind \cxo fzf-github-open-issue
 # bind \cxp open-pr-from-commit
 bind \cxz 'cat ~/.zsh_history | fzf-tmux | read -l result; and commandline "$result"'
-bind \cx\cb __fzf_git
+bind \cx\cb git-switch-prev
 
 function fzf-select-from-git-status
   set -l root (git rev-parse --show-superproject-working-tree --show-toplevel | head -1)
@@ -109,6 +109,47 @@ function __ghq_repository_search -d 'Repository search'
   ghq list --full-path | eval "fzf-tmux" $selector_options $flags | read select
   [ -n "$select" ]; and commandline "cd $select"; and commandline -f execute
   commandline -f repaint
+end
+
+# select from recently branches
+function git-switch-prev
+  set -l default_branch (git rev-parse --abbrev-ref origin/HEAD 2>/dev/null | string replace 'origin/' '')
+
+  if test -z "$default_branch"
+    return 1
+  end
+
+  set -l current (git rev-parse --abbrev-ref HEAD)
+
+  set -l entries
+  set -l seen
+  for line in (git reflog --format='%gD|%an|%ad|%gs' --date=short | grep 'checkout: moving from')
+    set -l author (string split "|" $line)[2]
+    set -l date (string split "|" $line)[3]
+    set -l m (string split "|" $line)[4]
+    set -l b (echo $m | string match -r '(?<=from )[^ ]+')
+    if test -n "$b"; and not contains -- $b $seen; and test "$b" != "$current"
+      set seen $seen $b
+      set entries $entries "$b|$author|$date"
+    end
+  end
+
+  if test (count $entries) -eq 0
+    return 1
+  end
+
+  set -l picked (printf "%s\n" $entries \
+    | column -ts'|' \
+    | fzf --ansi --exact --preview='git log --oneline --graph --decorate --color=always -50 {+1}' \
+    | awk '{print $1}')
+
+  if test -z "$picked"
+    return 0
+  end
+
+  set -l target (string split "|" $picked)[1]
+
+  git switch $target
 end
 
 if test -z (echo $TMUX)
