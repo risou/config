@@ -12,19 +12,25 @@ config.default_prog = { '/opt/homebrew/bin/fish', '-l' }
 -- config.color_scheme = 'PaperColorLight (Gogh)'
 -- config.color_scheme = 'iceberg-dark'
 -- config.color_scheme = 'iceberg-light'
-config.color_scheme = 'Palenight (Gogh)'
+-- config.color_scheme = 'Palenight (Gogh)'
+config.color_scheme = 'Catppuccin Mocha'
 -- config.color_scheme = 'Selenized White (Gogh)'
 
 -- config.window_background_opacity = 0.7
 -- config.text_background_opacity = 0.9
 
 config.font = wezterm.font_with_fallback({
+  -- { family = "UDEV Gothic 35NFLG", weight = "Medium" },
+  -- 以下2つはセット
+  { family = "JetBrains Mono", weight = "Medium" },
+  { family = "PlemolJP Console NF", weight = "Medium" },
+  -- 以下はそれぞれ単発
   -- { family = "UDEV Gothic 35NFLG" },
   -- { family = "Monaspace Neon", harfbuzz_features = { "calt", "clig", "liga" } },
-  { family = "FiraCode Nerd Font Mono", harfbuzz_features = { "onum", "cv24", "ss07" } },
-  { family = "Cica" },
-  { family = "Cica", assume_emoji_presentation = true },
-  { family = "JetBrains Mono" },
+  --   { family = "FiraCode Nerd Font Mono", harfbuzz_features = { "onum", "cv24", "ss07" } },
+  --   { family = "Cica" },
+  --   { family = "Cica", assume_emoji_presentation = true },
+  --   { family = "JetBrains Mono" },
 })
 
 local monaspace_features = { "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" }
@@ -34,7 +40,7 @@ config.font_rules = {
     intensity = "Normal",
     italic = true,
     font = wezterm.font {
-      family = "Monaspace Radon Var",
+      family = "Monaspace Radon",
       style = "Normal",
       weight = "Regular",
       stretch = "Expanded",
@@ -45,7 +51,7 @@ config.font_rules = {
     intensity = "Bold",
     italic = true,
     font = wezterm.font {
-      family = "Monaspace Krypton Var",
+      family = "Monaspace Krypton",
       style = "Italic",
       weight ="Black",
       harfbuzz_features = monaspace_features,
@@ -55,8 +61,12 @@ config.font_rules = {
 
 -- config.font_size = 21.0 -- 14.0 * 1.5
 -- config.font_size = 18.0 -- 14.0 * 1.3
-config.font_size = 14.0
+-- config.font_size = 14.0
 -- config.font_size = 12.0
+config.font_size = 16.0
+config.line_height = 1.18
+config.harfbuzz_features = { "liga=1", "calt=1", "zero=1" }
+config.adjust_window_size_when_changing_font_size = false -- フォントサイズ変更でウィンドウがリサイズされるのを防止
 
 config.use_ime = true
 
