@@ -83,10 +83,12 @@ $time\
 $status\
 $os\
 $container\
+$jobs\
 $shell\
+$line_break\
 $character"""
 [fill]
-symbol = '*'
+symbol = '-'
 style = 'fg:#01B1E1'
 [time]
 disabled = false
