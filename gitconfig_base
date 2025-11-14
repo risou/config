@@ -6,7 +6,7 @@
     email = risou.f@gmail.com
     signingkey = ****************
 [core]
-    pager = less -
+    pager = less -RX
     precomposeunicode = true
     excludesfile = /Users/risou/.gitignore_global
 [color]
@@ -21,6 +21,7 @@
     view-issue = "!f() { hub browse -- \"issues/$1\"; };f"
     merged-pr = "!f() { hub browse -- `git log --merges --oneline --reverse --ancestry-path $1...master | grep 'Merge pull request #' | head -n 1 | cut -f5 -d' ' | sed -e 's%#%pull/%'`; }; f"
     blame-pr = "!f() { git blame $1 |peco| cut -f 1 -d ' ' | xargs -I@ git merged-pr @; };f"
+    sd = "!git remote show origin | grep 'HEAD branch' | awk '{print $NF}' | xargs git switch"
 [url "git@github.com:risou"]
     insteadOf = https://github.com/risou
     pushInsteadOf = https://github.com/risou
@@ -32,7 +33,8 @@
 [commit]
     gpgsign = true
 [gpg]
-    program = /usr/local/bin/gpg
+#    program = /usr/local/bin/gpg
+    program = /opt/homebrew/bin/gpg
 [pager]
     diff = diff-so-fancy | less --tabs=4 -RFX --pattern='^(added|deleted|modified): '
     show = diff-so-fancy | less --tabs=4 -RFX --pattern='^(added|deleted|modified): '
