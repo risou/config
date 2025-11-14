@@ -5,7 +5,11 @@ function __fzf_git_color
     else if test (count $argv) -gt 0 -a -n "$FZF_GIT_PREVIEW_COLOR"
         echo "$FZF_GIT_PREVIEW_COLOR"
     else
-        echo "${FZF_GIT_COLOR:-always}"
+        if set -q FZF_GIT_COLOR
+            echo $FZF_GIT_COLOR
+        else
+            echo "always"
+        end
     end
 end
 
