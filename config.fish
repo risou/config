@@ -1,11 +1,6 @@
-if status is-interactive
+# if status is-interactive
     eval (/opt/homebrew/bin/brew shellenv)
-end
-
-# asdf
-source (brew --prefix asdf)/libexec/asdf.fish
-set -x ASDF_RUBY_VERSION_FILE ".ruby-version,.tool-versions"
-set -x ASDF_NODEJS_VERSION_FILE ".node-version,.tool-versions"
+# end
 
 set -x GOPATH /Users/risou
 set -x PATH /usr/local/bin $PATH
@@ -17,7 +12,8 @@ set -x PATH $PATH $HOME/.cargo/bin
 set -x PATH $PATH /usr/local/Cellar/python@3.9/3.9.6/Frameworks/Python.framework/Versions/3.9/bin
 
 set -x LANG ja_JP.UTF-8
-set -x FZF_DEFAULT_OPTS '--height 40% --reverse --bind=ctrl-j:accept,ctrl-k:kill-line,ctrl-space:toggle-down'
+# set -x FZF_DEFAULT_OPTS '--height 40% --reverse --bind=ctrl-j:accept,ctrl-k:kill-line,ctrl-space:toggle-down'
+set -x FZF_DEFAULT_OPTS ' --reverse --bind=ctrl-j:accept,ctrl-k:kill-line,ctrl-space:toggle-down'
 set -x FZF_TMUX 1
 set -x GPG_TTY (tty)
 
@@ -48,6 +44,19 @@ set -x PATH $PATH $GOPATH/bin
 
 # setup gcloud
 source "$(brew --prefix)/share/google-cloud-sdk/path.fish.inc"
+
+# setup flutter
+set -x PATH $HOME/development/flutter/bin $PATH
+# setup cocoapods
+set -x PATH $HOME/.gem/bin $PATH
+
+# for claude
+set -x PATH $PATH $HOME/.local/bin
+
+# fzf settings
+# Always up/down by ctrl-p/ctrl-n
+# Use alt-up/alt-down to previous/next-history instead
+set -x FZF_DEFAULT_OPTS "$FZF_DEFAULT_OPTS --bind ctrl-n:down,ctrl-p:up,alt-up:previous-history,alt-down:next-history"
 
 bind \cs __fzf_find_file
 bind \c] __ghq_repository_search
@@ -149,7 +158,8 @@ function git-switch-prev
 
   set -l target (string split "|" $picked)[1]
 
-  git switch $target
+  set -l output (git switch $target 2>&1)
+  echo $output
 end
 
 if test -z (echo $TMUX)
@@ -185,3 +195,4 @@ eval (direnv hook fish)
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 set --export --prepend PATH "/Users/risou/.rd/bin"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+# mise configuration moved to ~/.config/fish/conf.d/mise.fish
