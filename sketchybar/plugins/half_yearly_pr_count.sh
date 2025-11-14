@@ -13,6 +13,6 @@ else
   END_DATE=$(date +%Y-12-31)
 fi
 
-HALF_YEARLY_PR_COUNT=$(gh search prs --merged --merged-at "$START_DATE..$END_DATE" --owner "$GITHUB_ORG" --author @me --limit 100 --json 'title' -q '.[]|.title' | wc -l | tr -d ' ')
+HALF_YEARLY_PR_COUNT=$(gh search prs --merged --merged-at "$START_DATE..$END_DATE" --owner "$GITHUB_ORG" --author @me --limit 300 --json 'title' -q '.[]|.title' | wc -l | tr -d ' ')
 
 sketchybar --set $NAME label=$HALF_YEARLY_PR_COUNT
