@@ -302,9 +302,14 @@
 
 (leaf undo-tree
   :ensure t
-  :custom ((global-undo-tree-mode . t))
+  :custom ((global-undo-tree-mode . t)
+	   (undo-tree-auto-save-history . t)
+	   (undo-tree-history-directory-alist . '(("." . "~/.emacs.d/undo-tree-history"))))
   :bind (("C-/" . undo-tree-undo)
-	 ("C-'" . undo-tree-redo)))
+	 ("C-'" . undo-tree-redo))
+  :config
+  (unless (file-exists-p "~/.emacs.d/undo-tree-history")
+    (make-directory "~/.emacs.d/undo-tree-history" t)))
 
 (leaf comment-dwim-2
   :ensure t
@@ -313,3 +318,16 @@
 
 ;; ----------------
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(comment-dwim-2 undo-tree magit doom-themes neotree memoize all-the-icons counsel-projectile projectile company-c-headers company flycheck ivy-prescient prescient ivy-rich counsel swiper ivy exec-path-from-shell blackout el-get hydra leaf-keywords leaf)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
