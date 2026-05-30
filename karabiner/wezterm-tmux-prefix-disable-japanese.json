@@ -1,0 +1,45 @@
+{
+  "title": "WezTerm tmux prefix disables Japanese input",
+  "rules": [
+    {
+      "description": "In WezTerm, pressing Ctrl-T switches the input source to ABC before sending tmux prefix",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "t",
+            "modifiers": {
+              "mandatory": [
+                "control"
+              ],
+              "optional": [
+                "caps_lock"
+              ]
+            }
+          },
+          "to": [
+            {
+              "select_input_source": {
+                "input_source_id": "com.apple.keylayout.ABC"
+              }
+            },
+            {
+              "key_code": "t",
+              "modifiers": [
+                "control"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.github\\.wez\\.wezterm$"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

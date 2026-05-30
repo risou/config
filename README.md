@@ -143,6 +143,18 @@ OS X と tmux のクリップボードを共有するため以下をインスト
 $ brew install reattach-to-user-namespace
 ```
 
+# Karabiner-Elements
+
+WezTerm で `tmux` の prefix (`Ctrl-t`) を押したときに日本語入力をオフにしたい場合は、Karabiner-Elements の complex modifications に以下を配置して有効化する。
+
+```sh
+$ mkdir -p ~/.config/karabiner/assets/complex_modifications
+$ ln -s $(pwd)/karabiner/wezterm-tmux-prefix-disable-japanese.json \
+  ~/.config/karabiner/assets/complex_modifications/wezterm-tmux-prefix-disable-japanese.json
+```
+
+Karabiner-Elements の `Complex Modifications` から `WezTerm tmux prefix disables Japanese input` を有効化する。英数入力として `ABC` 以外の入力ソースを使っている場合は、JSON 内の `input_source_id` を環境に合わせて変更する。
+
 # gnupg
 
 ```sh

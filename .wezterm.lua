@@ -16,6 +16,15 @@ config.default_prog = { "/opt/homebrew/bin/fish", "-l" }
 config.color_scheme = "Catppuccin Mocha"
 -- config.color_scheme = 'Selenized White (Gogh)'
 
+config.window_decorations = "RESIZE"
+config.hide_tab_bar_if_only_one_tab = true
+config.window_frame = {
+	inactive_titlebar_bg = "none",
+	active_titlebar_bg = "none",
+}
+config.show_new_tab_button_in_tab_bar = false
+-- config.show_close_tab_button_in_tabs = false -- x ボタンを消す（まだ nightly でしか対応していないのでコメントアウト）
+
 config.window_background_opacity = 0.75
 -- config.text_background_opacity = 0.9
 
@@ -215,18 +224,8 @@ end)
 
 config.status_update_interval = 1000
 
-config.leader = { key = 't', mods = 'CTRL', timeout_milliseconds = 1000 }
+-- config.leader = { key = "t", mods = "CTRL", timeout_milliseconds = 1000 }
 config.keys = {
-  {
-    key = '%',
-    mods = 'LEADER|SHIFT',
-    action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
-  },
-  {
-    key = '"',
-    mods = 'LEADER|SHIFT',
-    action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
-  },
   {
     key = 'F1',
     mods = 'CMD',
@@ -254,6 +253,16 @@ config.keys = {
       })
     end),
   },
+	-- {
+	-- 	key = "%",
+	-- 	mods = "LEADER|SHIFT",
+	-- 	action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }),
+	-- },
+	-- {
+	-- 	key = '"',
+	-- 	mods = "LEADER|SHIFT",
+	-- 	action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
+	-- },
 	{
 		key = "u",
 		mods = "CMD",
