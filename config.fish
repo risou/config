@@ -49,7 +49,7 @@ alias emacsk="emacsclient -e '(kill-emacs)'"
 set -x PATH $PATH $GOPATH/bin
 
 # setup gcloud
-source "$(brew --prefix)/share/google-cloud-sdk/path.fish.inc"
+# source "$(brew --prefix)/share/google-cloud-sdk/path.fish.inc"
 
 # setup flutter
 set -x PATH $HOME/development/flutter/bin $PATH
