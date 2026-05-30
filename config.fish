@@ -72,118 +72,118 @@ bind \cxz 'cat ~/.zsh_history | fzf-tmux | read -l result; and commandline "$res
 bind \cx\cb git-switch-prev
 
 function fzf-select-from-git-status
-  set -l root (git rev-parse --show-superproject-working-tree --show-toplevel | head -1)
-  set -l list (git status --porcelain | fzf-tmux -m | awk -F ' ' '{print $NF}' | sed -e "s|^|$root/|g" | tr '\n' ' ')
-  [ -n "$list" ]; and commandline -i $list
+    set -l root (git rev-parse --show-superproject-working-tree --show-toplevel | head -1)
+    set -l list (git status --porcelain | fzf-tmux -m | awk -F ' ' '{print $NF}' | sed -e "s|^|$root/|g" | tr '\n' ' ')
+    [ -n "$list" ]; and commandline -i $list
 end
 
 function github-open-current-issue
-  set -l prefix "hub view -- 'issues/"
-  set -l suffix "'"
-  set -l cursor (commandline -C)
-  commandline -C 0
-  commandline -i $prefix
-  commandline -a $suffix
-  commandline -C (math $cursor + (string length $prefix))
+    set -l prefix "hub view -- 'issues/"
+    set -l suffix "'"
+    set -l cursor (commandline -C)
+    commandline -C 0
+    commandline -i $prefix
+    commandline -a $suffix
+    commandline -C (math $cursor + (string length $prefix))
 end
 
 function fzf-github-open-issue
-  set -l buffer (commandline)
-  set -l repo (ghq list | peco --query "$buffer" | sed -e 's/^.*\/\([^/]*\)\/\([^/]*\)$/\1\/\2/1')
-  set -l prefix "hub view $repo 'issues/"
-  set -l suffix "'"
-  commandline -r $prefix
-  commandline -a $suffix
-  commandline -C (string length $prefix)
+    set -l buffer (commandline)
+    set -l repo (ghq list | peco --query "$buffer" | sed -e 's/^.*\/\([^/]*\)\/\([^/]*\)$/\1\/\2/1')
+    set -l prefix "hub view $repo 'issues/"
+    set -l suffix "'"
+    commandline -r $prefix
+    commandline -a $suffix
+    commandline -C (string length $prefix)
 end
 
 function graph
     # git log --graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" $argv | fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
     git log --graph --color=always --format="%C(red)%h%C(reset) %C(yellow)%d%C(reset) %s %C(green)(%ad)%C(reset) %C(bold blue)<%an>%C(reset)" --abbrev-commit --date=iso $argv | fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
-    --bind "ctrl-m:execute(grep -o '[a-f0-9]\{7,\}' | head -1 | xargs -I % git show --color=always % | less -R)"
+        --bind "ctrl-m:execute(grep -o '[a-f0-9]\{7,\}' | head -1 | xargs -I % git show --color=always % | less -R)"
 end
 
 function open-pr-from-commit
-  set -l default_branch (git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
-  hub browse -- (git log --merges --oneline --reverse --ancestry-path $argv..."$default_branch" | grep 'Merge pull request #' | head -n 1 | cut -f5 -d' ' | sed -e 's%#%pull/%')
+    set -l default_branch (git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+    hub browse -- (git log --merges --oneline --reverse --ancestry-path $argv..."$default_branch" | grep 'Merge pull request #' | head -n 1 | cut -f5 -d' ' | sed -e 's%#%pull/%')
 end
 
 # original: decors/fish-ghq
 function __ghq_repository_search -d 'Repository search'
-  set -l selector_options
-  [ -n "$GHQ_SELECTOR_OPTS" ]; and set selector_options $GHQ_SELECTOR_OPTS
+    set -l selector_options
+    [ -n "$GHQ_SELECTOR_OPTS" ]; and set selector_options $GHQ_SELECTOR_OPTS
 
-  set -l query (commandline -b)
-  [ -n "$query" ]; and set flags --query="$query"; or set flags
-  ghq list --full-path | eval "fzf-tmux" $selector_options $flags | read select
-  [ -n "$select" ]; and commandline "cd $select"; and commandline -f execute
-  commandline -f repaint
+    set -l query (commandline -b)
+    [ -n "$query" ]; and set flags --query="$query"; or set flags
+    ghq list --full-path | eval fzf-tmux $selector_options $flags | read select
+    [ -n "$select" ]; and commandline "cd $select"; and commandline -f execute
+    commandline -f repaint
 end
 
 # select from recently branches
 function git-switch-prev
-  set -l default_branch (git rev-parse --abbrev-ref origin/HEAD 2>/dev/null | string replace 'origin/' '')
+    set -l default_branch (git rev-parse --abbrev-ref origin/HEAD 2>/dev/null | string replace 'origin/' '')
 
-  if test -z "$default_branch"
-    return 1
-  end
-
-  set -l current (git rev-parse --abbrev-ref HEAD)
-
-  set -l entries
-  set -l seen
-  for line in (git reflog --format='%gD|%an|%ad|%gs' --date=short | grep 'checkout: moving from')
-    set -l author (string split "|" $line)[2]
-    set -l date (string split "|" $line)[3]
-    set -l m (string split "|" $line)[4]
-    set -l b (echo $m | string match -r '(?<=from )[^ ]+')
-    if test -n "$b"; and not contains -- $b $seen; and test "$b" != "$current"
-      set seen $seen $b
-      set entries $entries "$b|$author|$date"
+    if test -z "$default_branch"
+        return 1
     end
-  end
 
-  if test (count $entries) -eq 0
-    return 1
-  end
+    set -l current (git rev-parse --abbrev-ref HEAD)
 
-  set -l picked (printf "%s\n" $entries \
+    set -l entries
+    set -l seen
+    for line in (git reflog --format='%gD|%an|%ad|%gs' --date=short | grep 'checkout: moving from')
+        set -l author (string split "|" $line)[2]
+        set -l date (string split "|" $line)[3]
+        set -l m (string split "|" $line)[4]
+        set -l b (echo $m | string match -r '(?<=from )[^ ]+')
+        if test -n "$b"; and not contains -- $b $seen; and test "$b" != "$current"
+            set seen $seen $b
+            set entries $entries "$b|$author|$date"
+        end
+    end
+
+    if test (count $entries) -eq 0
+        return 1
+    end
+
+    set -l picked (printf "%s\n" $entries \
     | column -ts'|' \
     | fzf --ansi --exact --preview='git log --oneline --graph --decorate --color=always -50 {+1}' \
     | awk '{print $1}')
 
-  if test -z "$picked"
-    return 0
-  end
+    if test -z "$picked"
+        return 0
+    end
 
-  set -l target (string split "|" $picked)[1]
+    set -l target (string split "|" $picked)[1]
 
-  set -l output (git switch $target 2>&1)
-  echo $output
+    set -l output (git switch $target 2>&1)
+    echo $output
 end
 
 if test -z (echo $TMUX)
-  function tmux
-    if test (count $argv) -eq 0; and tmux has-session 2>/dev/null
-      command tmux attach-session
-    else if test (count $argv) -ne 0
-      command tmux $argv
-    else
-      command tmux new-session
+    function tmux
+        if test (count $argv) -eq 0; and tmux has-session 2>/dev/null
+            command tmux attach-session
+        else if test (count $argv) -ne 0
+            command tmux $argv
+        else
+            command tmux new-session
+        end
     end
-  end
 end
 
 function ssh
-  if test -n (echo $TMUX)
-#    tmux select-pane -P 'bg=colour17'
-    command ssh $argv
-#    tmux select-pane -P 'default'
-  else
-    command ssh $argv
-  end
+    if test -n (echo $TMUX)
+        #    tmux select-pane -P 'bg=colour17'
+        command ssh $argv
+        #    tmux select-pane -P 'default'
+    else
+        command ssh $argv
+    end
 end
-set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
+set -g fish_user_paths /usr/local/sbin $fish_user_paths
 
 # startup yabai & skhd
 # brew services restart yabai
