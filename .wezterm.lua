@@ -226,33 +226,6 @@ config.status_update_interval = 1000
 
 -- config.leader = { key = "t", mods = "CTRL", timeout_milliseconds = 1000 }
 config.keys = {
-  {
-    key = 'F1',
-    mods = 'CMD',
-    action = wezterm.action_callback(function(window,  pane)
-      window:set_config_overrides({
-        font_size = 16.0,
-      })
-    end),
-  },
-  {
-    key = 'F2',
-    mods = 'CMD',
-    action = wezterm.action_callback(function(window,  pane)
-      window:set_config_overrides({
-        font_size = 14.0,
-      })
-    end),
-  },
-  {
-    key = 'F3',
-    mods = 'CMD',
-    action = wezterm.action_callback(function(window,  pane)
-      window:set_config_overrides({
-        font_size = 12.0,
-      })
-    end),
-  },
 	-- {
 	-- 	key = "%",
 	-- 	mods = "LEADER|SHIFT",
@@ -263,6 +236,48 @@ config.keys = {
 	-- 	mods = "LEADER|SHIFT",
 	-- 	action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
 	-- },
+	{
+		key = "F1",
+		mods = "CMD",
+		action = wezterm.action_callback(function(window, pane)
+			local overrides = window:get_config_overrides() or {}
+			overrides.font_size = 16.0
+			window:set_config_overrides(overrides)
+		end),
+	},
+	{
+		key = "F2",
+		mods = "CMD",
+		action = wezterm.action_callback(function(window, pane)
+			local overrides = window:get_config_overrides() or {}
+			overrides.font_size = 14.0
+			window:set_config_overrides(overrides)
+		end),
+	},
+	{
+		key = "F3",
+		mods = "CMD",
+		action = wezterm.action_callback(function(window, pane)
+			local overrides = window:get_config_overrides() or {}
+			overrides.font_size = 12.0
+			window:set_config_overrides(overrides)
+		end),
+	},
+	{
+		key = "m",
+		mods = "CMD|SHIFT",
+		action = wezterm.action_callback(function(window, pane)
+			window:maximize()
+		end),
+	},
+	{
+		key = "0",
+		mods = "CMD",
+		action = wezterm.action_callback(function(window, pane)
+			window:restore()
+			window:perform_action(wezterm.action.ResetFontAndWindowSize, pane)
+		end),
+	},
 	{
 		key = "u",
 		mods = "CMD",
