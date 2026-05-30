@@ -16,7 +16,7 @@ config.default_prog = { "/opt/homebrew/bin/fish", "-l" }
 config.color_scheme = "Catppuccin Mocha"
 -- config.color_scheme = 'Selenized White (Gogh)'
 
--- config.window_background_opacity = 0.7
+config.window_background_opacity = 0.75
 -- config.text_background_opacity = 0.9
 
 config.font = wezterm.font_with_fallback({
@@ -253,6 +253,19 @@ config.keys = {
       })
     end),
   },
+	{
+		key = "u",
+		mods = "CMD",
+		action = wezterm.action_callback(function(window, pane)
+			local overrides = window:get_config_overrides() or {}
+			if overrides.window_background_opacity == 1.0 then
+				overrides.window_background_opacity = nil
+			else
+				overrides.window_background_opacity = 1.0
+			end
+			window:set_config_overrides(overrides)
+		end),
+	},
 }
 
 return config
