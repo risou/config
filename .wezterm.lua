@@ -35,29 +35,30 @@ config.font = wezterm.font_with_fallback({
 
 local monaspace_features = { "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" }
 
-config.font_rules = {
-  {
-    intensity = "Normal",
-    italic = true,
-    font = wezterm.font {
-      family = "Monaspace Radon",
-      style = "Normal",
-      weight = "Regular",
-      stretch = "Expanded",
-      harfbuzz_features = monaspace_features,
-    },
-  },
-  {
-    intensity = "Bold",
-    italic = true,
-    font = wezterm.font {
-      family = "Monaspace Krypton",
-      style = "Italic",
-      weight ="Black",
-      harfbuzz_features = monaspace_features,
-    },
-  },
-}
+-- まだ Monaspace をインストールしていないので一旦コメントアウト
+-- config.font_rules = {
+-- 	{
+-- 		intensity = "Normal",
+-- 		italic = true,
+-- 		font = wezterm.font({
+-- 			family = "Monaspace Radon",
+-- 			style = "Normal",
+-- 			weight = "Regular",
+-- 			stretch = "Expanded",
+-- 			harfbuzz_features = monaspace_features,
+-- 		}),
+-- 	},
+-- 	{
+-- 		intensity = "Bold",
+-- 		italic = true,
+-- 		font = wezterm.font({
+-- 			family = "Monaspace Krypton",
+-- 			style = "Italic",
+-- 			weight = "Black",
+-- 			harfbuzz_features = monaspace_features,
+-- 		}),
+-- 	},
+-- }
 
 -- config.font_size = 21.0 -- 14.0 * 1.5
 -- config.font_size = 18.0 -- 14.0 * 1.3
