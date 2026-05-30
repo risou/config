@@ -1,5 +1,11 @@
+# Do not run `brew shellenv` here. It is run in conf.d/00-brew.fish instead.
+# Running it here would execute after vendor_conf.d/mise-activate.fish (mise activate),
+# so Homebrew's PATH would be applied after mise's. That would make Homebrew-installed
+# tools (e.g. go) take precedence over mise-managed ones. Running brew shellenv in
+# conf.d/00-brew.fish ensures it runs before mise activate, so mise's PATH wins.
+
 # if status is-interactive
-    eval (/opt/homebrew/bin/brew shellenv)
+#     eval (/opt/homebrew/bin/brew shellenv)
 # end
 
 set -x GOPATH /Users/risou
