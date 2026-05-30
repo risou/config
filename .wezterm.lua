@@ -72,8 +72,8 @@ local monaspace_features = { "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss
 -- config.font_size = 21.0 -- 14.0 * 1.5
 -- config.font_size = 18.0 -- 14.0 * 1.3
 -- config.font_size = 14.0
--- config.font_size = 12.0
-config.font_size = 16.0
+config.font_size = 12.0
+-- config.font_size = 16.0
 config.line_height = 1.18
 config.harfbuzz_features = { "liga=1", "calt=1", "zero=1" }
 config.adjust_window_size_when_changing_font_size = false -- フォントサイズ変更でウィンドウがリサイズされるのを防止
