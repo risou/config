@@ -196,7 +196,7 @@ set -g fish_user_paths /usr/local/sbin $fish_user_paths
 # brew services restart skhd
 
 starship init fish | source
-eval (direnv hook fish)
+# eval (direnv hook fish)
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 set --export --prepend PATH "/Users/risou/.rd/bin"
