@@ -1,5 +1,8 @@
 local wezterm = require("wezterm")
 
+local updateAgentBackground =
+	dofile(wezterm.config_dir .. "/wezterm/agent_background_runtime.lua")
+
 local config = {}
 
 if wezterm.config_builder then
@@ -198,6 +201,7 @@ local function updateRightStatus(window, pane)
 end
 
 wezterm.on("update-status", function(window, pane)
+	updateAgentBackground(window, pane)
 	updateLeftStatus(window, pane)
 	updateRightStatus(window, pane)
 end)
