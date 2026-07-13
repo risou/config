@@ -23,6 +23,14 @@ local snapshot = {
 assert_equal(background.agent_from_snapshot(snapshot), "codex", "focused Herdr pane")
 assert_equal(background.detect("/opt/homebrew/bin/claude", function() return nil end), "claude", "direct Claude")
 assert_equal(background.detect("/opt/homebrew/bin/codex", function() return nil end), "codex", "direct Codex")
+assert_equal(
+	background.detect(
+		"/opt/homebrew/Caskroom/codex/0.144.1/codex-aarch64-apple-darwin",
+		function() return nil end
+	),
+	"codex",
+	"Homebrew Codex binary"
+)
 assert_equal(background.detect("/opt/homebrew/bin/fish", function() return snapshot end), nil, "ordinary shell")
 assert_equal(background.detect("/opt/homebrew/bin/herdr", function() return snapshot end), "codex", "Herdr snapshot")
 assert_equal(background.detect("/opt/homebrew/bin/herdr", function() error("socket unavailable") end), nil, "Herdr failure")

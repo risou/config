@@ -16,6 +16,17 @@ local function normalize_agent(agent)
 	return nil
 end
 
+local function agent_from_process(process)
+	local exact_agent = normalize_agent(process)
+	if exact_agent then
+		return exact_agent
+	end
+	if process:match("^codex%-") then
+		return "codex"
+	end
+	return nil
+end
+
 function M.agent_from_snapshot(payload)
 	local snapshot = payload and payload.result and payload.result.snapshot
 	if not snapshot or not snapshot.focused_pane_id then
@@ -33,7 +44,7 @@ end
 
 function M.detect(process_name, snapshot_loader)
 	local process = basename(process_name)
-	local direct_agent = normalize_agent(process)
+	local direct_agent = agent_from_process(process)
 	if direct_agent then
 		return direct_agent
 	end
