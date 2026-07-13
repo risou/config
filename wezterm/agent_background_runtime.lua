@@ -1,15 +1,17 @@
 local wezterm = require("wezterm")
 
+local config_root = ...
+
 local agent_background =
-	dofile(wezterm.config_dir .. "/wezterm/agent_background.lua")
+	dofile(config_root .. "/wezterm/agent_background.lua")
 
 local agent_background_specs = {
 	claude = {
-		path = wezterm.config_dir .. "/wezterm/backgrounds/claude-work.png",
+		path = config_root .. "/wezterm/backgrounds/claude-work.png",
 		hsb = { brightness = 0.38, saturation = 0.7 },
 	},
 	codex = {
-		path = wezterm.config_dir .. "/wezterm/backgrounds/codex-private.png",
+		path = config_root .. "/wezterm/backgrounds/codex-private.png",
 		hsb = { brightness = 0.38, saturation = 0.85 },
 	},
 }

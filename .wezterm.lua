@@ -1,7 +1,16 @@
 local wezterm = require("wezterm")
 
+local ok, configFile =
+	wezterm.run_child_process({ "/bin/realpath", wezterm.config_file })
+assert(ok, "Unable to resolve WezTerm config file")
+
+local configRoot =
+	assert(configFile:gsub("%s+$", ""):match("^(.*)/[^/]+$"))
+
 local updateAgentBackground =
-	dofile(wezterm.config_dir .. "/wezterm/agent_background_runtime.lua")
+	assert(loadfile(configRoot .. "/wezterm/agent_background_runtime.lua"))(
+		configRoot
+	)
 
 local config = {}
 
