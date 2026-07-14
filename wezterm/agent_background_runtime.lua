@@ -56,7 +56,7 @@ end
 
 local function update_agent_background(window, pane)
 	local agent =
-		agent_background.detect(pane:get_foreground_process_name(), load_herdr_snapshot)
+		agent_background.detect(pane:get_foreground_process_info(), load_herdr_snapshot)
 	local image_spec = agent_background_specs[agent]
 
 	if image_spec and not file_exists(image_spec.path) then

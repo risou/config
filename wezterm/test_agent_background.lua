@@ -8,6 +8,18 @@ local function assert_equal(actual, expected, message)
 	end
 end
 
+local function process(executable, argv0)
+	return {
+		executable = executable,
+		argv = argv0 and { argv0 } or {},
+	}
+end
+
+local CURSOR_PROCESS_FIXTURE = process(
+	"/Users/masaakifujisawa/.local/share/cursor-agent/versions/2026.07.09-a3815c0/node",
+	"/Users/masaakifujisawa/.local/bin/agent"
+)
+
 local snapshot = {
 	result = {
 		snapshot = {
@@ -21,19 +33,79 @@ local snapshot = {
 }
 
 assert_equal(background.agent_from_snapshot(snapshot), "codex", "focused Herdr pane")
-assert_equal(background.detect("/opt/homebrew/bin/claude", function() return nil end), "claude", "direct Claude")
-assert_equal(background.detect("/opt/homebrew/bin/codex", function() return nil end), "codex", "direct Codex")
 assert_equal(
 	background.detect(
-		"/opt/homebrew/Caskroom/codex/0.144.1/codex-aarch64-apple-darwin",
+		process("/opt/homebrew/bin/claude", "claude"),
+		function() return nil end
+	),
+	"claude",
+	"direct Claude"
+)
+assert_equal(
+	background.detect(
+		process("/opt/homebrew/bin/codex", "codex"),
+		function() return nil end
+	),
+	"codex",
+	"direct Codex"
+)
+assert_equal(
+	background.detect(
+		process(
+			"/opt/homebrew/Caskroom/codex/0.144.1/codex-aarch64-apple-darwin",
+			"codex"
+		),
 		function() return nil end
 	),
 	"codex",
 	"Homebrew Codex binary"
 )
-assert_equal(background.detect("/opt/homebrew/bin/fish", function() return snapshot end), nil, "ordinary shell")
-assert_equal(background.detect("/opt/homebrew/bin/herdr", function() return snapshot end), "codex", "Herdr snapshot")
-assert_equal(background.detect("/opt/homebrew/bin/herdr", function() error("socket unavailable") end), nil, "Herdr failure")
+assert_equal(
+	background.detect(
+		process("/opt/homebrew/bin/nvim", "nvim"),
+		function() return nil end
+	),
+	"nvim",
+	"direct nvim"
+)
+assert_equal(
+	background.detect(CURSOR_PROCESS_FIXTURE, function() return nil end),
+	"cursor",
+	"direct Cursor Agent"
+)
+assert_equal(
+	background.detect(
+		process("/opt/homebrew/bin/fish", "fish"),
+		function() return snapshot end
+	),
+	"fish",
+	"ordinary shell fallback"
+)
+assert_equal(
+	background.detect(
+		process("/opt/homebrew/bin/node", "node"),
+		function() return nil end
+	),
+	"fish",
+	"generic Node fallback"
+)
+assert_equal(
+	background.detect(
+		process("/opt/homebrew/bin/herdr", "herdr"),
+		function() return snapshot end
+	),
+	"codex",
+	"Herdr snapshot"
+)
+assert_equal(
+	background.detect(
+		process("/opt/homebrew/bin/herdr", "herdr"),
+		function() error("socket unavailable") end
+	),
+	"fish",
+	"Herdr failure fallback"
+)
+assert_equal(background.detect(nil, function() return nil end), "fish", "unknown process fallback")
 
 local overrides = { font_size = 16.0, window_background_opacity = 1.0 }
 background.with_background(overrides, {

@@ -3,6 +3,7 @@ local M = {}
 local supported_agents = {
 	claude = true,
 	codex = true,
+	cursor = true,
 }
 
 local function basename(path)
@@ -10,19 +11,28 @@ local function basename(path)
 end
 
 local function normalize_agent(agent)
+	if agent == "agent" or agent == "cursor-agent" then
+		return "cursor"
+	end
 	if supported_agents[agent] then
 		return agent
 	end
 	return nil
 end
 
-local function agent_from_process(process)
-	local exact_agent = normalize_agent(process)
-	if exact_agent then
-		return exact_agent
+local function mode_from_process(info)
+	local executable = basename(info and info.executable)
+	local invoked_as = basename(info and info.argv and info.argv[1])
+	local direct = normalize_agent(executable) or normalize_agent(invoked_as)
+
+	if direct then
+		return direct
 	end
-	if process:match("^codex%-") then
+	if executable:match("^codex%-") then
 		return "codex"
+	end
+	if executable == "nvim" then
+		return "nvim"
 	end
 	return nil
 end
@@ -42,23 +52,22 @@ function M.agent_from_snapshot(payload)
 	return nil
 end
 
-function M.detect(process_name, snapshot_loader)
-	local process = basename(process_name)
-	local direct_agent = agent_from_process(process)
-	if direct_agent then
-		return direct_agent
+function M.detect(process_info, snapshot_loader)
+	local direct = mode_from_process(process_info)
+	if direct then
+		return direct
 	end
 
-	if process ~= "herdr" then
-		return nil
+	if basename(process_info and process_info.executable) ~= "herdr" then
+		return "fish"
 	end
 
 	local ok, payload = pcall(snapshot_loader)
 	if not ok then
-		return nil
+		return "fish"
 	end
 
-	return M.agent_from_snapshot(payload)
+	return M.agent_from_snapshot(payload) or "fish"
 end
 
 function M.with_background(overrides, image_spec)
