@@ -5,7 +5,19 @@ local config_root = ...
 local agent_background =
 	dofile(config_root .. "/wezterm/agent_background.lua")
 
-local agent_background_specs = {
+local background_specs = {
+	fish = {
+		path = config_root .. "/wezterm/backgrounds/fish-phase-weave.png",
+		hsb = { brightness = 0.38, saturation = 0.85 },
+	},
+	nvim = {
+		path = config_root .. "/wezterm/backgrounds/nvim-teal-silence.png",
+		hsb = { brightness = 0.38, saturation = 0.8 },
+	},
+	cursor = {
+		path = config_root .. "/wezterm/backgrounds/cursor-prototype-bloom.png",
+		hsb = { brightness = 0.38, saturation = 0.85 },
+	},
 	claude = {
 		path = config_root .. "/wezterm/backgrounds/claude-work.png",
 		hsb = { brightness = 0.38, saturation = 0.7 },
@@ -54,18 +66,32 @@ local function load_herdr_snapshot()
 	return payload
 end
 
-local function update_agent_background(window, pane)
-	local agent =
-		agent_background.detect(pane:get_foreground_process_info(), load_herdr_snapshot)
-	local image_spec = agent_background_specs[agent]
+local function available_spec(mode)
+	local spec = background_specs[mode] or background_specs.fish
 
-	if image_spec and not file_exists(image_spec.path) then
-		warn_once(
-			image_spec.path,
-			"WezTerm background image is missing: " .. image_spec.path
-		)
-		image_spec = nil
+	if file_exists(spec.path) then
+		return spec
 	end
+
+	warn_once(
+		spec.path,
+		"WezTerm background image is missing: " .. spec.path
+	)
+
+	if
+		spec ~= background_specs.fish
+		and file_exists(background_specs.fish.path)
+	then
+		return background_specs.fish
+	end
+
+	return nil
+end
+
+local function update_agent_background(window, pane)
+	local mode =
+		agent_background.detect(pane:get_foreground_process_info(), load_herdr_snapshot)
+	local image_spec = available_spec(mode)
 
 	local overrides = window:get_config_overrides() or {}
 	local current_path = overrides.window_background_image
