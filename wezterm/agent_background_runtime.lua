@@ -2,8 +2,7 @@ local wezterm = require("wezterm")
 
 local config_root = ...
 
-local agent_background =
-	dofile(config_root .. "/wezterm/agent_background.lua")
+local agent_background = dofile(config_root .. "/wezterm/agent_background.lua")
 
 local background_specs = {
 	fish = {
@@ -23,7 +22,7 @@ local background_specs = {
 		hsb = { brightness = 0.38, saturation = 0.7 },
 	},
 	codex = {
-		path = config_root .. "/wezterm/backgrounds/codex-private.png",
+		path = config_root .. "/wezterm/backgrounds/codex-phase-weave.png",
 		hsb = { brightness = 0.38, saturation = 0.85 },
 	},
 }
@@ -48,13 +47,9 @@ local function file_exists(path)
 end
 
 local function load_herdr_snapshot()
-	local success, stdout, stderr =
-		wezterm.run_child_process({ "/opt/homebrew/bin/herdr", "api", "snapshot" })
+	local success, stdout, stderr = wezterm.run_child_process({ "/opt/homebrew/bin/herdr", "api", "snapshot" })
 	if not success then
-		warn_once(
-			"herdr-snapshot",
-			"Unable to read Herdr snapshot: " .. (stderr or "unknown error")
-		)
+		warn_once("herdr-snapshot", "Unable to read Herdr snapshot: " .. (stderr or "unknown error"))
 		return nil
 	end
 
@@ -73,15 +68,9 @@ local function available_spec(mode)
 		return spec
 	end
 
-	warn_once(
-		spec.path,
-		"WezTerm background image is missing: " .. spec.path
-	)
+	warn_once(spec.path, "WezTerm background image is missing: " .. spec.path)
 
-	if
-		spec ~= background_specs.fish
-		and file_exists(background_specs.fish.path)
-	then
+	if spec ~= background_specs.fish and file_exists(background_specs.fish.path) then
 		return background_specs.fish
 	end
 
@@ -89,8 +78,7 @@ local function available_spec(mode)
 end
 
 local function update_agent_background(window, pane)
-	local mode =
-		agent_background.detect(pane:get_foreground_process_info(), load_herdr_snapshot)
+	local mode = agent_background.detect(pane:get_foreground_process_info(), load_herdr_snapshot)
 	local image_spec = available_spec(mode)
 
 	local overrides = window:get_config_overrides() or {}
