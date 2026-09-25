@@ -4,6 +4,7 @@ start_date="2025-01-01"
 end_date="2025-02-06"
 
 current_date="$start_date"
+: "${GITHUB_ORG:?Set GITHUB_ORG}"
 
 # GitHub認証状態のチェック
 if ! gh auth status &> /dev/null; then
@@ -23,7 +24,7 @@ while [[ "$current_date" < "$end_date" ]]; do
   fi
 
   echo "Querying PRs merged from $current_date to $weekend_date ..."
-  gh api --paginate "/search/issues?q=is:pr+is:merged+merged:${current_date}..${weekend_date}+org:heyinc&per_page=100" \
+  gh api --paginate "/search/issues?q=is:pr+is:merged+merged:${current_date}..${weekend_date}+org:${GITHUB_ORG}&per_page=100" \
     --jq '.items' \
     > "results_${current_date}_to_${weekend_date}.json"
 

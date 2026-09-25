@@ -1,9 +1,8 @@
 #! /bin/bash
 
-source "$HOME/.config/sketchybar/colors.sh"
+: "${GITHUB_ORG:?Set GITHUB_ORG}"
 
-# uncommit following environment variables
-GITHUB_ORG="heyinc"
+source "$HOME/.config/sketchybar/colors.sh"
 
 if [ $(date +%m) -le 6 ]; then
   START_DATE=$(date +%Y-01-01)
